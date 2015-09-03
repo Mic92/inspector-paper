@@ -1,0 +1,35 @@
+\begin{figure}[t]
+\centering
+\myfontsize
+{
+\begin{tabular}
+{m{1.5cm} m{1.4cm} m{0.1cm} m{1.8cm} m{1.2cm}}
+&\underline{{\bf Thread 1} ($T_1$)} & & \underline{ {\bf Thread 2}  ($T_2$)} &\\ 
+ 
+
+/* \underline{$T_{1}.a$} */ & {\tt lock()}; && &\\
+
+ {\tt read}=$\{x, y\}$  &if ($x > 0$) && &\\
+ {\tt write}=$\{x, y\}$ &  x = ++y;&& &\\
+ & {\tt unlock()};&& &\\
+        &  &  $\searrow$ & & \\
+   
+
+&&  & {\tt lock()}; &  /* \underline{$T_{2}.a$ }*/\\
+&&  & y = 2* x;    & {\tt read}=$\{x\}$  \\
+&  &  & {\tt unlock()}; &  {\tt write}=$\{y\}$ \\  
+
+        &  &  $\swarrow$ & & \\
+/* \underline{$T_{1}.b$} */ & {\tt lock()}; && &\\
+
+ {\tt read}=$\{x, y\}$  &if ($x > 0$) && &\\
+ {\tt write}=$\{x, y\}$ &  x = ++y;&& &\\
+ & {\tt unlock()};&& &\\
+
+\end{tabular}
+}
+
+
+\caption{ A simple example of shared-memory multithreading}
+\label{fig:simple-example}
+\end{figure}
