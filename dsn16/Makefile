@@ -3,6 +3,13 @@ TEXFILES = $(wildcard *.tex)
 FIGURES  = 
 LATEX = latex
 
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Darwin)
+    OPEN = open
+else
+    OPEN = xdg-open
+endif
+
 .SUFFIXES:	.plot .eps .fig
 
 all: $(TARGET).pdf
@@ -29,7 +36,7 @@ $(TARGET).pdf: $(TEXFILES)   $(addprefix figures/, $(addsuffix .eps, $(FIGURES))
 	latexmk -f -pdf main.tex
 
 view:: $(TARGET).pdf
-	open $(TARGET).pdf
+	$(OPEN) $(TARGET).pdf
 
 see:: $(TARGET).dvi
 	xdvi $(TARGET)
