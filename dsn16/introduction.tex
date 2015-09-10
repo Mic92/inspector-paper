@@ -7,29 +7,29 @@ Program Dependence Graph (PDG) provides an explicit intermediate program represe
 In this paper, we propose a generic approach for building Program Dependence Graphs (PDGs)  for shared-memory multithreaded programs. More specifically, we have two main design goals: (1) {\em Transparency:} to support unmodified shared-memory multithreaded programs with the full range of synchronization primitives in the {\tt POSIX} API; (2) {\em Efficiency:} to achieve low overheads by designing the underlying algorithm for building PDGs to be  {\em parallel} as well so as not limit the available parallelism in multithreaded applications.
 
 
-To achieve these goals, we present \projecttitle, a threading library for building Program Dependence Graphs (PDGs) for shared-memory multithreaded programs. To run a program using \projecttitle,  the user just needs to preload the \projecttitle library  by using the environment variable {\tt LD\_PRELOAD} or {\tt -rdynamic} flag, and then, run the program as usual. Thus, enabling existing binaries to benefit from our approach. 
+To achieve these goals, we present \projecttitle, a threading library for building Program Dependence Graphs (PDGs) for shared-memory multithreaded programs. To run a program using \projecttitle,  the user just needs to preload the \projecttitle library  by using the environment variable {\tt LD\_PRELOAD} or {\tt -rdynamic} flag, and then, run the program as usual. Thus, enabling existing binaries to benefit from our approach.
 
 
 Our approach is based on recording the data and control dependencies in a computation by constructing a Concurrent Program Dependence Graph (CPDG). The CPDG tracks the input data to a program, all sub-computations (a sub-computation is a unit of the computation), the data flow between sub-computations, and intra- and inter-thread control flow of the multithreaded execution.
 
 
-At a high-level, we use two simple building blocks to derive the control and data flow for the CPDG. First, we leverage Intel Processor Trace (\intelpt) ISA extensions, recently released as part of the Broadwell microarchitecture, for deriving the intra-thread control flow information. Additionally, we complement this  information with the happens-before relationship between threads for recording the inter-thread control dependencies. 
+At a high-level, we use two simple building blocks to derive the control and data flow for the CPDG. First, we leverage Intel Processor Trace (\intelpt) ISA extensions, recently released as part of the Broadwell microarchitecture, for deriving the intra-thread control flow information. Additionally, we complement this  information with the happens-before relationship between threads for recording the inter-thread control dependencies.
 
 Second, we make use of MMU-assisted memory tracking to derive the data flow during the program execution. However, a naive implementation of MMU-assisted tracking based on the Sequential Consistency (SC) memory model could be prohibitively expensive with the current hardware. Therefore,  our approach weakens the memory model, by supporting the Release Consistency (RC) memory model, to improve the efficiency for recording the data flow information.
 
 Our library integrates these two building blocks, and present a unified interface of the CPDG for the users. Overall, this paper makes the following contributions:
 
-\begin{itemize} 
+\begin{itemize}
 \item We present a parallel algorithm to build the CPDG that records intra- and inter-thread control and data dependencies for multithreaded program execution (\secref{algorithms}).
 
 \item We implemented our algorithm as a dynamically linkable shared library, which we call \projecttitle, leveraging MMU-assisted memory tracking, process-level isolation, and \intelpt.  The \projecttitle library can be loaded and linked at run-time as a replacement to the \pthreads library, without any recompilation  of the application code (\secref{implementation}).
 
-\item We  empirically demonstrate  the effectiveness of \projecttitle by applying it to applications of standard multithreaded benchmark suites (PARSEC~\cite{parsec} and Phoenix~\cite{phoenix}). Our experiments show that \projecttitle~incurs reasonable overheads for a majority of applications (\secref{evaluation}). 
+\item We  empirically demonstrate  the effectiveness of \projecttitle by applying it to applications of standard multithreaded benchmark suites (PARSEC~\cite{parsec} and Phoenix~\cite{phoenix}). Our experiments show that \projecttitle~incurs reasonable overheads for a majority of applications (\secref{evaluation}).
 
 
 
 \end{itemize}
 
 
-The remainder of the paper is organized as follows. We first present  an overview of our approach (\secref{overview}) and the system model (\secref{model}). Next, we describe the algorithm for building the CDPG (\secref{algorithms}). Based on the algorithm, we next present the design and implementation of  the \projecttitle library  (\secref{implementation}). Thereafter, we evaluate \projecttitle experimentally using PARSEC and Phoenix benchmarks (\secref{evaluation}). 
+The remainder of the paper is organized as follows. We first present  an overview of our approach (\secref{overview}) and the system model (\secref{model}). Next, we describe the algorithm for building the CDPG (\secref{algorithms}). Based on the algorithm, we next present the design and implementation of  the \projecttitle library  (\secref{implementation}). Thereafter, we evaluate \projecttitle experimentally using PARSEC and Phoenix benchmarks (\secref{evaluation}).
 Finally, we present the related work (\secref{related}) and conclusions (\secref{conclusion}).

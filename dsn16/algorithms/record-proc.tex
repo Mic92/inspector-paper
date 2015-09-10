@@ -1,8 +1,8 @@
 
 % \begin{figure}[h]
 % \myfontsize
-% 
-%	\fbox{	
+%
+%	\fbox{
 %	\begin{minipage}{0.95\linewidth}
 %	\vspace{-2mm}
 %	\centering
@@ -15,7 +15,7 @@
 \underline{{\bf initThread($t$)}}\\
 \Begin{
 $\alpha \leftarrow 0 $; // Initializes thunk counter ($\alpha$) to zero\\
-$\forall i\in \{1, ...,T\}: C_t[i] \leftarrow 0$;  // $t$'s clock set to zero	
+$\forall i\in \{1, ...,T\}: C_t[i] \leftarrow 0$;  // $t$'s clock set to zero
 
 
 
@@ -32,14 +32,14 @@ $\forall i\in \{1, ...,T\}: C_t[i] \leftarrow 0$;  // $t$'s clock set to zero
 $C_t [t] \leftarrow \alpha$; // Update thread clock with thunk counter ($\alpha$) value \\
 
 // Set thunk clock value to thread $t$'s clock
- 
-$\forall (i\in \{1, ...,T\}): L_t[\alpha] .C[i] \leftarrow C_t[i]$; 
+
+$\forall (i\in \{1, ...,T\}): L_t[\alpha] .C[i] \leftarrow C_t[i]$;
 
 %$L_t[\alpha] .R/W \leftarrow \phi$; // Initialize  read/write sets to empty set\\
-			
+
 }
 
-\underline{{\bf onMemoryAccess()}}\\ 
+\underline{{\bf onMemoryAccess()}}\\
 \Begin{
 // Update read/write sets of the executing thunk \\
 
@@ -57,7 +57,7 @@ $ L_t[\alpha].R \leftarrow L_t[\alpha] .R \cup \{$ {\tt pageID} $\}$; // On read
 %\Begin{
 %
 %{\tt memo} $(L_t[\alpha ] .W) \leftarrow$ {\tt content}($L_t[\alpha] .W $);   //(globals and
-%heap)\\ 
+%heap)\\
 %{\tt memo} $(L_t[\alpha ] .Stack)  \leftarrow${\tt content (Stack)}; \\
 %{\tt memo} $(L_t[\alpha ] .Reg)  \leftarrow${\tt content (CPU\_Registers)};
 %
@@ -66,33 +66,33 @@ $ L_t[\alpha].R \leftarrow L_t[\alpha] .R \cup \{$ {\tt pageID} $\}$; // On read
 %}
 \underline{{\bf onSynchronization($S$)}} \\
 \Begin{
-	
+
 	\Switch{Syncronization type}{
 		 \Case{{\tt release}($S$):}{
 		 	// Update $S$'s clock to hold max of its and $t$'s clocks\\
 	 		$\forall i\in \{1, ...,T\} :  C_S[i] \leftarrow max(C_S[i], C_t[i])$;\\
 			sync($S$); // Perform the synchronization
 		}
-	 
+
 	 	 \Case{{\tt acquire}($S$):}{
 		 	sync($S$)\; %// Perform the synchronization\\
 			// Update $t$'s clock to hold max of its and $S$'s clocks\\
     			$\forall i\in \{1, ...,T\} :  C_t[i] \leftarrow max(C_S[i], C_t[i])$;
-			
+
    		 }
         }
   }
-			
-	
+
+
 
 
 
 \caption{\bf Subroutines for the provenance algorithm}
 \label{fig:ithreadsRecordProc}
 \end{algorithm}
-	
+
 %\end{minipage}
-%	
+%
 %
 %}
 %
