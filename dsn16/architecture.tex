@@ -1,0 +1,24 @@
+\section{Architecture}
+\label{sec:introduction}
+
+To instrument an application we use an execution wrapper. This wrapper instructs
+the runtime linker to load our library tthread by setting \emph{LD\_PRELOAD}. It
+also prepares a file, which is later on used by tthread to log the thread
+schedule and data dependence graph during execution. To obtain control flow, we
+use an new Intel ISA Extension, called Processor Trace (PT). On the GNU/Linux
+operating system this processor feature is exposed to userland as a Perfomance
+Measuring Unit (PMU) in the perf event interface. PT logs the execution of a
+program as a series of packets, which denotes branches taken.  When the
+application is launched with libtthread loaded, the writeable file descriptor of
+a unix pipe is passed to application via environment variables.  Libtthread will
+use this pipe to write its process id (PID) and wait for the application wrapper using
+the \emph{pause()} syscall. Once the application wrapper has registered the
+trace in perf, it will send a \emph{SIGCONT} to the program to allow it to
+continue its execution. Because libtthread's variant of \emph{pthread\_create()}
+will create new processes instead of threads, this process will be repeated,
+whenever a new "`thread"' is created.  The events gathered by perf, are then
+processed by Intel Processor Trace Decoder Library (libipt). After program
+execution has finished, both pt trace and log of libtthread have to be merged.
+This is done using the backtrace information captured in libtthread, which
+stores its callees whenever a new thunk is started or memory access has been
+intercepted by the MMU.
