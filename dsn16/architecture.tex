@@ -5,30 +5,31 @@ To instrument an application we use an execution wrapper. This wrapper instructs
 the runtime linker to load our library tthread by setting \emph{LD\_PRELOAD}. It
 also prepares a file, which is later on used by tthread to log the thread
 schedule and data dependence graph during execution. To obtain control flow, we
-use an new Intel ISA Extension, called Processor Trace (PT). On the GNU/Linux
-operating system this processor feature is exposed to userland as a Perfomance
-Measuring Unit (PMU) in the perf event interface. The Perf interface takes a
-process id and returns a file descriptor. The file descriptor points to data,
-which is supposed to be mapped to memory using mmap(2) syscall. At offset 0 of this memory
-a header struct named \emph{perf_event_mmap_page} is located, with the offset of
-a ring buffer called \emph{AUX area}.
-PT logs the execution of process as a series of packets here, which denotes branches taken.
-The size of this \emph{AUX area} can be controlled by \emph{perf_event_mmap_page}.
-When the application is launched with libtthread loaded, the writeable file descriptor of
-a unix pipe is passed to application via environment variables.  Libtthread will
-use this pipe to write its process id (PID) and wait for the application wrapper using
-the \emph{pause()} syscall. Once the application wrapper has registered the
-trace in perf, it will send a \emph{SIGCONT} to the program to allow it to
-continue its execution. Because libtthread's variant of \emph{pthread\_create()}
-will create new processes instead of threads, this process will be repeated,
-whenever a new "`thread"' is created.
+use an new Intel ISA Extension, called Processor Trace (PT). In Linux this
+processor feature is exposed to userland as a Perfomance Measuring Unit (PMU) in
+the perf event interface. The Perf interface takes a process id and returns a
+file descriptor. The file descriptor points to data, which is supposed to be
+mapped to memory using mmap(2) syscall. At offset 0 of this memory a header
+struct named \emph{perf_event_mmap_page} is located, with the offset of a ring
+buffer called \emph{AUX area}. PT logs the execution of process as a series of
+packets here, which denotes branches taken. The size of this \emph{AUX area}
+can be controlled by \emph{perf_event_mmap_page}. When the application is
+launched with libtthread loaded, the writeable file descriptor of a unix pipe is
+passed to application via environment variables. Libtthread will use this pipe
+to write its process id (PID) and wait for the application wrapper using the
+\emph{pause()} syscall. Once the application wrapper has registered the trace in
+perf, it will send a \emph{SIGCONT} to the program to allow it to continue its
+execution. Because libtthread's variant of \emph{pthread\_create()} will create
+new processes instead of threads, this process will be repeated, whenever a new
+"`thread"' is created.
 
-The events gathered by perf, are then processed by Intel Processor Trace Decoder Library (libipt).
-To be able to reconstruct execution flow with all instructions executed,
-it needs the process image to be reconstructed. Therefor the elf header of the
-executable is processed by inspector and all linked libraries are inserted a the right offset.
+The events gathered by perf, are then processed by Intel Processor Trace Decoder
+Library (libipt). To be able to reconstruct execution flow with all
+instructions executed, it needs the process image to be reconstructed. Therefor
+the elf header of the executable is processed by inspector and all linked
+libraries are inserted a the right offset.
 
-After program execution has finished, both pt trace and log of libtthread have to be merged.
-This is done using the backtrace information captured in libtthread, which
-stores its callees whenever a new thunk is started or memory access has been
-intercepted by the MMU.
+After program execution has finished, both pt trace and log of libtthread have
+to be merged. This is done using the backtrace information captured in
+libtthread, which stores its callees whenever a new thunk is started or memory
+access has been intercepted by the MMU.
