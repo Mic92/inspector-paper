@@ -10,15 +10,16 @@ processor feature is exposed to userland as a Perfomance Measuring Unit (PMU) in
 the perf event interface. The Perf interface takes a process id and returns a
 file descriptor. The file descriptor points to data, which is supposed to be
 mapped to memory using mmap(2) syscall. At offset 0 of this memory a header
-struct named \emph{perf_event_mmap_page} is located, with the offset of a ring
-buffer called \emph{AUX area}. PT logs the execution of process as a series of
-packets here, which denotes branches taken. The size of this \emph{AUX area}
-can be controlled by \emph{perf_event_mmap_page}. When the application is
-launched with libtthread loaded, the writeable file descriptor of a unix pipe is
-passed to application via environment variables. Libtthread will use this pipe
-to write its process id (PID) and wait for the application wrapper using the
-\emph{pause()} syscall. Once the application wrapper has registered the trace in
-perf, it will send a \emph{SIGCONT} to the program to allow it to continue its
+struct named \emph{perf_event_mmap_page} is located.
+With the offset of a ring buffer called \emph{AUX area}. PT logs the execution
+of process as a series of packets here, which denotes branches taken.
+The size of this \emph{AUX area} can be controlled by \emph{perf_event_mmap_page}.
+
+When the application is launched with libtthread loaded,
+a unix socket is passed along to the application which is referenced in environment variables.
+Libtthread will use this socket to send a pipe and its process id (PID) back.
+Once the application wrapper has registered the trace in perf,
+it will send a reponse on the passed pipe to allow the program to continue its
 execution. Because libtthread's variant of \emph{pthread\_create()} will create
 new processes instead of threads, this process will be repeated, whenever a new
 "`thread"' is created.
@@ -26,8 +27,8 @@ new processes instead of threads, this process will be repeated, whenever a new
 The events gathered by perf, are then processed by Intel Processor Trace Decoder
 Library (libipt). To be able to reconstruct execution flow with all
 instructions executed, it needs the process image to be reconstructed. Therefor
-the elf header of the executable is processed by inspector and all linked
-libraries are inserted a the right offset.
+all as mapped files, marked as executable and referenced in /proc/<pid>/maps are
+given to libipt.
 
 After program execution has finished, both pt trace and log of libtthread have
 to be merged. This is done using the backtrace information captured in
