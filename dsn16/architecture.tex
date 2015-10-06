@@ -10,10 +10,10 @@ processor feature is exposed to userland as a Perfomance Measuring Unit (PMU) in
 the perf event interface. The Perf interface takes a process id and returns a
 file descriptor. The file descriptor points to data, which is supposed to be
 mapped to memory using mmap(2) syscall. At offset 0 of this memory a header
-struct named \emph{perf_event_mmap_page} is located.
+struct named \emph{perf\_event\_mmap\_page} is located.
 With the offset of a ring buffer called \emph{AUX area}. PT logs the execution
 of process as a series of packets here, which denotes branches taken.
-The size of this \emph{AUX area} can be controlled by \emph{perf_event_mmap_page}.
+The size of this \emph{AUX area} can be controlled by \emph{perf\_event\_mmap\_page}.
 
 When the application is launched with libtthread loaded,
 a unix socket is passed along to the application which is referenced in environment variables.
