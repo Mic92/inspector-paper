@@ -10,15 +10,15 @@ In Linux this processor feature is exposed to userland as a Perfomance Measuring
 Unit (PMU) in the perf event interface.
 
 The Perf interface on Linux consists of a syscall, which gives back a file
-descriptor. Events are accessed by obtaining buffers via mmap(2)
-and can be further controlled via ioctl syscalls on the given file descriptor.
-Along with interface the userspace \emph{perf} allows to dump and filter from
-these buffers. In the case of Inspector filtering is done by using Linux control
-groups (Also known as Cgroups). Cgroups are a kernel feature to apply
-constraint like resource usage to a group of processes. It has the property,
-that by default every child process belongs to the same process as its parent.
-Also for `perf_events` such a cgroup exists. The execution wrapper will create
-such a croup exclusivly for the application under test. This is done because
+descriptor. Events are accessed by obtaining buffers via mmap(2) and can be
+further controlled via ioctl syscalls on the given file descriptor. Along with
+interface the userspace \emph{perf} allows to dump and filter from these
+buffers. In the case of Inspector filtering is done by using Linux control
+groups (Also known as Cgroups). Cgroups are a kernel feature to apply constraint
+like resource usage to a group of processes. It has the property, that by
+default every child process belongs to the same process as its parent. Also for
+\emph{perf\_events} such a cgroup exists. The execution wrapper will create such
+a croup exclusivly for the application under test. This is done because
 \emph{tthread} will cause applications using threads to create multiple
 processes instead, which process ids are not known it advance.
 
