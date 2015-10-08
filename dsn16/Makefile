@@ -1,7 +1,7 @@
 TARGET   = main
 TEXFILES = $(wildcard *.tex)
 FIGURES  =
-GRAPHS   = arch
+GRAPHS   = arch arch2
 LATEX = latex
 
 UNAME_S := $(shell uname -s)
