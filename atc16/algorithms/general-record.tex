@@ -1,0 +1,45 @@
+
+%
+% \begin{figure}[t]
+%
+%	\fbox{	
+%	\begin{minipage}{0.9\linewidth}
+%	%\vspace{-2mm}
+\begin{center}		
+\begin{algorithm}[h]
+
+\myfontsize
+\SetLine
+$\forall S, \forall i\in \{1, ...,T\} : C_S[i] \leftarrow 0$; // All sync clocks set to zero\\
+\underline{{\bf  executeThread($t$)}}\\
+\Begin{
+
+
+	 {\tt initThread}($t$)\;
+	\While{$t$ has not terminated}{
+	
+		%{\tt startThunk}()\;
+		\Repeat{$t$ invokes synchronization primitive}{
+			Execute {\tt instruction} of $t$\; % and trace memory accesses\\
+			\If {({\tt instruction} is {\tt load} {\bf or} {\tt store})} {
+			{\tt onMemoryAccess}()\; %// For each load/store instr.
+			}
+		}
+		%{\tt endThunk}();  // Memoize the end state of thunk\\
+		$\alpha \leftarrow \alpha + 1$; // Increment thunk counter \\
+		// Let $S$ denote invoked synchronization primitive\\
+		{\tt onSynchronization}($S$)\;
+		
+		
+		
+	}
+}
+
+
+\caption{\bf  Data provenance algorithm}
+\label{fig:ithreadsRecord}
+\end{algorithm}
+	\end{center}
+%\end{minipage}
+%}
+%\end{figure}

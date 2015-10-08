@@ -1,0 +1,53 @@
+\section{Overview}
+\label{sec:overview}
+
+Our approach targets a shared-memory multithreaded environment, in which threads parallelize computation and take 
+advantage of shared portions of the address space to efficiently communicate with each other. Apart from performing reads 
+and writes to the shared memory, threads also employ different types of synchronization mechanisms to 
+coordinate their progress, thereby ensuring correct semantics. 
+
+We base our design on {\tt POSIX} threads, commonly referred to as
+{\tt pthreads}, which is a widely used threading library for shared memory
+multithreading with a rich set of synchronization primitives.  This
+choice has several advantages, namely that the {\tt POSIX} interface
+is standardized, and also that {\tt pthreads} is used as the underlying threading
+library for many higher level abstractions for parallel programming
+(e.g., {\tt OpenMP}).
+
+
+\subsection{Basic Approach}
+
+At a high level, our basic approach records control and data dependencies for multithreaded execution by constructing a {\em Concurrent Provenance Graph (or CPG)}. Informally, the CPG tracks the input data to a program, all sub-computations, the data flow between them, and control flow of the multithreaded execution, and the final result. 
+
+More specifically, the Concurrent Provenance Graph (or CPG) records a partial order $O = (N, \rightarrow$) among sub-computations with the following property: given a sub-computation $n$ (where $n \in N $)  and the subset of sub-computations $M$ that precede it according to $\rightarrow$, i.e., $M = \{M \subset N \mid \forall m \in M, m \rightarrow n\}$, if the writes made by $m$ becomes visible to $n$ then the partial order $\rightarrow$ captures this data flow between sub-computations.
+
+
+\input{tables/simple-example}
+
+\subsection{Example}
+
+Using a simple example (shown in Figure~\ref{fig:simple-example}), we next explain how to record  the partial order for derving the causal relationship between sub-computations. The example considers a multi-threaded execution with two threads ($T_1$ and $T_2$) modifying two shared variables ($x$ and $y$) using a lock. In the example, we assume that a thread execution is divided into sub-computations at the boundaries of {\tt lock()/unlock()}. We identify these sub-computations as $T_1.a$ for thread $T_1$, and $T_2.a$ for thread $T_2$.  
+
+To understand the dependencies that need to be recorded for the partial order, we consider the multithreaded execution with changes to the input and thread schedule.  First, consider a case of the input change where the value of variable $y$ is changed during an execution. Assuming that thread $T_1$ gets to acquire the lock before thread $T_2$, the writes made by sub-computation $T_1.a$ will affect the read made by $T_2.b$ because of the changed value of $y$ via  $x$. Therefore, we need to capture {\em data dependencies} between sub-computations as a part of the partial order. Our algorithm captures data dependencies by tracking read and write sets of a sub-computation, i.e., the set of memory locations read or written by the sub-computation, respectively.
+
+Second, we consider the case of change in thread schedule. The sub-computations can be interleaved in different order across executions because of nondeterministic thread scheduling by the underlying operating system. For instance, when threads acquiring the lock in the reverse order where thread $T_2$ gets acquire the lock before $T_1$. In this case, the final value $y$ may be changed even without any changes to the input. To infer such change, we also need to capture {\em control dependencies}   between sub-computations as a part of the partial order. Our algorithm captures control dependencies by tracking interleaving of sub-computations by recording the thread schedule. 
+
+
+
+
+Our algorithm described in Section~\ref{sec:algorithms} presents the details on how do we record data and control dependencies between sub-computations as part of the CPG. We first present the memory model used by \projecttitle in Section~\ref{sec:model}, which is critical to record these dependencies efficiently.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
