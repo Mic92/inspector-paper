@@ -1,7 +1,7 @@
 TARGET   = main
 TEXFILES = $(wildcard *.tex)
 FIGURES  = 
-LATEX = latex
+PDFLATEX = pdflatex
 
 .SUFFIXES:	.plot .eps .fig
 
@@ -13,13 +13,13 @@ figures/%.eps: plots/%.plot
 graphs: $(addprefix figures/, $(addsuffix .eps, $(FIGURES)))
 
 $(TARGET).aux: $(TEXFILES)
-	$(LATEX) $(TARGET).tex
+	$(PDFLATEX) $(TARGET).tex
 
 $(TARGET).bbl: $(TARGET).aux $(TARGET).bib
 	bibtex $(TARGET)
 
 $(TARGET).pdf: $(TEXFILES)   $(addprefix figures/, $(addsuffix .eps, $(FIGURES))) $(TARGET).bbl
-	latexmk -f -pdf main.tex
+	latexmk -pdf main.tex
 
 view:: $(TARGET).pdf
 	open $(TARGET).pdf
