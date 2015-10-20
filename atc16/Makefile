@@ -18,21 +18,11 @@ $(TARGET).aux: $(TEXFILES)
 $(TARGET).bbl: $(TARGET).aux $(TARGET).bib
 	bibtex $(TARGET)
 
-$(TARGET).dvi: $(TEXFILES)   $(addprefix figures/, $(addsuffix .eps, $(FIGURES))) $(TARGET).bbl
-	$(LATEX) $(TARGET).tex
-	$(LATEX) $(TARGET).tex
-
-$(TARGET).ps: $(TARGET).dvi
-	dvips $< -Ppdf -Pcmz -Pamz -t letter -D 600 -G0 -o $@
-
 $(TARGET).pdf: $(TEXFILES)   $(addprefix figures/, $(addsuffix .eps, $(FIGURES))) $(TARGET).bbl
 	latexmk -f -pdf main.tex
 
 view:: $(TARGET).pdf
 	open $(TARGET).pdf
-
-see:: $(TARGET).dvi
-	xdvi $(TARGET)
 
 %.eps: plots/%.plot
 	gnuplot $< > figures/$@
@@ -44,7 +34,7 @@ spell::
 	ispell *.tex
 
 clean::
-	rm -fv *.out *.dvi *.aux *.log *~ *.bbl *.blg *.toc *.ps *.pdf *.ent *.fls *.fdb_latexmk
+	rm -fv *.out *.aux *.log *~ *.bbl *.blg *.toc *.ps *.pdf *.ent *.fls *.fdb_latexmk
 	rm -fv $(addprefix figures/, $(addsuffix .eps, $(FIGURES)))
 
 distclean:: clean
