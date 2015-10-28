@@ -15,87 +15,60 @@
 % Created:      15 February 2005
 %
 %-----------------------------------------------------------------------------
-%\documentclass{sig-alternate-10pt}
-\documentclass[letterpaper,twocolumn,10pt]{article}
-
-
-
-\usepackage{usenix,epsfig,endnotes,url,color,subfigure}
+\documentclass{IEEEtran}
+\usepackage{epsfig,endnotes,url,color}
 \usepackage{array}
+\usepackage{enumitem}
+\usepackage[english]{babel}
 \usepackage{multirow}
 \usepackage{xspace}
 \usepackage{verbatim}
-\usepackage{hyperref}
-\usepackage[compact]{titlesec}
-\usepackage{wrapfig}
-
-
-
-\usepackage[english]{babel} 
-
+\usepackage[ruled, vlined]{algorithm2e}
+\usepackage{paralist}
+\usepackage{tikz}
 \usepackage{amsmath}
- \usepackage[ruled]{algorithm2e}
- 
- 
- % Add navigation window to pdf
-\usepackage{hyperref}
-\hypersetup{pdftex,colorlinks=true,allcolors=blue}
-\usepackage{hypcap}
+\usepackage{cases}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\ifCLASSOPTIONcompsoc
+\usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
+\else
+\usepackage[caption=false,font=footnotesize]{subfig}
+\fi
 
+\usetikzlibrary{calc,trees,positioning,arrows,chains,shapes.geometric,%
+  decorations.pathreplacing,
+  matrix,shapes.symbols,
+  shapes.misc,% wg. rounded rectangle
+  shapes.arrows,%
+  scopes,%
+  decorations.pathmorphing,% /pgf/decoration/random steps | erste Graphik
+  shadows%
+}
 
 \input{mac}
 \input{defs}
-\newcommand{\myfontsize}{\fontsize{8}{9}\selectfont}
 
-
+\newcommand{\myfontsize}{\fontsize{7}{9}\selectfont}
 
 \newcommand{\projecttitle}{{\tt Inspector}\xspace}
 \newcommand{\pthreads}{{\tt pthreads}\xspace}
 \newcommand{\dthreads}{{\tt Dthreads}\xspace}
 \newcommand{\intelpt}{{Intel\textsuperscript{\textregistered} PT}\xspace}
 
-%\newcommand{\todo}[1]{{\frameit{ToDo}{#1}}}
-\newcommand{\obs}[1]{{\frameit{Obs}{#1}}}
-% \usepackage{amsthm}
-\newtheorem{lemma}{Lemma}
-\newtheorem{theorem}{Theorem}
-
-\pagenumbering{arabic}
 
 
-\usepackage{mathpazo} % math & rm
-\linespread{1.03}        % Palatino needs more leading (space between lines)
-%\usepackage{inconsolata}
-%\usepackage{zi4}
-%\renewcommand{\ttdefault}{txtt}
-\normalfont
-\usepackage[T1]{fontenc}
 
 
 \begin{document}
-\title{Inspector: A Data Provenance Library for Multithreaded Programs}
 
-%\author{
-%\parbox{1.5in}{
-%\centerline{J\"{o}rg Thalheim}
-%\centerline{TU Dresden}
-%}
-%\and
-%\parbox{1.5in}{
-%\centerline{Pramod Bhatotia}
-%\centerline{TU Dresden}
-%}
-%\and
-%\parbox{1.5in}{
-%\centerline{Christof Fetzer}
-%\centerline{TU Dresden}
-%}
-%}
+% \numberofauthors{3}
 
-
+\author{
+}
+\title{\projecttitle:\\ Data Provenance for Multithreaded Programs}
 \maketitle
-\thispagestyle{empty}
-%\pagestyle{empty}
 \input{abstract}
 
 
@@ -112,7 +85,5 @@
 \bibliographystyle{abbrv}
 
 \bibliography{main} 
-
-
 
 \end{document}
