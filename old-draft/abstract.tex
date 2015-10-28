@@ -1,0 +1,11 @@
+\begin{abstract}
+
+Program Dependence Graph (PDG) is an intermediate program representation that records control and data dependencies for a program execution. PDGs are heavily used as an underlying building block for a wide-range of workflows; including, program debugging, compiler optimizations, data provenance, incremental computation, program slicing, dynamic flow information control/tracking (DIFC/DIFT), etc.
+
+In this paper, we present a simple {\tt POSIX}-compliant library, named \projecttitle,  to build the PDG for shared-memory multithreaded programs. The \projecttitle library is completely transparent and easy to use: it can be used as a replacement for the \pthreads library by a simple exchange of libraries linked, without even recompiling the application code.
+
+
+To achieve this result,  we present a parallel algorithm that records intra and inter-thread control and data dependencies using  a Concurrent Program Dependence Graph (CPDG).  We implemented our algorithm to operate at the compiled binary code
+level by leveraging OS-based process-level isolation, MMU-assisted memory tracking, and Intel Processor Trace ISA extensions (\intelpt).  Our evaluation on a multicore platform using applications from multithreaded benchmarks suites (PARSEC and Phoenix) shows reasonable overheads for recording the CPDG.
+
+\end{abstract}

@@ -2,10 +2,10 @@
 %
 % \begin{figure}[t]
 %
-%	\fbox{
+%	\fbox{	
 %	\begin{minipage}{0.9\linewidth}
 %	%\vspace{-2mm}
-\begin{center}
+\begin{center}		
 \begin{algorithm}[h]
 
 \myfontsize
@@ -17,7 +17,7 @@ $\forall S, \forall i\in \{1, ...,T\} : C_S[i] \leftarrow 0$; // All sync clocks
 
 	 {\tt initThread}($t$)\;
 	\While{$t$ has not terminated}{
-
+	
 		%{\tt startThunk}()\;
 		\Repeat{$t$ invokes synchronization primitive}{
 			Execute {\tt instruction} of $t$\; % and trace memory accesses\\
@@ -29,9 +29,9 @@ $\forall S, \forall i\in \{1, ...,T\} : C_S[i] \leftarrow 0$; // All sync clocks
 		$\alpha \leftarrow \alpha + 1$; // Increment thunk counter \\
 		// Let $S$ denote invoked synchronization primitive\\
 		{\tt onSynchronization}($S$)\;
-
-
-
+		
+		
+		
 	}
 }
 

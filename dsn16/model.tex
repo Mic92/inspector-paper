@@ -2,29 +2,29 @@
 \label{sec:model}
 
 \myparagraph{Memory consistency model} Our approach relies on the use of the
-Release Consistency memory model (RC)~\cite{DSM-RC}. This memory model
+Release Consistency memory model (RC)~\cite{DSM-RC}. This memory model 
 requires writes made by one thread to become visible only to another thread after the
 first thread releases a synchronization object and before the second thread
 acquires a synchronization object. For our purposes, this model has the critical
 benefit of allowing us to restrict inter-thread communication (i.e. shared
-memory accesses) to the synchronization points in threads. By reducing the number of
+memory accesses) to the synchronization points in threads. By reducing the number of 
 points in an execution where inter-thread communication can occur, we avoid
 having to track individual {\tt load}/{\tt store} instructions (given that any of these
-accesses could potentially be inter-thread communication), which would
-be extremely inefficient with current hardware.
+accesses could potentially be inter-thread communication), which would 
+be extremely inefficient with current hardware. 
 
-A natural consequence of the RC memory model is that the granularity of inter-thread communication  for \projecttitle is the sequence of instructions between two \pthreads API calls instead of  individual {\tt load}/{\tt store} instructions. Note that the RC memory model is weaker
+A natural consequence of the RC memory model is that the granularity of sub-computations for provenance for \projecttitle is the sequence of instructions between two \pthreads API calls instead of  individual {\tt load}/{\tt store} instructions. Note that the RC memory model is weaker
 than, for example, the Sequential Consistency model (SC)~\cite{scLamport}, but
 still guarantees correctness and liveness for applications that are data race
 free. In fact,  the semantics provided by
-\projecttitle is as restrictive as the POSIX specification~\cite{pthreads-spec}, which mandates that all accesses to shared data structures must be properly synchronized using
-\pthreads synchronization primitives.
+\projecttitle is as restrictive as the POSIX specification~\cite{pthreads-spec}, which mandates that all accesses to shared data structures must be properly synchronized using 
+\pthreads synchronization primitives. 
 
 \myparagraph{Synchronization model} We support the full range of synchronization
 primitives in the \pthreads API, including {\em mutexes}, {\em cond\_wait/cond\_signal}, {\em semaphores},  and {\em
 barriers}. However, due to the weakly consistent RC memory model, our approach
 does not support {\em ad-hoc synchronization mechanisms} used by programmers via
-shared variables (also referred to as sync variables) in loop such as user-defined spin locks.
+shared variables (also referred to as sync variables) in loop such as user-defined spin locks. 
 Although, ad-hoc synchronization mechanisms are used due to either flexibility
 or performance reasons, in practice they are shown to be
 error-prone~\cite{adhoc-sync} introducing bugs or severe performance issues.

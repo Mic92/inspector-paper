@@ -1,48 +1,26 @@
 TARGET   = main
 TEXFILES = $(wildcard *.tex)
-FIGURES  =
-GRAPHS   = arch arch2
-LATEX = latex
+FIGURES  = 
 
-UNAME_S := $(shell uname -s)
-ifeq ($(UNAME_S),Darwin)
-    OPEN = open
-else
-    OPEN = xdg-open
-endif
-
-.SUFFIXES:	.plot .eps .fig .dot .jpg
+.SUFFIXES:	.plot .eps .fig
 
 all: $(TARGET).pdf
 
-figure/%.jpg: figure/%.dot
-	dot -Tjpg $< -o$@
-
-figure/%.eps: plots/%.plot
+figures/%.eps: plots/%.plot
 	gnuplot $< > $@
 
-EPS_FIGURES = $(addprefix figure/, $(addsuffix .eps, $(FIGURES)))
+graphs: $(addprefix figures/, $(addsuffix .eps, $(FIGURES)))
 
-DOT_FIGURES = $(addprefix figure/, $(addsuffix .jpg, $(GRAPHS)))
-
-graphs: $(EPS_FIGURES) $(DOT_FIGURES)
-
-$(TARGET).aux: $(TEXFILES)
-	$(LATEX) $(TARGET).tex
-
-$(TARGET).bbl: $(TARGET).aux $(TARGET).bib
-	bibtex $(TARGET)
-
-$(TARGET).pdf: $(TEXFILES) $(EPS_FIGURES) $(DOT_FIGURES) $(TARGET).bbl
-	latexmk -f -pdf main.tex
+$(TARGET).pdf: $(TEXFILES)   $(addprefix figures/, $(addsuffix .eps, $(FIGURES)))
+	latexmk -pdf main.tex
 
 view:: $(TARGET).pdf
-	$(OPEN) $(TARGET).pdf
+	open $(TARGET).pdf
 
 %.eps: plots/%.plot
-	gnuplot $< > figure/$@
+	gnuplot $< > figures/$@
 
-%.eps: figure/%.fig
+%.eps: figures/%.fig
 	fig2dev -L eps -p dummy $< $*.eps
 
 spell::
@@ -50,7 +28,7 @@ spell::
 
 clean::
 	rm -fv *.out *.aux *.log *~ *.bbl *.blg *.toc *.ps *.pdf *.ent *.fls *.fdb_latexmk
-	rm -fv $(EPS_FIGURES) $(DOT_FIGURES)
+	rm -fv $(addprefix figures/, $(addsuffix .eps, $(FIGURES)))
 
 distclean:: clean
 	rm $(TARGET).ps
