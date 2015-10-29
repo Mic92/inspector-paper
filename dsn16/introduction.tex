@@ -1,12 +1,16 @@
 \section{Introduction}
 \label{sec:introduction}
 
+Data provenance provides an explicit intermediate program representation recording control and data dependencies for a program execution~\cite{pdg-pingali}.  proved to be one of the important abstractions in program analysis as the concept is used for a wide range of workflows; including, program debugging, compiler optimizations, data provenance, incremental computation, program slicing, dynamic flow information control and tracking,  etc.
+
+
+\if 0
 Multithreaded programs are notoriously difficult to debug. This difficulty arises from the fact that multithreaded programs are inherently non-deterministic. Consequently, threads accessing the shared-memory region with different inter-leavings may lead to undesirable concurrency bugs, like program crash or data corruption. 
 
 
 Currently, debugging techniques rely on examining memory state during the program execution or by analyzing core dumps after the program crashes. These techniques mainly target ``what" is the state of the program without revealing much about ``why" is it the state of the program like that. We can aid the developers to better understand the failed execution by augmenting the existing debugging techniques with the lineage information of the memory state or ``why"-provenance or simply data-provenance.
 
- 
+ \fi
 %Many existing systems provide support for data provenance; however,
 %most target sequential programs (detailed in $\S$~\ref{sec:related}),
 %while others that do support parallelism require a new language with a restrictive programming model. Furthermore, the existing  provenance systems for parallel programs rely on manual annotations using a new type system. Thereby, limiting their wide-spread adoption.
@@ -22,13 +26,15 @@ To achieve these goals, we present \projecttitle, a threading library for data p
 Our approach is based on recording the data and control dependencies in a computation by constructing a Concurrent Provenance Graph (CPG). The CPG tracks the input data to a program, all sub-computations (a sub-computation is a unit of the computation), the data flow between sub-computations, and intra- and inter-thread control flow of the multithreaded execution.
 
 
-Overall, this paper makes the following contributions:
-
-
-We present a parallel algorithm for data provenance for multithreaded programs that records intra- and inter-thread control and data dependencies using a Concurrent Provenance Graph (CPG) (\secref{algorithms}).
-
-We implemented our algorithm as a dynamically linkable shared library, which we call \projecttitle, leveraging MMU-assisted memory tracking, process-level isolation, and \intelpt.  The \projecttitle library can be loaded and linked at run-time as a replacement to the \pthreads library, without any recompilation  of the application code (\secref{implementation}).
-
-We  empirically demonstrate  the effectiveness of \projecttitle by applying it to applications of standard multithreaded benchmark suites (PARSEC~\cite{parsec} and Phoneix~\cite{phoenix}). Our experiments show that \projecttitle~incurs reasonable overheads for a majority of applications (\secref{evaluation}). 
-
+%Overall, this paper makes the following contributions:
+%\begin{itemize}
+%
+%\item We present a parallel algorithm for data provenance for multithreaded programs that records intra- and inter-thread control and data dependencies using a Concurrent Provenance Graph (CPG) (\secref{algorithms}).
+%
+%\item We implemented our algorithm as a dynamically linkable shared library, which we call \projecttitle, leveraging MMU-assisted memory tracking, process-level isolation, and \intelpt.  The \projecttitle library can be loaded and linked at run-time as a replacement to the \pthreads library, without any recompilation  of the application code (\secref{implementation}).
+%
+%\item  We  empirically demonstrate  the effectiveness of \projecttitle by applying it to applications of standard multithreaded benchmark suites (PARSEC~\cite{parsec} and Phoneix~\cite{phoenix}). Our experiments show that \projecttitle~incurs reasonable overheads for a majority of applications (\secref{evaluation}). 
+%
+%\end{itemize}
+%
 
