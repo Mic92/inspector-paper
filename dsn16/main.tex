@@ -7,7 +7,20 @@
 \usepackage{verbatim}
 \usepackage[ruled, vlined]{algorithm2e}
 \usepackage{amsmath}
+\usepackage{caption}
+\usepackage{natbib}
 
+ % Add navigation window to pdf
+\usepackage{hyperref}
+\hypersetup{pdftex,colorlinks=true,allcolors=blue}
+\usepackage{hypcap}
+\usepackage{xr}
+
+%special fonts
+\usepackage{mathpazo} % math & rm
+\linespread{1.03}        % Palatino needs more leading (space between lines)
+
+\input{space-tricks}
 
 
 \input{mac}
@@ -28,7 +41,7 @@
 
 \author{
 Tool paper\\
-Paper No. (8 pages)
+Paper No. XXX (8 pages)
 }
 \title{\Large \projecttitle: A Threading Library for Data Provenance for Parallel Programs}
 \maketitle

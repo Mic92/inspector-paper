@@ -31,9 +31,9 @@ Overall, this paper makes the following contributions:
 
 \item We present a parallel algorithm for data provenance for multithreaded programs that records intra- and inter-thread control and data dependencies using a Concurrent Provenance Graph (CPG) (\secref{algorithms}).
 
-\item We implemented our algorithm as a dynamically linkable shared library, which we call \projecttitle, leveraging MMU-assisted memory tracking, process-level isolation, and \intelpt.  The \projecttitle library can be loaded and linked at run-time as a replacement to the \pthreads library, without any recompilation  of the application code (\secref{implementation}).
+\item We implemented our algorithm as a dynamically linkable shared library, which we call \projecttitle, leveraging MMU-assisted memory tracking, process-level isolation, and recently released \intelpt ISA extensions.  The \projecttitle library can be loaded and linked at run-time as a replacement to the \pthreads library, without any recompilation  of the application code (\secref{implementation}).
 
-\item  We  empirically demonstrate  the effectiveness of \projecttitle by applying it to applications of standard multithreaded benchmark suites (PARSEC~\cite{parsec} and Phoneix~\cite{phoenix}). Our experiments show that \projecttitle~incurs reasonable overheads for a majority of applications (\secref{evaluation}). 
+\item  We  empirically demonstrate  the effectiveness of \projecttitle by applying it to applications of standard multithreaded benchmark suites (PARSEC~\cite{parsec} and Phoneix~\cite{phoenix}). Our experiments show that \projecttitle~incurs reasonable overhead for a majority of applications (\secref{evaluation}). 
 
 \end{itemize}
 

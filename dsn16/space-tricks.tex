@@ -1,39 +1,31 @@
-\setlength{\floatsep}{0in}
-\setlength{\textfloatsep}{3pt plus 1.0pt minus 2.0pt}
-\setlength{\intextsep}{3pt plus 1.0pt minus 2.0pt}
-\setlength{\dbltextfloatsep}{3pt plus 1.0pt minus 2.0pt}
-\setlength{\dblfloatsep}{3pt plus 1.0pt minus 2.0pt}
-%\setlength{\abovecaptionskip}{1pt plus 1.0pt minus 1.0pt}
-%\setlength{\belowcaptionskip}{2pt plus 1.0pt minus 1.0pt}
+% -*- root: main.tex -*-
 
-%%paragraphs
-\setlength{\parindent}{0.2in}
-\setlength{\parskip}{0pt plus 1pt minus 1pt}
-%\setlength{\parsep}{0pt plus 1pt minus 1pt}
-\setlength{\parsep}{0pt}
-%\setlength{\partopsep}{}
-%    \topsep
-\titlespacing{\section}{0pt}{0.9ex}{0.7ex}
-\titlespacing{\subsection}{0pt}{0.8ex}{0.6ex}
-\titlespacing{\subsubsection}{0pt}{0.7ex}{0.5ex}
-%\titlespacing{\section}{0pt}{7pt plus 1pt minus 1pt}{2pt plus 1 pt minus 1pt}
-%\titlespacing{\subsection}{0pt}{*0}{*0}
-%\titlespacing{\subsubsection}{0pt}{*0}{*0}
-%\fboxsep=0pt
-\if 0
 %space left between floats.
 \setlength{\floatsep}{4mm}
 % space between last top float or first bottom float and the text.
 \setlength{\textfloatsep}{2mm}
+
 % space left on top and bottom of an in-text float.
-\setlength{\intextsep}{0mm}
+\setlength{\intextsep}{0.5mm}
 % space above caption
-\setlength{\abovecaptionskip}{0.3mm}
+\setlength{\abovecaptionskip}{2mm}
 %space below caption
-\setlength{\belowcaptionskip}{0.3mm}
+\setlength{\belowcaptionskip}{0mm}
 
 %% Change figure handling
-\renewcommand{\topfraction}{0.999999}
-\renewcommand{\textfraction}{0.00001}
-\renewcommand{\floatpagefraction}{0.9999999}
-\fi
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\textfraction}{0.1}
+\renewcommand{\floatpagefraction}{1}
+
+%\usepackage[small,compact,noindentafter]{titlesec} 
+%\usepackage[compact]{titlesec}
+
+%\titlespacing\section{0pt}{6pt plus 2pt minus 2pt}{2pt plus 2pt minus 2pt}
+%\titlespacing\subsection{0pt}{4pt plus 2pt minus 2pt}{2pt plus 1pt minus 1pt}
+%\titlespacing{\paragraph}{0pt}{2pt plus 0pt minus 1pt}{1.0ex}
+
+\usepackage[inline]{enumitem}
+\setlist{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
+
+\usepackage[subtle]{savetrees}
+% \usepackage[moderate]{savetrees}
