@@ -1,51 +1,14 @@
-
-%-----------------------------------------------------------------------------
-%
-%               Template for LaTeX Class/Style File
-%
-% Name:         sigplanconf-template.tex
-% Purpose:      A template for sigplanconf.cls, which is a LaTeX 2e class
-%               file for SIGPLAN conference proceedings.
-%
-% Author:       Paul C. Anagnostopoulos
-%               Windfall Software
-%               978 371-2316
-%               paul@windfall.com
-%
-% Created:      15 February 2005
-%
-%-----------------------------------------------------------------------------
 \documentclass{IEEEtran}
 \usepackage{epsfig,endnotes,url,color}
 \usepackage{array}
-\usepackage{enumitem}
 \usepackage[english]{babel}
 \usepackage{multirow}
 \usepackage{xspace}
 \usepackage{verbatim}
 \usepackage[ruled, vlined]{algorithm2e}
-\usepackage{paralist}
-\usepackage{tikz}
 \usepackage{amsmath}
-\usepackage{cases}
-\usepackage{mathtools}
-\usepackage{amsthm}
-\usepackage{amssymb}
-\ifCLASSOPTIONcompsoc
-\usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
-\else
-\usepackage[caption=false,font=footnotesize]{subfig}
-\fi
 
-\usetikzlibrary{calc,trees,positioning,arrows,chains,shapes.geometric,%
-  decorations.pathreplacing,
-  matrix,shapes.symbols,
-  shapes.misc,% wg. rounded rectangle
-  shapes.arrows,%
-  scopes,%
-  decorations.pathmorphing,% /pgf/decoration/random steps | erste Graphik
-  shadows%
-}
+
 
 \input{mac}
 \input{defs}
@@ -63,11 +26,11 @@
 
 \begin{document}
 
-% \numberofauthors{3}
-
 \author{
+Tool paper\\
+Paper No. (8 pages)
 }
-\title{\projecttitle:\\ Data Provenance for Multithreaded Programs}
+\title{\Large \projecttitle: A Threading Library for Data Provenance for Parallel Programs}
 \maketitle
 \input{abstract}
 
