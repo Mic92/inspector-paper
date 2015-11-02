@@ -1,0 +1,21 @@
+digraph architecture {
+  fontname=Verdana;
+  fontsize=12;
+  graph [nodesep=0.8,dpi=300];
+  compound=true;
+
+  node [shape=box,fontname=Verdana,style=rounded,fontsize=12,color=1,colorscheme=pastel18];
+  edge [fontname=Verdana,fontsize=10,color=darkgreen,colorscheme=pastel18,style=dotted];
+
+  subgraph cluster_cgroup {
+    process1; process2;
+    label="Inspector cgroup";
+    graph[style=dotted];
+  }
+
+  "libtthread.so" -> "process1" [label="mprotect"];
+  "Intel PT PMU" -> process1 [label="trace"] [lhead=cluster_cgroup];
+  "process1" -> "MMU" [label="page faults"];
+  "MMU" -> "perf record" [label="page fault events"]
+  "Intel PT PMU" -> "perf record" [label="trace dump"];
+}
