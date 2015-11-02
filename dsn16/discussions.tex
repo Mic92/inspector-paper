@@ -1,0 +1,12 @@
+\section{Discussion}
+\label{sec:discussion}
+While data provenance is useful across wide range of workflows, we discuss two active projects where \projecttitle is being used to increase the dependability and security of software systems. 
+
+\myparagraph{Dependability: Debugging multithreaded programs} Multithreaded programs are notoriously difficult to debug. This difficulty arises from the fact that multithreaded programs are inherently non-deterministic. Consequently, threads accessing the shared-memory region with different inter-leavings may lead to undesirable concurrency bugs, like program crash or data corruption. 
+
+
+Currently, debugging techniques rely on examining memory state during the program execution or by analyzing core dumps after the program crashes. These techniques mainly target ``what" is the state of the program without revealing much about ``why" is it the state of the program like that. We can aid the developers to better understand the failed execution by augmenting the existing debugging techniques with the lineage information of the memory state or ``why"-provenance or simply data-provenance.
+
+
+\myparagraph{Security: Dynamic information flow control}
+
