@@ -5,7 +5,7 @@ In the section, we present the detailed design of the \projecttitle library. We 
 \subsection{Concurrent Provenance Graph}  We define the {\em
 Concurrent Provenance Graph} (CPG)  as a directed acyclic graph $G =
 (V,E)$ with vertices ($V$) and edges ($E$). The
-vertices of the CPG represent {\em sub-computations}. We distinguish between two kinds of edges: control and data-dependence edges, recording control and data dependencies between sub-computations, respectively. 
+vertices of the CPG represent {\em sub-computations}. We distinguish between three kinds of edges: control, schedule, and data-dependence edges for recording control, schedule, and data dependencies, respectively. 
 
 The edges  record the control and data dependencies 
 
@@ -14,7 +14,7 @@ executed by a thread between two \pthreads synchronization API calls. We model a
 ($L_t$). Sub-computations in a thread are totally ordered based on their execution order
 using a monotonically increasing thunk counter ($\alpha$). We refer a sub-computation of thread $t$ using the counter $\alpha$ as an index in the thread execution sequence ($L_t$), i.e., $L_t[\alpha]$. 
 
-\myparagraph{Control edges} We derive control edges based on the ordering of synchronization operations (also known as a {\em sync schedule}). In particular,  we build on the observation that synchronization primitives can be modeled as {\em acquire} and {\em release} operations. That is,   during synchronization, the synchronization object is {\em released} by one set of threads and subsequently  {\em acquired} by a corresponding set of threads blocked on the object. For example, an {\tt unlock(S)} operation releases $S$
+\myparagraph{Synchronization edges} We derive control edges based on the ordering of synchronization operations (also known as a {\em sync schedule}). In particular,  we build on the observation that synchronization primitives can be modeled as {\em acquire} and {\em release} operations. That is,   during synchronization, the synchronization object is {\em released} by one set of threads and subsequently  {\em acquired} by a corresponding set of threads blocked on the object. For example, an {\tt unlock(S)} operation releases $S$
 and a corresponding {\tt lock(S)} operation acquires it; a global {\tt
 barrier(S)} operation causes all threads to release $S$ as they reach the
 barrier, and then causes them to re-acquire $S$. Similarly, all other
