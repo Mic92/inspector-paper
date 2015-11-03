@@ -24,11 +24,12 @@ More specifically, the Concurrent Provenance Graph (or CPG) records a partial or
 
 \myparagraph{Example} Using a simple example (shown in Figure~\ref{fig:simple-example}), we next explain how do we record the dependencies for a shared-memory multithreaded program. The example considers a multi-threaded execution with two threads ($T_1$ and $T_2$) modifying two shared variables ($x$ and $y$) using a lock. In the example, we assume that a thread execution is divided into sub-computations at the boundaries of {\tt lock()/unlock()}. We identify these sub-computations as $T_1.a$ for thread $T_1$, and $T_2.a$ for thread $T_2$.   To understand the dependencies that need to be recorded for the partial order, we showcase three cases for recording the control, schedule, and data dependencies.
 
-First, 
+The first dependency that we need to record is the control flow execution of threads. In particular, we need to capture all branches that are taken during the execution to record control dependencies. For example, 
 
-Second,
+Second, we consider the case of change in thread schedule. The sub-computations can be interleaved in different order across executions because of nondeterministic thread scheduling by the underlying operating system. For instance, when threads acquiring the lock in the reverse order where thread $T_2$ gets acquire the lock before $T_1$. In this case, the final value $y$ may be changed even without any changes to the input. To infer such change, we also need to capture {\em schedule dependencies}   between sub-computations as a part of the partial order. Our algorithm captures control dependencies by tracking interleaving of sub-computations by recording the thread schedule. 
 
-Third,
+Third,  consider a case of the input change where the value of variable $y$ is changed during an execution. Assuming that thread $T_1$ gets to acquire the lock before thread $T_2$, the writes made by sub-computation $T_1.a$ will affect the read made by $T_2.b$ because of the changed value of $y$ via  $x$. Therefore, we need to capture {\em data dependencies} between sub-computations as a part of the partial order. Our algorithm captures data dependencies by tracking read and write sets of a sub-computation, i.e., the set of memory locations read or written by the sub-computation, respectively.
+
  
 
 
