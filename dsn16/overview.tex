@@ -22,7 +22,7 @@ More specifically, the Concurrent Provenance Graph (or CPG) records a partial or
 
 \input{tables/simple-example}
 
-\myparagraph{Example} Using a simple example (shown in Figure~\ref{fig:simple-example}), we next explain how do we record the dependencies for a shared-memory multithreaded program. The example considers a multi-threaded execution with two threads ($T_1$ and $T_2$) modifying two shared variables ($x$ and $y$) using a lock. In the example, we assume that a thread execution is divided into sub-computations at the boundaries of {\tt lock()/unlock()}. We identify these sub-computations as $T_1.a$ for thread $T_1$, and $T_2.a$ for thread $T_2$.   To understand the dependencies that need to be recorded for the partial order, we consider three cases to showcase the recording of control, schedule, and data dependencies.
+\myparagraph{Example} Using a simple example (shown in Figure~\ref{fig:simple-example}), we next explain how do we record the dependencies for a shared-memory multithreaded program. The example considers a multi-threaded execution with two threads ($T_1$ and $T_2$) modifying two shared variables ($x$ and $y$) using a lock. In the example, we assume that a thread execution is divided into sub-computations at the boundaries of {\tt lock()/unlock()}. We identify these sub-computations as $T_1.a$ for thread $T_1$, and $T_2.a$ for thread $T_2$.   To understand the dependencies that need to be recorded for the partial order, we showcase three cases for recording the control, schedule, and data dependencies.
 
 First, 
 
@@ -42,7 +42,7 @@ Third,
 
 
 
-Our algorithm described in Section~\ref{sec:algorithms} presents the details on how do we record data and control dependencies between sub-computations as part of the CPG. We first present the system model used by \projecttitle in Section~\ref{sec:model}, which is critical to record these dependencies efficiently.
+Our algorithm described in Section~\ref{sec:algorithms} presents the details on how do we construct the CPG. Before that,  we first present the system model assumed by \projecttitle in Section~\ref{sec:model}, which is critical to record these dependencies efficiently.
 
 
 
