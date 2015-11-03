@@ -65,7 +65,7 @@ overview of the recording algorithm, and details of subroutines used in the reco
  \input{algorithms/general-record} 
 
 %explain the algorithm using figure.
-\paragraph{Overview.}   The provenance algorithm (shown in Algorithm~\ref{fig:ithreadsRecord}) is executed by threads in parallel. The algorithm employs run-time techniques to derive the information needed for the CPG. During a thread execution, the thread traces memory accesses on {\tt load/store} instructions, and adds them to the read and
+\myparagraph{Overview}   The provenance algorithm (shown in Algorithm~\ref{fig:ithreadsRecord}) is executed by threads in parallel. The algorithm employs run-time techniques to derive the information needed for the CPG. During a thread execution, the thread traces memory accesses on {\tt load/store} instructions, and adds them to the read and
 the write set of the executing thunk. The thread continues to execute instructions and perform memory tracing until a synchronization primitive call is made to the \pthreads  library. At the synchronization point, we define the end point for the executing sub-computation. 
 Thereafter, we let the thread perform the actual synchronization operation.
 Finally, we start a new sub-computation and repeat the process until the executing thread
@@ -75,7 +75,7 @@ terminates.
 %get in the gory details of the algorithms.
  \input{algorithms/record-proc}
 
-\paragraph{Details.} For the CPG, control dependencies are derived by 
+\myparagraph{Details} For the CPG, control dependencies are derived by 
 happens-before ordering of sub-computations. To do so, we use vector clocks
 ($C$)~\cite{Mattern89virtualtime},  a widely used mechanism to generate a partial order of events and to infer causality. Our use of vector
 clocks is motivated by its efficiency for recording a partial order between thunks in a complete decentralized manner instead of having to serialize all synchronization events in a total order.
