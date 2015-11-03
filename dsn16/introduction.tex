@@ -21,7 +21,10 @@ In this paper, we propose an operating systems-based approach to data provenance
 To achieve these goals, we present \projecttitle, a threading library for data provenance. To run a program using \projecttitle,  the user just needs to preload the \projecttitle library  by using the environment variable {\tt LD\_PRELOAD} or {\tt -rdynamic} flag, and then, run the program as usual. Thus, enabling existing binaries to benefit from our approach. 
 
 
-Our approach is based on recording the data, control, and schedule dependencies in a computation by constructing a {\em Concurrent Provenance Graph} (CPG). The CPG tracks the input data to a program, all sub-computations (a sub-computation is a unit of the computation), the data flow between sub-computations, and intra- and inter-thread control flow, and threads interleaving for the multithreaded execution.
+Our approach is based on recording the data, control, and schedule dependencies in a computation by constructing a {\em Concurrent Provenance Graph} (CPG). The CPG tracks the input data to a program, all sub-computations (a sub-computation is a unit of the computation), the data flow between sub-computations, intra-thread control flow, and inter-thread schedule dependencies for the multithreaded execution. 
+
+
+In this paper, we present a {\em parallel} algorithm to build the CPG. Our algorithm combines the release consistency memory model with vector clocks to record the inter-thread data and schedule dependencies in a completely decentralized  manner. We implemented our algorithm by leveraging process-level isolation, MMU-assisted memory tracking, and \intelpt ISA extensions released as part of the Broadwell architecture.
 
 
 

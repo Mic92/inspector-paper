@@ -3,23 +3,22 @@
 \myfontsize
 {
 \begin{tabular}
-{m{1.5cm} m{1.4cm} m{0.1cm} m{1.8cm} m{1.2cm}}
+{m{1.5cm} m{2cm} m{0.1cm} m{1.8cm} m{1.2cm}}
 &\underline{{\bf Thread 1} ($T_1$)} & & \underline{ {\bf Thread 2}  ($T_2$)} &\\ 
  
 
 /* \underline{$T_{1}.a$} */ & {\tt lock()}; && &\\
-{\tt read}=$\{y\}$  &  x = ++y;&& &\\
-{\tt write}=$\{x, y\}$  & {\tt unlock()};&& &\\
+& {\tt if} (flag == 0) && &\\
+{\tt read}=$\{y\}$  & \hspace{3mm} x = ++y;&& &\\
+{\tt write}=$\{x, y\}$  & {\tt else} && &\\
+&\hspace{3mm}   x = ++y + 5;&& &\\
+  & {\tt unlock()};&& &\\
         &  &  $\searrow$ & & \\
    
 
 &&  & {\tt lock()}; &  /* \underline{$T_{2}.a$ }*/\\
 &&  & y = 2* x;    & {\tt read}=$\{x\}$  \\
 &  &  & {\tt unlock()}; &  {\tt write}=$\{y\}$ \\  
-%&  &  & \hspace{.3cm} $\downarrow$    &\\
-%&   &  &{\tt lock()};   &  /* \underline{$T_{2}.b$ }*/\\
-%&  &  &   y = 2*x + z;  & {\tt read}=$\{x, z\}$ \\
-%& &  &  {\tt unlock()}; & {\tt write}=$\{y\}$ 
 \end{tabular}
 }
 
