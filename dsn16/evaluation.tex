@@ -27,8 +27,7 @@ machine is running Linux with kernel 4.2.0 in 64-bit mode.
 
 
 
-\myparagraph{Metrics: Time and Work}  We consider two types of measures to report the performance metrics: {\em work} and {\em time}. Work refers to the total computation performed by all threads, and it is measured as the cumulative sum of the runtime for all threads. Time refers to the end-to-end computation time for the multithreaded applications. Time measurements reflect the end user perceived latency, whereas work measurements assess the overall resource (CPU) utilization.
-
+\myparagraph{Metrics: Time and Work}  We consider two types of measures to report the performance metrics: {\em time} and {\em work}. In a nutshell, time measurements reflect the end user perceived latency, whereas work measurements assess the overall resource (CPU) utilization.  More specifically,  time refers to the end-to-end computation time for the multithreaded applications. Work refers to the total computation performed by all threads, and it is measured as the cumulative CPU time for all threads. To measure work, we used the CPU accounting controller in cgroups to account the CPU usage of all threads. 
 
 \myparagraph{Measurements} All applications were compiled using GCC 4.9.2 compiler with -$o3$ optimization flag. For all performance measurements, we report the average over 10 runs with minimum and maximum values discarded.
 
