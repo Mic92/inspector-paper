@@ -21,13 +21,13 @@ host system consists of 8 cores (16 threads) of Intel(R) Xeon(R) CPU Processor D
 machine is running Linux with kernel 4.2.0 in 64-bit mode.
 
 
-\myparagraph{Applications and dataset}  We evaluated \projecttitle with applications from two multithreaded benchmark suites: Phoenix 2.0 \cite{phoenix} and PARSEC 3.0 \cite{parsec}. Table~\ref{tab:apps} lists the applications used for the evaluation along with the input data and benchmark parameters.  We report results for all 7 applications in the Phoenix benchmark and 8 out of 13 applications in the PARSEC benchmarks. %: {\em blackscholes, canneal, dedup, ferret, streamcluster, swaptions, vips,} and {\em x264}.
-%The remaining five applications are not supported for the following reasons: \emph{bodytrack} and \emph{raytrace} make use of C++ exceptions, which are currently not supported by our implementation; \emph{freqmine} is an application based on OpenMP, which did not compile under our version of LLVM; \emph{fluidanimate} produces nondeterministic output and thus makes it impossible to check the correctness of the results; and finally, the native version of \emph{facesim} crashes with a runtime error when compiled with LLVM. 
+\myparagraph{Applications and dataset}  We evaluated \projecttitle with applications from two multithreaded benchmark suites: Phoenix 2.0 \cite{phoenix} and PARSEC 3.0 \cite{parsec}. Table~\ref{tab:apps} lists the applications used for the evaluation along with the input data and benchmark parameters.  
 
 
 
 
-\myparagraph{Metrics: Time and Work} 
+
+\myparagraph{Metrics: Time and Work}  We consider two types of measures to report the performance metrics: {\em work} and {\em time}. Work refers to the total computation performed by all threads, and it is measured as the cumulative sum of the runtime for all threads. Time refers to the end-to-end computation time for the multithreaded applications. Time measurements reflect the end user perceived latency, whereas work measurements assess the overall resource (CPU) utilization.
 
 
 \myparagraph{Measurements} All applications were compiled using GCC 4.9.2 compiler with -$o3$ optimization flag. For all performance measurements, we report the average over 10 runs with minimum and maximum values discarded.
