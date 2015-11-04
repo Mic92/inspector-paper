@@ -7,14 +7,15 @@ Concurrent Provenance Graph} (CPG)  as a directed acyclic graph $G =
 (V,E)$ with vertices ($V$) and edges ($E$). The
 vertices of the CPG represent {\em sub-computations}. We distinguish between three kinds of edges: control, schedule, and data-dependence edges for recording control, schedule, and data dependencies, respectively. 
 
-The edges  record the control and data dependencies 
-
 \myparagraph{Sub-computations} We define a {\em sub-computation}  as the sequence of instructions
 executed by a thread between two \pthreads synchronization API calls. We model an execution of thread $t$ as a sequence of thunks
 ($L_t$). Sub-computations in a thread are totally ordered based on their execution order
 using a monotonically increasing thunk counter ($\alpha$). We refer a sub-computation of thread $t$ using the counter $\alpha$ as an index in the thread execution sequence ($L_t$), i.e., $L_t[\alpha]$. 
 
-\myparagraph{Synchronization edges} We derive control edges based on the ordering of synchronization operations (also known as a {\em sync schedule}). In particular,  we build on the observation that synchronization primitives can be modeled as {\em acquire} and {\em release} operations. That is,   during synchronization, the synchronization object is {\em released} by one set of threads and subsequently  {\em acquired} by a corresponding set of threads blocked on the object. For example, an {\tt unlock(S)} operation releases $S$
+\myparagraph{Control edges} We derive control edges to record the intra-thread causal order between thunks of the same thread based on their execution order. Furthermore, we also record all control path taken by the thread during the execution.
+
+
+\myparagraph{Synchronization edges} We derive synchronization edges based on the ordering of synchronization operations (also known as a {\em sync schedule}). In particular,  we build on the observation that synchronization primitives can be modeled as {\em acquire} and {\em release} operations. That is,   during synchronization, the synchronization object is {\em released} by one set of threads and subsequently  {\em acquired} by a corresponding set of threads blocked on the object. For example, an {\tt unlock(S)} operation releases $S$
 and a corresponding {\tt lock(S)} operation acquires it; a global {\tt
 barrier(S)} operation causes all threads to release $S$ as they reach the
 barrier, and then causes them to re-acquire $S$. Similarly, all other
@@ -123,6 +124,6 @@ vector clock value from the thread doing the release to the thread doing the acq
 
 
 
-\paragraph{Summary.} In the end of the provenance algorithm, all sub-computations (along with their read/write sets) have a recorded value of sub-computation's vector clock ($L_t[\alpha].C$). The standard comparison of vector clocks defines the  happens-before partial order, through which causal order is derived between sub-computations.
+In the end of the provenance algorithm, all sub-computations (along with their read/write sets) have a recorded value of sub-computation's vector clock ($L_t[\alpha].C$). The standard comparison of vector clocks defines the  happens-before partial order, through which causal order is derived between sub-computations.
 
 
