@@ -1,14 +1,14 @@
 \begin{abstract}
 Data provenance strives for {\em explaining} how the computation was performed, by recording a ``trace" of the execution. The provenance trace is useful for a wide-range of workflows in improving the dependability, security, and efficiency of software systems. 
 
-In this paper, we present \projecttitle\footnote{For the double-blind review process, we have changed the name to \projecttitle}, a {\tt POSIX}-compliant data provenance library for shared-memory multithreaded programs. The \projecttitle library is completely transparent and easy to use: it can be used as a replacement for the \pthreads library by a simple exchange of libraries linked, without even recompiling the code.  
+In this paper, we present \projecttitle\footnote{For the double-blind review process, we have changed the name to \projecttitle.}, a {\tt POSIX}-compliant data provenance library for shared-memory multithreaded programs. The \projecttitle library is completely transparent and easy to use: it can be used as a replacement for the \pthreads library by a simple exchange of libraries linked, without even recompiling the code.  
 
 
 To achieve this result,  we present a parallel provenance algorithm that records control, data, and schedule dependencies using  a {\em Concurrent Provenance Graph} (CPG).  We implemented our algorithm to operate at the compiled binary code
-level by leveraging a combination of OS-specific mechanisms, and recently released \intelpt ISA extensions as part of the Broadwell microarchitecture.  Our
+level by leveraging a combination of OS-specific mechanisms, and recently released \intelpt ISA extensions as part of the Broadwell and Skylake microarchitectures.  Our
 evaluation on a multicore platform using applications from multithreaded benchmarks suites (PARSEC
-and Phoenix) shows reasonable overheads for recording data provenance. 
+and Phoenix) shows reasonable overheads for recording the data provenance trace. 
 
-Furthermore, we briefly describe three on-going case-studies where the generic interface exported by \projecttitle is being used to improve the dependability, security, and efficiency of software systems. \projecttitle is an active open-source project and the tool is publicly available to the research community for use in other workflows. 
+Furthermore, we briefly describe three on-going case-studies where the generic provenance interface exported by \projecttitle is being used to improve the dependability, security, and efficiency of software systems. \projecttitle is an active open-source project and the tool is publicly available to the research community for use in other workflows. 
 
 \end{abstract}
