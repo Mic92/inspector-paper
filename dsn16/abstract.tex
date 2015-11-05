@@ -1,10 +1,12 @@
 \begin{abstract}
-Data provenance strives for {\em explaining} how the computation was performed, by recording a ``trace" of the execution. In this paper, we present \projecttitle, a {\tt POSIX}-compliant data provenance library for shared-memory multithreaded programs. The \projecttitle library is completely transparent and easy to use: it can be used as a replacement for the \pthreads library by a simple exchange of libraries linked, without even recompiling the application code.  
+Data provenance strives for {\em explaining} how the computation was performed, by recording a ``trace" of the execution. The data provenance trace is useful for a wide-range of workflows in improving the dependability and security of software systems. 
+
+In this paper, we present \projecttitle, a {\tt POSIX}-compliant data provenance library for shared-memory multithreaded programs. The \projecttitle library is completely transparent and easy to use: it can be used as a replacement for the \pthreads library by a simple exchange of libraries linked, without even recompiling the code.  
 
 
 To achieve this result,  we present a parallel provenance algorithm that records control, data, and schedule dependencies using  a {\em Concurrent Provenance Graph} (CPG).  We implemented our algorithm to operate at the compiled binary code
 level by leveraging a combination of OS-specific mechanisms, and recently released \intelpt ISA extensions.  Our
 evaluation on a multicore platform using applications from multithreaded benchmarks suites (PARSEC
-and Phoenix) shows reasonable overheads for recording data provenance. \projecttitle's source code is publicly available.
+and Phoenix) shows reasonable overheads for recording data provenance. \projecttitle is publicly available to the research community.
 
 \end{abstract}
