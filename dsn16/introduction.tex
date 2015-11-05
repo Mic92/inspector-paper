@@ -1,11 +1,10 @@
 \section{Introduction}
 \label{sec:introduction}
 
-Data provenance provides an explicit intermediate program representation recording control and data dependencies for a program execution.  The data provenance trace is useful for a wide-range of workflows, such as program debugging, compiler optimizations, incremental computation, program slicing, and dynamic flow information control. 
+Data provenance provides an explicit intermediate program representation recording control and data dependencies for a program execution.  The provenance trace is useful for a wide-range of workflows to improve the dependability, security, and efficiency of software systems; including, program debugging~\cite{}, record-replay systems for parallel state-machine replication~\cite{},  compiler optimizations~\cite{}, incremental computation~\cite{}, program slicing~\cite{}, memory management for NUMA architectures~\cite{}, and dynamic flow information control~\cite{}, etc. 
 
-Many existing systems provide support for data provenance; however,
-most target sequential programs (detailed in $\S$~\ref{sec:related}),
-while others that do support parallelism require a new language with a restrictive programming model. Furthermore, the existing  provenance systems for parallel programs rely on manual annotations using a new type system. Thereby, limiting their wide-spread adoption.
+Many existing systems provide support for data provenance (detailed in $\S$~\ref{sec:related}); however,
+most target sequential programs and specific application domain, while others that do support parallelism require a new language with a restrictive programming model. Furthermore, the existing  provenance systems for parallel programs rely on manual annotations using a new type system. Thereby, limiting their wide-spread adoption.
 
 
 
@@ -14,7 +13,7 @@ In this paper, we propose an operating systems-based approach to data provenance
 
 \item Transparency: To support unmodified multithreaded programs without requiring any code changes to existing applications. 
 \item Generality: To support the general shared-memory programming model with the  full range of synchronization primitives in the {\tt POSIX} API. 
-\item Efficiency: To achieve low overheads by designing the underlying provenance algorithm to be  {\em parallel} as well that does not limit the available application parallelism.
+\item Efficiency: To impose low overheads by designing the underlying provenance algorithm to be  {\em parallel} as well so that it does not limit the available application parallelism.
 
 \end{itemize}
 
