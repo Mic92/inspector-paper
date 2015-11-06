@@ -1,10 +1,10 @@
 \section{Overview}
 \label{sec:overview}
-
-Our approach targets a shared-memory multithreaded environment, in which threads parallelize computation and take 
-advantage of shared portions of the address space to efficiently communicate with each other. Apart from performing reads 
-and writes to the shared memory, threads also employ different types of synchronization mechanisms to 
-co-ordinate their progress, thereby ensuring correct semantics. 
+%
+%Our approach targets a shared-memory multithreaded environment, in which threads parallelize computation and take 
+%advantage of shared portions of the address space to efficiently communicate with each other. Apart from performing reads 
+%and writes to the shared memory, threads also employ different types of synchronization mechanisms to 
+%co-ordinate their progress, thereby ensuring correct semantics. 
 
 We base our design on {\tt POSIX} threads, commonly referred to as
 {\tt pthreads}, which is a widely used threading library for shared memory
@@ -14,7 +14,10 @@ is standardized across different architectures and operating systems, and also t
 library for many higher level abstractions for parallel programming
 (e.g., {\tt OpenMP}).
 
-\myparagraph{Basic approach} At a high level, we record control, data, and schedule dependencies for multithreaded execution by constructing a {\em Concurrent Provenance Graph (or CPG)}. Informally, we first divide thread execution into sub-computations. Thereafter, we record the execution trace to construct the CPG that tracks the data flow between the sub-computations, control flow, and thread schedule  of the multithreaded execution.
+
+
+
+\myparagraph{Basic approach} At a high level, we record data provenance for a multithreaded execution by constructing a {\em Concurrent Provenance Graph (or CPG)}. Informally,  The CPG records three types of dependencies, namely, control, data, and schedule dependencies for the multithreaded execution. To record these dependencies, we divide thread execution into sub-computations. We record the execution trace to construct the CPG that tracks the data flow between the sub-computations, control flow for each thread execution, and threads interleaving  in the multithreaded execution.
 
 More specifically, the Concurrent Provenance Graph (or CPG) records a partial order $O = (N, \rightarrow$) among sub-computations with the following property: given a sub-computation $n$ (where $n \in N $)  and the subset of sub-computations $M$ that precede it according to $\rightarrow$, i.e., $M = \{M \subset N \mid \forall m \in M, m \rightarrow n\}$, if the writes made by $m$ becomes visible to $n$ then the partial order $\rightarrow$ captures this possible data flow between sub-computations.
 
@@ -22,7 +25,7 @@ More specifically, the Concurrent Provenance Graph (or CPG) records a partial or
 
 
 
-\myparagraph{Example} Using a simple example (shown in Figure~\ref{fig:simple-example}), we next explain how do we record the dependencies for a shared-memory multithreaded program. The example considers a multi-threaded execution with two threads ($T_1$ and $T_2$) modifying two shared variables ($x$ and $y$) using a lock. In the example, we assume that a thread execution is divided into sub-computations at the boundaries of {\tt lock()/unlock()}. We identify these sub-computations as $T_1.a$ for thread $T_1$, and $T_2.a$ for thread $T_2$.   To understand the dependencies that need to be recorded for the partial order, we showcase three cases for recording the control, schedule, and data dependencies.
+\myparagraph{Example} Using a simple example (shown in Figure~\ref{fig:simple-example}), we next explain how do we record these dependencies for a shared-memory multithreaded program. The example considers a multi-threaded execution with two threads ($T_1$ and $T_2$) modifying two shared variables ($x$ and $y$) using a lock. In the example, we assume that a thread execution is divided into sub-computations at the boundaries of {\tt lock()/unlock()}. We identify these sub-computations as $T_1.a$ for thread $T_1$, and $T_2.a$ for thread $T_2$.   To understand the dependencies that need to be recorded for the partial order, we showcase three cases for recording the control, schedule, and data dependencies.
 
 The first dependency that we need to record is the control flow execution of threads. In particular, we need to capture all branches that are taken during the execution to record control dependencies. For example, 
 
