@@ -28,7 +28,7 @@ In this paper, we present a {\em parallel} algorithm to build the CPG. Our algor
 An additional challenge that we need to address in the library implementation is the excessive log data produced by \intelpt, especially for long running applications. Therefore, we further extended the library to support a live snapshot facility, where the user can analyze the provenance on-the-fly while the program is still running. The library periodically takes a consistent snapshot~\cite{chandy-lamport} of the CPG in a decentralized fashion.
 
 
-Overall, this paper makes the following contributions:
+To summarize, we make the following contributions:
 \begin{itemize}
 
 \item We present a parallel algorithm for data provenance for multithreaded programs that records control, data, and schedule dependencies using a Concurrent Provenance Graph (CPG) ($\S$\ref{sec:algorithms}).
@@ -42,6 +42,6 @@ Overall, this paper makes the following contributions:
 
 
 
-Furthermore, we briefly describe three on-going case-studies where the generic provenance interface exported by \projecttitle is being used to improve the dependability, security, and efficiency of software systems  ($\S$\ref{sec:discussion}). \projecttitle is an active open-source project and the tool is publicly available to the research community for further use in other workflows.  
+Furthermore, we briefly describe three on-going case-studies where the generic provenance interface exported by \projecttitle is being used to improve the dependability, security, and efficiency of software systems  ($\S$\ref{sec:discussion}). \projecttitle is an active open-source project and the library is publicly available to the research community for further use in other workflows.  
 
 %\projecttitle is an active open-source project, and the library is publicly available to the research community. We believe that the provenance abstraction exported by \projecttitle is useful to support a wide-range of workflows in improving the dependability and security of software systems ($\S$~\ref{sec:discussion}).
