@@ -17,20 +17,21 @@ In this paper, we propose an operating systems-based approach to data provenance
 
 \end{itemize}
 
-To achieve these goals, we present \projecttitle, a threading library for data provenance. To run a program using \projecttitle,  the user just needs to preload the \projecttitle library  by using the environment variable {\tt LD\_PRELOAD} or {\tt -rdynamic} flag, and then, run the program as usual. Thus, enabling the existing binaries to benefit from our approach. 
+To achieve these goals, we present \projecttitle, a threading library for data provenance. To run a program using \projecttitle,  the user just needs to preload the \projecttitle library  by using the environment variable {\tt LD\_PRELOAD} or {\tt -rdynamic} flag, and then, run the program as usual. Thus, enabling the existing binaries to benefit from \projecttitle. The library exports the provenance information as an extended  {\tt perf} utility for data provenance. 
 
 
-Our approach is based on recording the data, control, and schedule dependencies in a computation by constructing a {\em Concurrent Provenance Graph} (CPG). The CPG tracks the input data to a program, all sub-computations (a sub-computation is a unit of the computation), the data flow between sub-computations, intra-thread control flow, and inter-thread schedule dependencies for the multithreaded execution. 
+Our high level approach is based on recording data, control, and schedule dependencies in a computation by constructing a {\em Concurrent Provenance Graph} (CPG). The CPG tracks the input data to a program, all sub-computations (a sub-computation is a unit of the computation), the data flow between sub-computations, intra-thread control flow, and inter-thread schedule dependencies for the multithreaded execution. 
 
 
-In this paper, we present a {\em parallel} algorithm to build the CPG. Our algorithm leverages the Release Consistency (RC) memory model to efficiently record the inter-thread data and schedule dependencies in a completely decentralized manner. We implemented our algorithm as a dynamically linkable shared library by leveraging process-level isolation, MMU-assisted memory tracking, and \intelpt ISA extensions released recently as part of the Broadwell and Skylake microarchitectures. 
+In this paper, we present a {\em parallel} algorithm to build the CPG. Our algorithm leverages the Release Consistency (RC) memory model to efficiently record the inter-thread data and schedule dependencies in a completely decentralized manner. We implemented our algorithm as a dynamically linkable shared library by leveraging process-level isolation, MMU-assisted memory tracking, and \intelpt ISA extensions released recently as part of the Broadwell (also Skylake) microarchitecture. 
 
+An additional challenge that we need to address in the library implementation is the excessive log data produced by \intelpt, especially for long running applications. Therefore, we further extended the library to support a live snapshot facility, where the user can analyze the provenance on-the-fly while the program is still running. The library periodically takes a consistent snapshot~\cite{chandy-lamport} of the CPG in a decentralized fashion.
 
 
 Overall, this paper makes the following contributions:
 \begin{itemize}
 
-\item We present a parallel algorithm for data provenance for multithreaded programs that records intra- and inter-thread control and data dependencies using a Concurrent Provenance Graph (CPG) ($\S$\ref{sec:algorithms}).
+\item We present a parallel algorithm for data provenance for multithreaded programs that records control, data, and schedule dependencies using a Concurrent Provenance Graph (CPG) ($\S$\ref{sec:algorithms}).
 
 \item We implemented our algorithm as a dynamically linkable shared library, which we call \projecttitle, leveraging MMU-assisted memory tracking, process-level isolation, and recently released \intelpt ISA extensions.  The \projecttitle library can be loaded and linked at run-time as a replacement to the \pthreads library, without any recompilation  of the application code ($\S$\ref{sec:implementation}).
 
@@ -39,7 +40,7 @@ Overall, this paper makes the following contributions:
 \end{itemize}
 
 
-An additional challenge that we need to address in the library implementation is the excessive log data produced by \intelpt, especially for long running applications. Therefore, we further extended the library to support a live snapshot facility, where the user can analyze the provenance on-the-fly while the program is still running. The library takes a consistent snapshot~\cite{chandy-lamport} of the CPG periodically in a complete decentralized manner.
+
 
 Furthermore, we briefly describe three on-going case-studies where the generic provenance interface exported by \projecttitle is being used to improve the dependability, security, and efficiency of software systems  ($\S$\ref{sec:discussion}). \projecttitle is an active open-source project and the tool is publicly available to the research community for further use in other workflows.  
 
