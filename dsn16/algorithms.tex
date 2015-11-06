@@ -5,17 +5,20 @@ In the section, we present the detailed design of the \projecttitle library. We 
 \subsection{Concurrent Provenance Graph}  We define the {\em
 Concurrent Provenance Graph} (CPG)  as a directed acyclic graph $G =
 (V,E)$ with vertices ($V$) and edges ($E$). The
-vertices of the CPG represent {\em sub-computations}. %We distinguish between three kinds of edges: control, schedule, and data-dependence edges for recording control, schedule, and data dependencies, respectively. 
+vertices of the CPG represent {\em sub-computations}. The edges represent the dependencies between sub-computations. %We distinguish between three kinds of edges: control, schedule, and data-dependence edges for recording control, schedule, and data dependencies, respectively. 
 
-We distinguish between three kinds of edges: control, synchronization, and data-dependence edges.
+\myparagraph{Vertices: sub-computations} We define a {\em sub-computation}  as the sequence of instructions
+executed by a thread between two \pthreads synchronization API calls. We model an execution of thread $t$ as a sequence of thunks
+($L_t$). Sub-computations in a thread are totally ordered based on their execution order
+using a monotonically increasing thunk counter ($\alpha$). We refer a sub-computation of thread $t$ using the counter $\alpha$ as an index in the thread execution sequence ($L_t$), i.e., $L_t[\alpha]$.
+
+
+\myparagraph{Edges: dependencies} We distinguish between three kinds of edges: control, synchronization, and data-dependence edges.
 {\em Control edges} ($E_{C}$) are used to record the intra-thread causal order between thunks of the same thread
 based on their execution order. {\em Synchronization edges}  ($E_{S}$) are
 used to record the inter-thread causal order between thunks based on the synchronization order between threads. ($E_{D}$) are used to establish the {\em update-use relationship} between thunks. The update-use relationship exists between two thunks if they can be  ordered based on the happens-before relationship, and the write-set of the  antecedent thunk intersects with the read-set of the precedent thunk.
 
-\myparagraph{Sub-computations} We define a {\em sub-computation}  as the sequence of instructions
-executed by a thread between two \pthreads synchronization API calls. We model an execution of thread $t$ as a sequence of thunks
-($L_t$). Sub-computations in a thread are totally ordered based on their execution order
-using a monotonically increasing thunk counter ($\alpha$). We refer a sub-computation of thread $t$ using the counter $\alpha$ as an index in the thread execution sequence ($L_t$), i.e., $L_t[\alpha]$. 
+ 
 
 \myparagraph{Control edges} We derive control edges to record the intra-thread causal order between thunks of the same thread based on their execution order. Furthermore, we also record all control path taken by the thread during the execution.
 
