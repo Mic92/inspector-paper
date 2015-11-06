@@ -1,10 +1,10 @@
 \section{Introduction}
 \label{sec:introduction}
 
-Data provenance provides an explicit intermediate program representation recording control and data dependencies for a program execution.  The provenance trace is useful for a wide-range of workflows to improve the dependability, security, and efficiency of software systems; including, program debugging~\cite{fast-track-pldi}, record-replay systems for parallel state-machine replication~\cite{rex},  compiler optimizations~\cite{pgo}, incremental computation~\cite{ithreads}, program slicing~\cite{roly}, memory management for NUMA architectures~\cite{memprof}, and dynamic information flow tracking~\cite{dift}, etc. 
+Data provenance provides an explicit intermediate program representation recording control and data dependencies for a program execution.  The provenance trace is useful for a wide-range of workflows to improve the dependability, security, and efficiency of software systems; including, program debugging~\cite{fast-track-pldi}, parallel state machine replication~\cite{rex},  compiler optimizations~\cite{pgo}, incremental computation~\cite{ithreads}, program slicing~\cite{roly}, memory management~\cite{memprof}, and dynamic information flow tracking~\cite{dift}, etc. 
 
-Many existing systems provide support for data provenance (detailed in $\S$~\ref{sec:related}); however,
-most target sequential programs and specific application domain, while others that do support parallelism require a new language with a restrictive programming model. Furthermore, the existing  provenance systems for parallel programs rely on manual annotations using a new type system. Thereby, limiting their wide-spread adoption.
+Many existing systems provide support for data provenance (details in $\S$\ref{sec:related}); however,
+most existing solutions target sequential programs, while others that do support parallelism rely on restrictive application-specific programming model. As a result, the existing solutions have limited wide-spread adoption.
 
 
 
@@ -17,7 +17,7 @@ In this paper, we propose an operating systems-based approach to data provenance
 
 \end{itemize}
 
-To achieve these goals, we present \projecttitle, a threading library for data provenance. To run a program using \projecttitle,  the user just needs to preload the \projecttitle library  by using the environment variable {\tt LD\_PRELOAD} or {\tt -rdynamic} flag, and then, run the program as usual. Thus, enabling existing binaries to benefit from our approach. 
+To achieve these goals, we present \projecttitle, a threading library for data provenance. To run a program using \projecttitle,  the user just needs to preload the \projecttitle library  by using the environment variable {\tt LD\_PRELOAD} or {\tt -rdynamic} flag, and then, run the program as usual. Thus, enabling the existing binaries to benefit from our approach. 
 
 
 Our approach is based on recording the data, control, and schedule dependencies in a computation by constructing a {\em Concurrent Provenance Graph} (CPG). The CPG tracks the input data to a program, all sub-computations (a sub-computation is a unit of the computation), the data flow between sub-computations, intra-thread control flow, and inter-thread schedule dependencies for the multithreaded execution. 
