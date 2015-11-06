@@ -20,7 +20,7 @@ More specifically, the Concurrent Provenance Graph (or CPG) records a partial or
 
 %We next use a simple example to explain the high-level approach (shown in Figure~\ref{fig:simple-example}). 
 
-\input{tables/simple-example}
+
 
 \myparagraph{Example} Using a simple example (shown in Figure~\ref{fig:simple-example}), we next explain how do we record the dependencies for a shared-memory multithreaded program. The example considers a multi-threaded execution with two threads ($T_1$ and $T_2$) modifying two shared variables ($x$ and $y$) using a lock. In the example, we assume that a thread execution is divided into sub-computations at the boundaries of {\tt lock()/unlock()}. We identify these sub-computations as $T_1.a$ for thread $T_1$, and $T_2.a$ for thread $T_2$.   To understand the dependencies that need to be recorded for the partial order, we showcase three cases for recording the control, schedule, and data dependencies.
 
@@ -41,7 +41,7 @@ Third,  consider a case of the input change where the value of variable $y$ is c
 %Second, we consider the case of change in thread schedule. The sub-computations can be interleaved in different order across executions because of nondeterministic thread scheduling by the underlying operating system. For instance, when threads acquiring the lock in the reverse order where thread $T_2$ gets acquire the lock before $T_1$. In this case, the final value $y$ may be changed even without any changes to the input. To infer such change, we also need to capture {\em control dependencies}   between sub-computations as a part of the partial order. Our algorithm captures control dependencies by tracking interleaving of sub-computations by recording the thread schedule. 
 
 
-
+\input{tables/simple-example}
 
 Our algorithm described in Section~\ref{sec:algorithms} presents the details on how do we construct the CPG. Before that,  we first present the system model assumed by \projecttitle in Section~\ref{sec:model}, which is critical to record these dependencies efficiently.
 
