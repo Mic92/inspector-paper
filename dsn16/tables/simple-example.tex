@@ -11,7 +11,7 @@
 & {\tt if} (flag == 0) && &\\
 {\tt read}=$\{y\}$  & \hspace{3mm} x = ++y;&& &\\
 {\tt write}=$\{x, y\}$  & {\tt else} && &\\
-&\hspace{3mm}   x = ++y + 5;&& &\\
+&\hspace{3mm}   x = (++y) + 5;&& &\\
   & {\tt unlock()};&& &\\
         &  &  $\searrow$ & & \\
    
@@ -19,6 +19,18 @@
 &&  & {\tt lock()}; &  /* \underline{$T_{2}.a$ }*/\\
 &&  & y = 2* x;    & {\tt read}=$\{x\}$  \\
 &  &  & {\tt unlock()}; &  {\tt write}=$\{y\}$ \\  
+
+ &  &  $\swarrow$ & & \\
+
+/* \underline{$T_{1}.b$} */ & {\tt lock()}; && &\\
+
+
+{\tt read}=$\{y\}$  & y = y/2;&& &\\
+{\tt write}=$\{ y\}$  & {\tt unlock()};  && &\\
+
+
+  
+  
 \end{tabular}
 }
 
