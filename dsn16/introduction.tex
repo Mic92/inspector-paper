@@ -1,7 +1,7 @@
 \section{Introduction}
 \label{sec:introduction}
 
-Data provenance provides an explicit intermediate program representation recording control and data dependencies for a program execution.  The provenance trace is useful for a wide-range of workflows to improve the dependability, security, and efficiency of software systems; including, program debugging~\cite{}, record-replay systems for parallel state-machine replication~\cite{},  compiler optimizations~\cite{}, incremental computation~\cite{}, program slicing~\cite{}, memory management for NUMA architectures~\cite{}, and dynamic flow information control~\cite{}, etc. 
+Data provenance provides an explicit intermediate program representation recording control and data dependencies for a program execution.  The provenance trace is useful for a wide-range of workflows to improve the dependability, security, and efficiency of software systems; including, program debugging~\cite{fast-track-pldi}, record-replay systems for parallel state-machine replication~\cite{rex},  compiler optimizations~\cite{pgo}, incremental computation~\cite{ithreads}, program slicing~\cite{roly}, memory management for NUMA architectures~\cite{memprof}, and dynamic information flow tracking~\cite{dift}, etc. 
 
 Many existing systems provide support for data provenance (detailed in $\S$~\ref{sec:related}); however,
 most target sequential programs and specific application domain, while others that do support parallelism require a new language with a restrictive programming model. Furthermore, the existing  provenance systems for parallel programs rely on manual annotations using a new type system. Thereby, limiting their wide-spread adoption.
