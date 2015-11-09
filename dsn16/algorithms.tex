@@ -1,26 +1,30 @@
 \section{Design}
 \label{sec:algorithms}
-In the section, we present the detailed design of the \projecttitle library. We first formally define the CPG, and next, we present the provenance algorithm.
+In the section, we first formally define the CPG, and next, we present the provenance algorithm.
 
 \subsection{Concurrent Provenance Graph}  We define the {\em
 Concurrent Provenance Graph} (CPG)  as a directed acyclic graph $G =
 (V,E)$ with vertices ($V$) and edges ($E$). The
-vertices of the CPG represent {\em sub-computations}. The edges represent the dependencies between sub-computations. %We distinguish between three kinds of edges: control, schedule, and data-dependence edges for recording control, schedule, and data dependencies, respectively. 
+vertices of the CPG represent {\em sub-computations}. The edges represent the dependencies between the sub-computations. %We distinguish between three kinds of edges: control, schedule, and data-dependence edges for recording control, schedule, and data dependencies, respectively. 
 
-\myparagraph{Vertices: sub-computations} We define a {\em sub-computation}  as the sequence of instructions
-executed by a thread between two \pthreads synchronization API calls. We model an execution of thread $t$ as a sequence of thunks
-($L_t$). Sub-computations in a thread are totally ordered based on their execution order
-using a monotonically increasing thunk counter ($\alpha$). We refer a sub-computation of thread $t$ using the counter $\alpha$ as an index in the thread execution sequence ($L_t$), i.e., $L_t[\alpha]$.
+\myparagraph{Vertices: sub-computations (sub-computations)} We define a {\em sub-computation}  as the sequence of instructions
+executed by a thread between two \pthreads synchronization API calls. We model an execution of thread $t$ as a sequence of sub-computations
+($L_t$). 
 
 
 \myparagraph{Edges: dependencies} We distinguish between three kinds of edges: control, synchronization, and data-dependence edges.
-{\em Control edges} ($E_{C}$) are used to record the intra-thread causal order between thunks of the same thread
-based on their execution order. {\em Synchronization edges}  ($E_{S}$) are
-used to record the inter-thread causal order between thunks based on the synchronization order between threads. ($E_{D}$) are used to establish the {\em update-use relationship} between thunks. The update-use relationship exists between two thunks if they can be  ordered based on the happens-before relationship, and the write-set of the  antecedent thunk intersects with the read-set of the precedent thunk.
+{\em Control edges}  are used to record the intra-thread causal order between sub-computations of the same thread
+based on their execution order, and also control flow within each sub-computation at the granularity of code {\em thunks}. {\em Synchronization edges}   are
+used to record the inter-thread causal order between sub-computations based on the synchronization order between threads. {\em Data dependence edges} are used to establish the {\em update-use relationship} between sub-computations. The update-use relationship exists between two sub-computations if they can be  ordered based on the happens-before relationship, and the write-set of the  precedent  sub-computations intersects with the read-set of the antecedent sub-computations.
 
  
 
-\myparagraph{Control edges} We derive control edges to record the intra-thread causal order between thunks of the same thread based on their execution order. Furthermore, we also record all control path taken by the thread during the execution.
+\myparagraph{Control edges} We derive control edges to record the intra-thread causal order between sub-computations of the same thread based on their execution order. Sub-computations in a thread are totally ordered based on their execution order
+using a monotonically increasing thunk counter ($\alpha$). We refer a sub-computation of thread $t$ using the counter $\alpha$ as an index in the thread execution sequence ($L_t$), i.e., $L_t[\alpha]$.
+
+
+Furthermore, we also record all control path taken by the thread within each sub-computation during the execution, which we refer to as code {\em thunks}.  
+We denote a thunk $L_t[\alpha].T_h[i]$ to a sequence of instructions between the branches within each subcomputation $L_t[\alpha]$. 
 
 
 \myparagraph{Synchronization edges} We derive synchronization edges based on the ordering of synchronization operations (also known as a {\em sync schedule}). In particular,  we build on the observation that synchronization primitives can be modeled as {\em acquire} and {\em release} operations. That is,   during synchronization, the synchronization object is {\em released} by one set of threads and subsequently  {\em acquired} by a corresponding set of threads blocked on the object. For example, an {\tt unlock(S)} operation releases $S$
@@ -47,12 +51,14 @@ same thread ($t_1 = t_2$), and $L_{(t_1)}[\alpha]$ was executed before $L_{(t_2)
  We derive the data dependencies between sub-computations using the read/write sets. For a sub-computation $L_t[\alpha]$, the {\em read-set}
 ($L_t[\alpha].R$) and the {\em write-set} ($L_t[\alpha].W$) are the set of
 addresses that were respectively read from and written to by
-the thread while executing the sub-computation. We derive the read/write sets at the granularity of memory pages for efficiency reasons, as described in~\secref{implementation}.
+the thread while executing the sub-computation. {\em Data dependence edges} are used to establish the {\em update-use relationship} between sub-computations. The update-use relationship exists between two sub-computations if they can be  ordered based on the happens-before relationship, and the write-set of the  precedent  sub-computations intersects with the read-set of the antecedent sub-computations.
 
-.
+
+%We derive the read/write sets at the granularity of memory pages for efficiency reasons, as described in~\secref{implementation}.
+
 %(V,E)$ with two types of vertices ($V$) and three types of edges ($E$). The
-%vertices of CDDG are thunks, which we distinguish between two types of thunks:
-%independent thunks ($V_{Ti}$)  and dependent thunks ($V_{Td}$). 
+%vertices of CDDG are sub-computations, which we distinguish between two types of sub-computations:
+%independent sub-computations ($V_{Ti}$)  and dependent sub-computations ($V_{Td}$). 
 
 
 
@@ -84,7 +90,7 @@ terminates.
 \myparagraph{Details} For the CPG, control dependencies are derived by 
 happens-before ordering of sub-computations. To do so, we use vector clocks
 ($C$)~\cite{Mattern89virtualtime},  a widely used mechanism to generate a partial order of events and to infer causality. Our use of vector
-clocks is motivated by its efficiency for recording a partial order between thunks in a complete decentralized manner instead of having to serialize all synchronization events in a total order.
+clocks is motivated by its efficiency for recording a partial order between sub-computations in a complete decentralized manner instead of having to serialize all synchronization events in a total order.
 
 In particular, each thread maintains a vector clock, i.e., an array/vector of size equal to the number of threads in the system.  
 During a synchronization event, the clock of the thread performing the

@@ -5,7 +5,7 @@
 %	\fbox{	
 %	\begin{minipage}{0.9\linewidth}
 %	%\vspace{-2mm}
-\begin{center}		
+%\begin{center}		
 \begin{algorithm}[t]
 
 \myfontsize
@@ -29,7 +29,7 @@ $\forall S, \forall i\in \{1, ...,T\} : C_S[i] \leftarrow 0$; // All sync clocks
 			}
 		}
 		%{\tt endThunk}();  // Memoize the end state of thunk\\
-		$\alpha \leftarrow \alpha + 1$; // Increment thunk counter \\
+		$\alpha \leftarrow \alpha + 1$; // Increment sub-computation counter \\
 		// Let $S$ denote invoked synchronization primitive\\
 		{\tt onSynchronization}($S$)\;
 		
@@ -42,7 +42,7 @@ $\forall S, \forall i\in \{1, ...,T\} : C_S[i] \leftarrow 0$; // All sync clocks
 \caption{\bf  Data provenance algorithm}
 \label{fig:ithreadsRecord}
 \end{algorithm}
-	\end{center}
+%	\end{center}
 %\end{minipage}
 %}
 %\end{figure}
