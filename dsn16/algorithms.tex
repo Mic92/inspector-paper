@@ -41,9 +41,7 @@ and a corresponding {\tt lock(S)} operation acquires it.
 
 We derive the partial order based on the happens-before relation
 ($\rightarrow$)~\cite{djit,fast-track-pldi} between acquire and release operations. In particular, a release
-operation happens-before the corresponding acquire operation. Given
-the use of the RC model, the happens-before relation
-captures the possible flow of data between sub-computations of the same or different threads.
+operation happens-before the corresponding acquire operation.
 Formally, two sub-computations $L_{(t_1)}[\alpha]$ and
 $L_{(t_2)}[\beta]$ are ordered by the happens-before relationship ($L_{(t_1)}[\alpha] \rightarrow
 L_{(t_2)}[\beta]$) if:  ($i$)  they are sub-computations of the
@@ -53,10 +51,12 @@ same thread ($t_1 = t_2$), and $L_{(t_1)}[\alpha]$ was executed before $L_{(t_2)
 
 \myparagraph{III: Data-dependence edges}  {\em Data dependence edges} are used to establish the {\em update-use relationship} between sub-computations. The update-use relationship exists between two sub-computations if they can be  ordered based on the happens-before relationship, and the write-set of the  precedent  sub-computations intersects with the read-set of the antecedent sub-computations. 
 
-We derive the data dependencies between sub-computations using the read/write sets. For a sub-computation $L_t[\alpha]$, the {\em read-set}
+Given
+the use of the RC model, the happens-before relation
+captures the possible flow of data between sub-computations of the same or different threads.  We derive the data dependencies between sub-computations using the read/write sets. For a sub-computation $L_t[\alpha]$, the {\em read-set}
 ($L_t[\alpha].R$) and the {\em write-set} ($L_t[\alpha].W$) are the set of
 addresses that were respectively read from and written to by
-the thread while executing the sub-computation.
+the thread while executing the sub-computation. 
 
 %We derive the read/write sets at the granularity of memory pages for efficiency reasons, as described in~\secref{implementation}.
 
@@ -75,8 +75,9 @@ the thread while executing the sub-computation.
  
 At high-level, our algorithm records the multithreaded execution of the
 application program for constructing the CPG.
-In particular, we derive vertices  by defining
-sub-computations end points between two synchronization operations and recording their respective read/write sets. Control aedges in the CPG are derived by recording the happens-before order between sub-computations. Our algorithm implicitly derives data-dependent edges through the union of the happens-before order between sub-computations and the read/write sets. Algorithm~\ref{fig:ithreadsRecord} presents the high-level
+%In particular, we derive vertices  by defining
+%sub-computations end points between two synchronization operations and recording their respective read/write sets. Control aedges in the CPG are derived by recording the happens-before order between sub-computations. Our algorithm implicitly derives data-dependent edges through the union of the happens-before order between sub-computations and the read/write sets. 
+Algorithm~\ref{fig:ithreadsRecord} presents the high-level
 overview of the recording algorithm, and details of subroutines used in the recording algorithm are presented in Algorithm~\ref{fig:ithreadsRecordProc}.
  \input{algorithms/general-record} 
 
