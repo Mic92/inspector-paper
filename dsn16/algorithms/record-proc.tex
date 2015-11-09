@@ -22,12 +22,14 @@ $\forall i\in \{1, ...,T\}: C_t[i] \leftarrow 0$;  // $t$'s clock set to zero
 }
 
 
-\underline{{\bf startThunk()}}\\
+\underline{{\bf startSub-computation({\tt instruction})}}\\
 
 \Begin{
 
 
+{\tt thunk}$\leftarrow 0$; // Initialize thunk counter\\
 
+$ L_t[\alpha].H[{\tt thunk}]\leftarrow$ {\tt instruction}; // Start new thunk
 
 $C_t [t] \leftarrow \alpha$; // Update thread clock with sub-computation counter ($\alpha$) value \\
 
@@ -38,6 +40,7 @@ $\forall (i\in \{1, ...,T\}): L_t[\alpha] .C[i] \leftarrow C_t[i]$;
 %$L_t[\alpha] .R/W \leftarrow \phi$; // Initialize  read/write sets to empty set\\
 			
 }
+
 
 \underline{{\bf onMemoryAccess()}}\\ 
 \Begin{
@@ -54,14 +57,12 @@ $ L_t[\alpha].R \leftarrow L_t[\alpha] .R \cup \{$ {\tt pageID} $\}$; // On read
 }
 
 
-\underline{{\bf onBranchAccess()}}\\ 
+\underline{{\bf onBranchAccess({\tt instruction})}}\\ 
 \Begin{
 // Add thunks within the executing sub-computation \\
-$ L_t[\alpha].T_h[i]$\;
-i++;
+{\tt thunk++;} // Increment thunk counter\\
 
-
-
+$ L_t[\alpha].H[{\tt thunk}]\leftarrow$ {\tt instruction}; // Add new thunk
 }
 
 

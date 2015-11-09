@@ -18,14 +18,14 @@ $\forall S, \forall i\in \{1, ...,T\} : C_S[i] \leftarrow 0$; // All sync clocks
 	 {\tt initThread}($t$)\;
 	\While{$t$ has not terminated}{
 	
-		%{\tt startThunk}()\;
+		{\tt startSub-computation}({\tt instruction})\;
 		\Repeat{$t$ invokes synchronization primitive}{
 			Execute {\tt instruction} of $t$\; % and trace memory accesses\\
 			\If {({\tt instruction} is {\tt load} {\bf or} {\tt store})} {
 			{\tt onMemoryAccess}()\; %// For each load/store instr.
 			}
 			\If {({\tt instruction} is {\tt branch} } {
-			{\tt onBranchAccess}()\; %// For each load/store instr.
+			{\tt onBranchAccess}({\tt instruction})\; %// For each load/store instr.
 			}
 		}
 		%{\tt endThunk}();  // Memoize the end state of thunk\\
