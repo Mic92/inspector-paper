@@ -82,17 +82,28 @@ overview of the recording algorithm, and details of subroutines used in the reco
  \input{algorithms/general-record} 
 
 %explain the algorithm using figure.
-\myparagraph{Overview}   The provenance algorithm (shown in Algorithm~\ref{fig:ithreadsRecord}) is executed by threads in parallel. The algorithm employs run-time techniques to derive the information needed for the CPG. During a thread execution, the thread traces memory accesses on {\tt load/store} instructions, and adds them to the read and
-the write set of the executing thunk. The thread continues to execute instructions and perform memory tracing until a synchronization primitive call is made to the \pthreads  library. At the synchronization point, we define the end point for the executing sub-computation. 
-Thereafter, we let the thread perform the actual synchronization operation.
+\myparagraph{Overview}   The provenance algorithm (shown in Algorithm~\ref{fig:ithreadsRecord}) is executed by all threads in parallel. During a thread execution, the thread traces memory accesses on {\tt load/store} instructions, and adds them to the read and
+the write set of the executing sub-computation. Additionally, threads also traces all branch instructions, and adds this information to thunks for the executing sub-computation.
+The thread continues to execute instructions until a synchronization primitive call is made to the \pthreads  library. At the synchronization point, we define the end point for the executing sub-computation. 
+Thereafter, we let the thread perform the actual synchronization operation. The algorithm derives control  and synchronization edges in the CPG are derived by recording the happens-before order between sub-computations. Our algorithm implicitly derives data-dependent edges through the union of the happens-before order between sub-computations and the read/write sets.
 Finally, we start a new sub-computation and repeat the process until the executing thread
 terminates. 
+
+ 
+
+
+%employs run-time techniques to derive the information needed for the CPG. In particular, we derive vertices  by defining sub-computations end points between two synchronization operations. 
+   
+   
+  
+
+
 
  
 %get in the gory details of the algorithms.
  \input{algorithms/record-proc}
 
-\myparagraph{Details} For the CPG, control dependencies are derived by 
+\myparagraph{Details} For the CPG, control and synchronization dependencies are derived by 
 happens-before ordering of sub-computations. To do so, we use vector clocks
 ($C$)~\cite{Mattern89virtualtime},  a widely used mechanism to generate a partial order of events and to infer causality. Our use of vector
 clocks is motivated by its efficiency for recording a partial order between sub-computations in a complete decentralized manner instead of having to serialize all synchronization events in a total order.
