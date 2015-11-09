@@ -12,14 +12,17 @@ executed by a thread between two \pthreads synchronization API calls. We model a
 ($L_t$). 
 
 
-\myparagraph{Edges: dependencies} We distinguish between three kinds of edges: control, synchronization, and data-dependence edges.
-{\em Control edges}  are used to record the intra-thread causal order between sub-computations of the same thread
-based on their execution order, and also control flow within each sub-computation at the granularity of code {\em thunks}. {\em Synchronization edges}   are
-used to record the inter-thread causal order between sub-computations based on the synchronization order between threads. {\em Data dependence edges} are used to establish the {\em update-use relationship} between sub-computations. The update-use relationship exists between two sub-computations if they can be  ordered based on the happens-before relationship, and the write-set of the  precedent  sub-computations intersects with the read-set of the antecedent sub-computations.
+\myparagraph{Edges: dependencies} We distinguish between three kinds of edges: control, synchronization, and data-dependence edges. We next described these edges.
+
+
+%{\em Control edges}  are used to record the intra-thread causal order between sub-computations of the same thread
+%based on their execution order, and also control flow within each sub-computation at the granularity of code {\em thunks}. {\em Synchronization edges}   are
+%used to record the inter-thread causal order between sub-computations based on the synchronization order between threads. {\em Data dependence edges} are used to establish the {\em update-use relationship} between sub-computations. The update-use relationship exists between two sub-computations if they can be  ordered based on the happens-before relationship, and the write-set of the  precedent  sub-computations intersects with the read-set of the antecedent sub-computations.
 
  
 
-\myparagraph{Control edges} We derive control edges to record the intra-thread causal order between sub-computations of the same thread based on their execution order. Sub-computations in a thread are totally ordered based on their execution order
+\myparagraph{Control edges} {\em Control edges}  are used to record the intra-thread causal order between sub-computations of the same thread
+based on their execution order, and also control flow within each sub-computation at the granularity of code {\em thunks}. We derive control edges to record the intra-thread causal order between sub-computations of the same thread based on their execution order. Sub-computations in a thread are totally ordered based on their execution order
 using a monotonically increasing thunk counter ($\alpha$). We refer a sub-computation of thread $t$ using the counter $\alpha$ as an index in the thread execution sequence ($L_t$), i.e., $L_t[\alpha]$.
 
 
@@ -27,7 +30,9 @@ Furthermore, we also record all control path taken by the thread within each sub
 We denote a thunk $L_t[\alpha].T_h[i]$ to a sequence of instructions between the branches within each subcomputation $L_t[\alpha]$. 
 
 
-\myparagraph{Synchronization edges} We derive synchronization edges based on the ordering of synchronization operations (also known as a {\em sync schedule}). In particular,  we build on the observation that synchronization primitives can be modeled as {\em acquire} and {\em release} operations. That is,   during synchronization, the synchronization object is {\em released} by one set of threads and subsequently  {\em acquired} by a corresponding set of threads blocked on the object. For example, an {\tt unlock(S)} operation releases $S$
+\myparagraph{Synchronization edges}  {\em Synchronization edges}   are
+used to record the inter-thread causal order between sub-computations based on the synchronization order between threads. 
+We derive synchronization edges based on the ordering of synchronization operations (also known as a {\em sync schedule}). In particular,  we build on the observation that synchronization primitives can be modeled as {\em acquire} and {\em release} operations. That is,   during synchronization, the synchronization object is {\em released} by one set of threads and subsequently  {\em acquired} by a corresponding set of threads blocked on the object. For example, an {\tt unlock(S)} operation releases $S$
 and a corresponding {\tt lock(S)} operation acquires it; a global {\tt
 barrier(S)} operation causes all threads to release $S$ as they reach the
 barrier, and then causes them to re-acquire $S$. Similarly, all other
