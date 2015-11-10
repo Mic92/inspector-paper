@@ -27,9 +27,9 @@ $\forall i\in \{1, ...,T\}: C_t[i] \leftarrow 0$;  // $t$'s clock set to zero
 \Begin{
 
 
-{\tt thunk}$\leftarrow 0$; // Initialize thunk counter\\
+$\beta\leftarrow 0$; // Initialize thunk counter\\
 
-$ L_t[\alpha].H[{\tt thunk}]\leftarrow$ {\tt instruction}; // Start new thunk
+$ L_t[\alpha].\Delta[{\beta}]\leftarrow$ {\tt instruction}; // Start new thunk
 
 $C_t [t] \leftarrow \alpha$; // Update thread clock with sub-computation counter ($\alpha$) value \\
 
@@ -59,10 +59,10 @@ $ L_t[\alpha].R \leftarrow L_t[\alpha] .R \cup \{$ {\tt pageID} $\}$; // On read
 
 \underline{{\bf onBranchAccess({\tt instruction})}}\\ 
 \Begin{
-// Add thunks within the executing sub-computation \\
-{\tt thunk++;} // Increment thunk counter\\
 
-$ L_t[\alpha].H[{\tt thunk}]\leftarrow$ {\tt instruction}; // Add new thunk
+$\beta \leftarrow \beta + 1$; // Increment thunk counter \\
+
+$ L_t[\alpha].\Delta[\beta]\leftarrow$ {\tt instruction}; // Add a new thunk
 }
 
 

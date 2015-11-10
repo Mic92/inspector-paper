@@ -8,8 +8,11 @@ Concurrent Provenance Graph} (CPG)  as a directed acyclic graph $G =
 vertices of the CPG represent {\em sub-computations}. The edges represent the dependencies between the sub-computations. %We distinguish between three kinds of edges: control, schedule, and data-dependence edges for recording control, schedule, and data dependencies, respectively. 
 
 \myparagraph{Sub-computations} We define a {\em sub-computation}  as the sequence of instructions
-executed by a thread between two \pthreads synchronization API calls. We model the execution of thread $t$ as a sequence of sub-computations
-($L_t$). 
+executed by a thread between two \pthreads synchronization API calls. Using the RC memory model, we derive the synchronization and data dependencies at the granularity of a sub-computation.
+
+
+
+We further divide each sub-computation as sequence of code thunks, or {\em thunks} to record the control path taken by the executing thread within the sub-computation.
 
 
 \myparagraph{Dependencies} We distinguish between three kinds of dependencies: control, synchronization, and data dependencies. We next described these dependencies.
@@ -22,9 +25,11 @@ executed by a thread between two \pthreads synchronization API calls. We model t
  
 
 \myparagraph{I: Control edges} {\em Control edges}  are used to record the intra-thread causal order between sub-computations of the same thread
-based on their execution order. Furthermore, we also record all control path taken by the executing thread within each sub-computation during the execution, which we call as {\em thunks}.  
+based on their execution order. Furthermore, we also record all control path taken by the executing thread within each sub-computation during the execution at the granularity of {thunks}.  
 
-Sub-computations in a thread are totally ordered based on their execution order using a monotonically increasing thunk counter ($\alpha$). We refer a sub-computation of thread $t$ using the counter $\alpha$ as an index in the thread execution sequence ($L_t$), i.e., $L_t[\alpha]$.  We denote thunk ($L_t[\alpha].\Delta$) as a sequence of instructions between the branches within each subcomputation $L_t[\alpha]$. 
+We model the execution of thread $t$ as a sequence of sub-computations ($L_t$).  Sub-computations in a thread are totally ordered based on their execution order using a monotonically increasing thunk counter ($\alpha$). We refer a sub-computation of thread $t$ using the counter $\alpha$ as an index in the thread execution sequence ($L_t$), i.e., $L_t[\alpha]$.  
+
+We refer a thunk ($L_t[\alpha].\Delta$) as a sequence of instructions between two successive branches within each subcomputation. We denote a thunk of sub-computation $L_t[\alpha]$ using a counter $\beta$ as an index in the sub-computation as $L_t[\alpha].\Delta[\beta]$.  
 
 
 \myparagraph{II: Synchronization edges}  {\em Synchronization edges}   are
@@ -42,21 +47,22 @@ and a corresponding {\tt lock(S)} operation acquires it.
 We derive the partial order based on the happens-before relation
 ($\rightarrow$)~\cite{djit,fast-track-pldi} between acquire and release operations. In particular, a release
 operation happens-before the corresponding acquire operation.
-Formally, two sub-computations $L_{(t_1)}[\alpha]$ and
-$L_{(t_2)}[\beta]$ are ordered by the happens-before relationship ($L_{(t_1)}[\alpha] \rightarrow
-L_{(t_2)}[\beta]$) if:  ($i$)  they are sub-computations of the
-same thread ($t_1 = t_2$), and $L_{(t_1)}[\alpha]$ was executed before $L_{(t_2)}[\beta]$; ($ii$)  $L_{(t_1)}[\alpha]$  is a release and $L_{(t_2)}[\beta]$ is corresponding acquire on the same synchronization object $S$; ($iii$) due to transitivity if  
- $L_{(t_1)}[\alpha] \rightarrow L_{(t_3)}[\gamma] $ and $L_{(t_3)}[\gamma]  \rightarrow L_{(t_2)}[\beta]$.
+Formally, two sub-computations $L_{(t_1)}[\alpha_1]$ and
+$L_{(t_2)}[\alpha_2]$ are ordered by the happens-before relationship ($L_{(t_1)}[\alpha_1] \rightarrow
+L_{(t_2)}[\alpha_2]$) if:  ($i$)  they are sub-computations of the
+same thread ($t_1 = t_2$), and $L_{(t_1)}[\alpha_1]$ was executed before $L_{(t_2)}[\alpha_2]$; ($ii$)  $L_{(t_1)}[\alpha_1]$  is a release and $L_{(t_2)}[\alpha_2]$ is corresponding acquire on the same synchronization object $S$; ($iii$) due to transitivity if  
+ $L_{(t_1)}[\alpha_!] \rightarrow L_{(t_3)}[\alpha_3] $ and $L_{(t_3)}[\alpha_3]  \rightarrow L_{(t_2)}[\alpha_2]$.
 
 
-\myparagraph{III: Data-dependence edges}  {\em Data dependence edges} are used to establish the {\em update-use relationship} between sub-computations. The update-use relationship exists between two sub-computations if they can be  ordered based on the happens-before relationship, and the write-set of the  precedent  sub-computations intersects with the read-set of the antecedent sub-computations. 
-
-Given
-the use of the RC model, the happens-before relation
-captures the possible flow of data between sub-computations of the same or different threads.  We derive the data dependencies between sub-computations using the read/write sets. For a sub-computation $L_t[\alpha]$, the {\em read-set}
+\myparagraph{III: Data-dependence edges}  {\em Data dependence edges} are records the flow of data between sub-computations of the same or different threads. 
+ We derive the data dependencies between sub-computations using the read/write sets. For a sub-computation $L_t[\alpha]$, the {\em read-set}
 ($L_t[\alpha].R$) and the {\em write-set} ($L_t[\alpha].W$) are the set of
 addresses that were respectively read from and written to by
 the thread while executing the sub-computation. 
+
+Essentially, data dependence edges establish the {\em update-use relationship} between sub-computations. The update-use relationship exists between two sub-computations if they can be  ordered based on the happens-before relationship, and the write-set of the  precedent  sub-computations intersects with the read-set of the antecedent sub-computations. 
+
+
 
 %We derive the read/write sets at the granularity of memory pages for efficiency reasons, as described in~\secref{implementation}.
 
@@ -66,7 +72,9 @@ the thread while executing the sub-computation.
 
 
 
-
+%Given
+%the use of the RC model, the happens-before relation
+%captures the possible flow of data between sub-computations of the same or different threads. 
  
  
  \subsection{ Provenance Algorithm}
