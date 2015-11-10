@@ -81,21 +81,21 @@ Essentially, data dependence edges establish the {\em update-use relationship} b
 
  
  
-At high-level, our algorithm records the multithreaded execution of the
-application program for constructing the CPG.
+At high-level, our algorithm records the multithreaded execution to construct the CPG.
 %In particular, we derive vertices  by defining
 %sub-computations end points between two synchronization operations and recording their respective read/write sets. Control aedges in the CPG are derived by recording the happens-before order between sub-computations. Our algorithm implicitly derives data-dependent edges through the union of the happens-before order between sub-computations and the read/write sets. 
-Algorithm~\ref{fig:ithreadsRecord} presents the high-level
-overview of the recording algorithm, and details of subroutines used in the recording algorithm are presented in Algorithm~\ref{fig:ithreadsRecordProc}.
+Algorithm~\ref{fig:ithreadsRecord} presents the overview of the provenance algorithm, and details of the subroutines are presented in Algorithm~\ref{fig:ithreadsRecordProc}.
  \input{algorithms/general-record} 
 
 %explain the algorithm using figure.
 \myparagraph{Overview}   The provenance algorithm (shown in Algorithm~\ref{fig:ithreadsRecord}) is executed by all threads in parallel. During a thread execution, the thread traces memory accesses on {\tt load/store} instructions, and adds them to the read and
-the write set of the executing sub-computation. Additionally, threads also traces all branch instructions, and adds this information to thunks for the executing sub-computation.
+the write set of the executing sub-computation for deriving data dependencies. Additionally, threads also traces all branch instructions, and adds this information to thunks for the executing sub-computation as part of the recording control dependencies.
 The thread continues to execute instructions until a synchronization primitive call is made to the \pthreads  library. At the synchronization point, we define the end point for the executing sub-computation. 
-Thereafter, we let the thread perform the actual synchronization operation. The algorithm derives control  and synchronization edges in the CPG are derived by recording the happens-before order between sub-computations. Our algorithm implicitly derives data-dependent edges through the union of the happens-before order between sub-computations and the read/write sets.
-Finally, we start a new sub-computation and repeat the process until the executing thread
+Thereafter, we let the thread perform the actual synchronization operation. At synchronization points, the algorithm derives control  and synchronization edges at the granularity of sub-computation by recording the happens-before order between sub-computations. Finally, we start a new sub-computation and repeat the process until the executing thread
 terminates. 
+
+ %Our algorithm implicitly derives data-dependent edges through the union of the happens-before order between sub-computations and the read/write sets.
+
 
  
 
@@ -142,13 +142,16 @@ Based on the intuition developed so far, we next present the
 subroutines used in the recording algorithm (see
 Algorithm~\ref{fig:ithreadsRecordProc}). Let $T$ denote the number of threads in the system, which are numbered from $1$ to $T$.  Initially, each thread $t$ initializes (using routine {\tt initThread}($t$)) its monotonically increasing thunk
 counter ($\alpha$) and the thread clock ($C_t$) to zero. In addition, vector clocks ($C_S$) of all synchronization objects $S$ are also initialized to zero. 
-In the beginning of a new thunk (using routine {\tt startThunk()}), the clock value ($C_t$) of the thread $t$ is
+In the beginning of a new thunk (using routine {\tt startSub-computation()}), the clock value ($C_t$) of the thread $t$ is
 updated based on the sub-computation  counter ($\alpha$) to keep track of the local logical time of $t$. The thread clock is updated by assigning the $\alpha$ to $t^{th}$ index of the thread clock $C_t[t]$. The updated value of thread clock ($C_t$)   is also assigned to the sub-computation's clock ($L_t[\alpha].C$). Finally, the read set and the write set
-($L_t[T_t].R/W$) of the new thunk are initialized to empty set.
+($L_t[T_t].R/W$) of the new sub-computation are initialized to empty set.
 
-During a thunk execution, we trace reads and writes  (using routine {\tt onMemoryAccess()}) at the granularity of the
+During a sub-computation execution, we trace reads and writes  (using routine {\tt onMemoryAccess()}) at the granularity of the
 memory pages ({\tt pageID}), and update the respective read/write set
-($L_t[T_t].R/W$) of the executing thunk.  
+($L_t[T_t].R/W$) of the executing sub-computation.  
+
+Similarly, we also trace branch instructions (using routine {\tt onBranchAccess()}), and update the thunk within the executing sub-computation.
+
 At synchronization points, we define the end of the current sub-computation, and therefore, we increment the sub-computation  counter ($\alpha$) by one. The executing thread performs the synchronization operation (using routine {\tt onSynchronization()}). Recall that in our model, a synchronization operation is either a release or an acquire operation. Therefore, we handle {\tt onSynchronization()} accordingly. If it is a release operation on the synchronization object $S$ by the thread $t$, the 
 releasing thread updates the synchronization object's clock ($C_S$) to
 hold the maximum of its own clock value ($C_{t}$) and the clock  ($C_S$) of $S$. Then the releasing thread performs the actual release operation  on object $S$. Alternatively, if its an acquire operation then the acquiring thread first performs the acquire  operation on object $S$. After the acquire operation on the synchronization object $S$ by
