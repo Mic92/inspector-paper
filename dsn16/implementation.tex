@@ -38,7 +38,7 @@ shares parts of the execution context with the parent process (which implements 
 
 But this raises a new problem, which is that, unlike threads, processes do not share their address spaces. We address this by taking advantage of the RC memory model we defined for \projecttitle, where threads share the updates only at synchronization points.  To implement the RC memory model, we use shared memory commit of Dthreads that allows threads to communicate at well-defined synchronization points.
 
-
+\input{figure/figureTex/lib-architecture}
 \myparagraph{Shared memory commit} This shared memory commit is implemented using memory mapped files. In
 particular, the virtual address ranges for the shared portions (globals and heap) of
 the address space are mapped to memory mapped files, which are managed by the
@@ -92,8 +92,8 @@ theire will be gaps in the trace. PSB packets allow to resynchronize over these
 gapps.
 
 
-\input{figure/figureTex/lib-architecture}
 
+\input{figure/figureTex/pt-os}
 %\begin{figure}[h]
 %\includegraphics[width=8cm]{figure/arch.jpg}
 %\caption{Libtthread Architecture}
