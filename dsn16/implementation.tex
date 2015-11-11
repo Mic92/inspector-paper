@@ -3,7 +3,7 @@
 
 
 
-This section describes the implementation of the \projecttitle library based on the algorithm presented in~\secref{algorithms}. We implemented \projecttitle as a dynamically linkable shared library for the GNU/Linux OS that can be loaded and linked  at runtime for {\tt POSIX} threads (replacing the \pthreads library). The application executables can simply link the library (without any recompilation) either using {\tt LD\_PRELOAD} or the {\tt -rdynamic} flag, specifying the path of the \projecttitle library. The library exports the provenance information as an extended  {\tt perf} utility for data provenance. 
+This section describes the implementation of the \projecttitle library based on the algorithm presented in~\secref{algorithms}. We implemented \projecttitle as a dynamically linkable shared library for the GNU/Linux OS that can be loaded and linked  at runtime for {\tt POSIX} threads (replacing the \pthreads library). The application executables can simply link the library (without any recompilation) either using {\tt LD\_PRELOAD} or the {\tt -rdynamic} flag, specifying the path of the \projecttitle library. The library exports the provenance information as an extended interface in the {\tt perf} utility to support data provenance. 
 The architecture of \projecttitle (shown in Figure~\ref{fig:basicSystem}) consists of two main components: \projecttitle threading library, and \projecttitle PT OS support.  We next describe these two components in detail.
 
 
