@@ -25,7 +25,7 @@ Our high level approach is based on recording data, control, and schedule depend
 
 In this paper, we present a {\em parallel} algorithm to build the CPG. Our algorithm leverages the Release Consistency (RC) memory model to efficiently record the inter-thread data and schedule dependencies in a completely decentralized manner. We implemented our algorithm as a dynamically linkable shared library by leveraging process-level isolation, MMU-assisted memory tracking, and \intelpt ISA extensions released recently as part of the Broadwell (also Skylake) microarchitecture. 
 
-An additional challenge that we need to address in the library implementation is the excessive log data produced by \intelpt, especially for long running applications. Therefore, we further extended the library to support a live snapshot facility, where the user can analyze the provenance on-the-fly while the program is still running. The library periodically takes a consistent snapshot~\cite{chandy-lamport} of the CPG in a decentralized fashion.
+%An additional challenge that we need to address in the library implementation is the excessive log data produced by \intelpt, especially for long running applications. Therefore, we further extended the library to support a live snapshot facility, where the user can analyze the provenance on-the-fly while the program is still running. The library periodically takes a consistent snapshot~\cite{chandy-lamport} of the CPG in a decentralized fashion.
 
 
 To summarize, we make the following contributions:
