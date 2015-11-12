@@ -1,12 +1,20 @@
 \section{Discussion}
 \label{sec:discussion}
-While data provenance is useful across wide range of workflows, we discuss two active projects where \projecttitle is being used to increase the dependability and security of software systems. 
+While data provenance is useful across wide range of workflows, we discuss three active projects where \projecttitle is being used to increase the dependability, security, and efficiency of software systems. 
 
-\myparagraph{Dependability: Debugging multithreaded programs} Multithreaded programs are notoriously difficult to debug. This difficulty arises from the fact that multithreaded programs are inherently non-deterministic. Consequently, threads accessing the shared-memory region with different inter-leavings may lead to undesirable concurrency bugs, like program crash or data corruption. 
-
-
-Currently, debugging techniques rely on examining memory state during the program execution or by analyzing core dumps after the program crashes. These techniques mainly target ``what" is the state of the program without revealing much about ``why" is it the state of the program like that. We can aid the developers to better understand the failed execution by augmenting the existing debugging techniques with the lineage information of the memory state or ``why"-provenance or simply data-provenance.
+\myparagraph{Dependability: Debugging programs} Multithreaded programs are notoriously difficult to debug because of the inherently non-deterministic thread scheduling by the OS.  Currently, debugging techniques rely on examining memory state during the program execution or by analyzing core dumps after the program crashes. These techniques mainly target ``what" is the state of the program without revealing much about ``why" is it the state of the program like that. Our library can be extended to aid the developers to better understand the failed execution by augmenting the existing debugging techniques with the data provenance of the memory state.
 
 
-\myparagraph{Security: Dynamic information flow control}
+%
+%Multithreaded programs are notoriously difficult to debug. This difficulty arises from the fact that multithreaded programs are inherently non-deterministic. Consequently, threads accessing the shared-memory region with different inter-leavings may lead to undesirable concurrency bugs, like program crash or data corruption. 
+%
+%
+%Currently, debugging techniques rely on examining memory state during the program execution or by analyzing core dumps after the program crashes. These techniques mainly target ``what" is the state of the program without revealing much about ``why" is it the state of the program like that. We can aid the developers to better understand the failed execution by augmenting the existing debugging techniques with the lineage information of the memory state or ``why"-provenance or simply data-provenance.
+
+
+\myparagraph{Security: Dynamic information flow control} Dynamic information flow tracking protects software against accidental or malicious leakage of information by restricting the spurious I/O. Our library can be extended to thwart unwanted I/O activities by embedding a policy checker to prevent data leakage at the level of {\tt glibc} wrappers for system calls.
+
+
+
+\myparagraph{Efficiency: Memory management for NUMA architecture} The recent advancements in NUMA architectures offers a wide range of configurations for the interconnects with varying memory bandwidth, and  it is unclear how these different configurations affect the OS support for applications. Our library can be extended to investigate the potential impact of interconnect topologies on the memory management, and automatically optimize the memory layout  for a given  topology in the given NUMA architecture.  The optimization for  the  memory management with respect to the NUMA architecture is based on the  analyses of the memory access patterns in data provenance graph.
 
