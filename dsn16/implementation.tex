@@ -3,7 +3,7 @@
 
 
 
-This section describes the architecture and implementation of \projecttitle. The architecture of \projecttitle (shown in Figure~\ref{fig:basicSystem}) consists of two main components: \projecttitle threading library, and \projecttitle PT OS support. The library exports the provenance information as an extended interface in the {\tt perf} utility to support data provenance. We next describe these two components in detail.
+This section describes the architecture and implementation of \projecttitle. The architecture of \projecttitle (shown in Figure~\ref{fig:basicSystem}) consists of two main components: threading library and OS support. The library exports the CPG as an extended interface in the {\tt perf} utility for supporting data provenance. We next describe these two components in detail.
 
 
 
@@ -20,23 +20,23 @@ The \projecttitle threading library derives the data and schedule dependencies. 
 
 \myparagraph{Memory protection} A central challenge of the implementation of the algorithm is keeping track of the data dependencies for shared-memory accesses by all possible interleaving threads. Since monitoring every load and store to each memory word would be too costly, we instead rely on the OS's (hardware-assisted) page fault mechanism to keep track of reads and writes at the granularity of memory pages.
 
-To derive the read and write sets during thunk execution,  \projecttitle~uses standard memory protection  mechanism and signal handlers. In particular, \projecttitle protects the address space using {\tt mprotect(PROT\_NONE)} at the beginning of each thunk. This forces a trap (and the corresponding OS signal) the first time a page is read or written to in a given thunk. The respective signal handler, which is implemented by the \projecttitle library, records the information about the access, and also resets the protection bits so that subsequent accesses to the same page by the same thread in the same thunk can proceed without generating a trap, and therefore avoid a
+To derive the read and write sets during sub-computation execution,  \projecttitle~uses standard memory protection  mechanism and signal handlers. In particular, \projecttitle protects the address space using {\tt mprotect(PROT\_NONE)} at the beginning of each sub-computation. This forces a trap (and the corresponding OS signal) the first time a page is read or written to in a given sub-computation. The respective signal handler, which is implemented by the \projecttitle library, records the information about the access, and also resets the protection bits so that subsequent accesses to the same page by the same thread in the same sub-computation can proceed without generating a trap, and therefore avoid a
 latency penalty.  
 
 However, a naive page protection mechanism raises an important problem because all threads in a process share the same virtual memory
 structures (namely the TLB and page table entries with the respective protection bits). This makes it difficult to keep track of which
 threads are responsible for which memory accesses or to enforce different protections for different threads. Otherwise, we need to re-protect the page after serving every load and store instruction causing a large number of page faults.
-%(E.g., an access to a given memory location may or may not be the first access in a thunk depending on which thread is performing the access.) 
+%(E.g., an access to a given memory location may or may not be the first access in a sub-computation depending on which thread is performing the access.) 
 To address this problem, \projecttitle implements threads as separate
-processes (an idea originally proposed by Grace~\cite{grace-oopsla-2009} and also used in Dthreads~\cite{dthreads-sosp-2011}).
+processes (an idea originally proposed by Grace~\cite{grace-oopsla-2009}).
 
-\myparagraph{Private address space} \projecttitle  implements threads as separate processes thus allowing each thread has its own private address space and control over the virtual
+\myparagraph{Threads as processes} \projecttitle  implements threads as separate processes thus allowing each thread has its own private address space and control over the virtual
 memory structures.   This gives us the ability to manipulate the page protection of threads individually while providing a simple way to implement the release consistency memory
 model. In particular, \projecttitle uses the {\tt clone} system call to fork off a new process on {\tt pthread\_create()}. The process that implements the newly created thread (i.e., the child process) already
 shares parts of the execution context with the parent process (which implements the calling thread) such as file descriptors and signal handlers. 
 
 
-But this raises a new problem, which is that, unlike threads, processes do not share their address spaces. We address this by taking advantage of the RC memory model we defined for \projecttitle, where threads share the updates only at synchronization points.  To implement the RC memory model, we use shared memory commit of Dthreads that allows threads to communicate at well-defined synchronization points.
+But this raises a new problem, which is that, unlike threads, processes do not share their address spaces. We address this by taking advantage of the RC memory model we defined for \projecttitle, where threads share the updates only at synchronization points.  To implement the RC memory model, we use shared memory commit of  Dthreads~\cite{dthreads-sosp-2011} (originally proposed in distributed shared memory architectures such as TreadMarks~\cite{treadmark} and Munin~\cite{munin}) that allows threads to communicate at well-defined synchronization points.
 
 \input{figure/figureTex/lib-architecture}
 \myparagraph{Shared memory commit} This shared memory commit is implemented using memory mapped files. In
