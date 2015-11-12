@@ -35,12 +35,16 @@ To summarize, we make the following contributions:
 
 \item We implemented our algorithm as a dynamically linkable shared library, which we call \projecttitle, leveraging MMU-assisted memory tracking, process-level isolation, and recently released \intelpt ISA extensions.  The \projecttitle library can be loaded and linked at run-time as a replacement to the \pthreads library, without any recompilation  of the application code ($\S$\ref{sec:implementation}).
 
-\item  We  empirically demonstrate  the effectiveness of \projecttitle by applying it to applications of  PARSEC~\cite{parsec} and Phoneix~\cite{phoenix} benchmark suites. Our experiments show that \projecttitle~incurs reasonable overhead to record data provenance for a majority of applications ($\S$\ref{sec:evaluation}). 
+\item We further extended the library to support a live snapshot facility, where the user can analyze the provenance on-the-fly while the program is still running. The library periodically takes a consistent snapshot~\cite{chandy-lamport} of the CPG in a decentralized fashion ($\S$\ref{sec:snapshot}).
+
+
+%\item  We  empirically demonstrate  the effectiveness of \projecttitle by applying it to applications of  PARSEC~\cite{parsec} and Phoneix~\cite{phoenix} benchmark suites. Our experiments show that \projecttitle~incurs reasonable overhead to record data provenance for a majority of applications ($\S$\ref{sec:evaluation}). 
 
 \end{itemize}
 
 
 
+We  empirically demonstrate  the effectiveness of \projecttitle by applying it to applications of  PARSEC~\cite{parsec} and Phoneix~\cite{phoenix} benchmark suites. Our experiments show that \projecttitle~incurs reasonable overhead to record data provenance for a majority of applications ($\S$\ref{sec:evaluation}). 
 
 Furthermore, we briefly describe three on-going case-studies where the generic provenance interface exported by \projecttitle is being used to improve the dependability, security, and efficiency of software systems  ($\S$\ref{sec:discussion}). \projecttitle is an active open-source project and the library is publicly available to the research community for further use in other workflows.  
 

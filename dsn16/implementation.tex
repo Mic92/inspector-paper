@@ -55,7 +55,7 @@ to the same memory location we resolve them using a last-writer wins policy.
 \subsection{OS Support for \intelpt}
 
 To obtain the control flow dependencies, we use the new Intel ISA extensions, called Processor Trace (PT), recently released as part of the Broadwell (also in Skylake) microarchitecture. In Linux this processor feature is exposed to the user-space as a Performance Measuring Unit (PMU) in the {\tt perf} event interface. We make use of the \intelpt PMU to derive the control flow dependencies. Figure~\ref{fig:pt-OS-support} shows the architecture for the OS support for \intelpt.
- \input{figure/figureTex/pt-os}
+
 
 
 In particular, the {\tt perf} interface on Linux consists of a syscall, which gives back a file
@@ -80,7 +80,7 @@ stored in a ring buffer called \emph{AUX area}. If perf tool cannot
 keep up with processor trace it is possible (for example an interrupt occurs),
 there will be gaps in the trace. PSB packets allow to resynchronize over these
 gaps. (We also provide a snapshot facility for long running programs described in $\S$~\ref{sec:snapshot}.)
-
+ \input{figure/figureTex/pt-os}
 
 After execution the result can be further processed by using a set of tools
 for example {\tt perf script}. The branch information is still in a compressed
