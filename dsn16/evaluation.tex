@@ -31,8 +31,12 @@ machine is running Linux with kernel 4.2.0 in 64-bit mode.
 
 \myparagraph{Measurements} All applications were compiled using GCC 5.2.1 compiler with -$o3$ optimization flag. For all performance measurements, we report the average over 10 runs with minimum and maximum values discarded.
 
+\input{plotsTex/overheads}
+\input{plotsTex/data-size-overheads}
 
+\input{plotsTex/overheads-breakdown}
 
+\if 0
 \begin{figure}[h]
 \includegraphics[width=8cm]{figure/benchmarks/times-inspector.pdf}
 \end{figure}
@@ -52,7 +56,7 @@ machine is running Linux with kernel 4.2.0 in 64-bit mode.
 \begin{figure}[h]
 \includegraphics[width=8cm]{figure/benchmarks/worksize-times-inspector.pdf}
 \end{figure}
-
+\fi 
 %
 %\myparagraph{Performance metrics: Work and Time}  For each run, we consider two types of measures: \emph{work} and
 % {\em time}. Work refers to the total amount of
