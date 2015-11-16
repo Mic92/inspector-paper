@@ -21,8 +21,10 @@ free. In fact,  the semantics provided by
 \myparagraph{Synchronization model} We support the full range of synchronization
 primitives in the \pthreads API, including {\em mutexes}, {\em cond\_wait/cond\_signal}, {\em semaphores},  and {\em
 barriers}. However, due to the weakly consistent RC memory model, our approach
-does not support {\em ad-hoc synchronization mechanisms} used by programmers via
-shared variables (also referred to as sync variables) in loop such as user-defined spin locks. 
+does not support {\em ad-hoc synchronization mechanisms} such as user-defined spin locks. 
 Although, ad-hoc synchronization mechanisms are used due to either flexibility
 or performance reasons, in practice they are shown to be
-error-prone~\cite{adhoc-sync} introducing bugs or severe performance issues.
+error-prone introducing bugs or severe performance issues~\cite{adhoc-sync}.
+%
+%used by programmers via
+%shared variables (also referred to as sync variables) in loop
