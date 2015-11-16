@@ -4,9 +4,9 @@
 In this section, we present an experimental evaluation of \projecttitle based on the implementation described in  \secref{implementation}. Our evaluation answers the following questions.
 
 \begin{itemize}
-\item What overheads does \projecttitle impose for recording data provenance of multithreaded executions? ($\S$~\ref{subsec:overheads})
-\item How do these overheads scale with increases in the size of input data and computation size? ($\S$~\ref{subsec:scale-overheads})
-\item What are the sources for the provenance overheads? ($\S$~\ref{subsec:quantify-overheads})
+\item What overheads does \projecttitle impose for recording data provenance? ($\S$~\ref{subsec:overheads})
+\item How do these overheads scale with increases in the size of input data? ($\S$~\ref{subsec:data-size-overheads})
+\item What are the sources for the provenance overheads? ($\S$~\ref{subsec:overheads-breakdown})
 \end{itemize}
 
 
@@ -24,39 +24,40 @@ machine is running Linux with kernel 4.2.0 in 64-bit mode.
 \myparagraph{Applications and dataset}  We evaluated \projecttitle with applications from two multithreaded benchmark suites: Phoenix 2.0 \cite{phoenix} and PARSEC 3.0 \cite{parsec}. Table~\ref{tab:apps} lists the applications used for the evaluation along with the input data and benchmark parameters.
 
 
+\myparagraph{Measurements}  For all experiments,  we report time measurements, i.e., run-time comparison between the native {\tt pthreads} execution, and \projecttitle execution.  All applications were compiled using GCC 5.2.1 compiler with -$o3$ optimization flag. For all performance measurements, we report the average over 10 runs with minimum and maximum values discarded.
 
 
 
-\myparagraph{Metrics: Time and Work}  We consider two types of measures to report the performance metrics: {\em time} and {\em work}. In a nutshell, time measurements reflect the end user perceived latency, whereas work measurements assess the overall resource (CPU) utilization.  More specifically,  time refers to the end-to-end computation time for the multithreaded applications. Work refers to the total computation performed by all threads, and it is measured as the cumulative CPU time for all threads. To measure work, we used the CPU accounting controller in cgroups to account the CPU usage of all threads.
+%\myparagraph{Metrics: Time and Work}  We consider two types of measures to report the performance metrics: {\em time} and {\em work}. In a nutshell, time measurements reflect the end user perceived latency, whereas work measurements assess the overall resource (CPU) utilization.  More specifically,  time refers to the end-to-end computation time for the multithreaded applications. Work refers to the total computation performed by all threads, and it is measured as the cumulative CPU time for all threads. To measure work, we used the CPU accounting controller in {\tt cgroups} to account the CPU usage of all threads.
 
-\myparagraph{Measurements} All applications were compiled using GCC 5.2.1 compiler with -$o3$ optimization flag. For all performance measurements, we report the average over 10 runs with minimum and maximum values discarded.
+%\myparagraph{Measurements} All applications were compiled using GCC 5.2.1 compiler with -$o3$ optimization flag. For all performance measurements, we report the average over 10 runs with minimum and maximum values discarded.
 
-\input{plotsTex/overheads}
-\input{plotsTex/data-size-overheads}
 
-\input{plotsTex/overheads-breakdown}
+%\myparagraph{Additional results} Due to the space limitation, we only present  time measurements for all experiments. The work measurements are available online on the following anonymized link:  
+% \href{http://www.mpi-sws.org/\~bhatotia/}{\tt http://www.mpi-sws.org/\textasciitilde bhatotia/}
 
-\if 0
-\begin{figure}[h]
-\includegraphics[width=8cm]{figure/benchmarks/times-inspector.pdf}
-\end{figure}
 
-\begin{figure}[h]
-\includegraphics[width=8cm]{figure/benchmarks/cpu-cycles-inspector.pdf}
-\end{figure}
-
-\begin{figure}[h]
-\includegraphics[width=8cm]{figure/benchmarks/times-16-threads.pdf}
-\end{figure}
-
-\begin{figure}[h]
-\includegraphics[width=8cm]{figure/benchmarks/cpu-cycles-16-threads.pdf}
-\end{figure}
-
-\begin{figure}[h]
-\includegraphics[width=8cm]{figure/benchmarks/worksize-times-inspector.pdf}
-\end{figure}
-\fi 
+%\if 0
+%\begin{figure}[h]
+%\includegraphics[width=8cm]{figure/benchmarks/times-inspector.pdf}
+%\end{figure}
+%
+%\begin{figure}[h]
+%\includegraphics[width=8cm]{figure/benchmarks/cpu-cycles-inspector.pdf}
+%\end{figure}
+%
+%\begin{figure}[h]
+%\includegraphics[width=8cm]{figure/benchmarks/times-16-threads.pdf}
+%\end{figure}
+%
+%\begin{figure}[h]
+%\includegraphics[width=8cm]{figure/benchmarks/cpu-cycles-16-threads.pdf}
+%\end{figure}
+%
+%\begin{figure}[h]
+%\includegraphics[width=8cm]{figure/benchmarks/worksize-times-inspector.pdf}
+%\end{figure}
+%\fi 
 %
 %\myparagraph{Performance metrics: Work and Time}  For each run, we consider two types of measures: \emph{work} and
 % {\em time}. Work refers to the total amount of
@@ -67,19 +68,25 @@ machine is running Linux with kernel 4.2.0 in 64-bit mode.
 %whereas work measurements assess the overall resource (CPU) utilization.
 
 \subsection{Provenance Overheads}
+\label{subsec:overheads}
 
-\myparagraph{Overheads}
-
-\myparagraph{Breakdown of overheads}
-
-\subsection{\projecttitle Scalability}
-
-\myparagraph{Overheads w.r.t. input size}
-
-\myparagraph{Overheads w.r.t. computation size}
+\input{plotsTex/overheads}
 
 
-\subsection{Sources of Overheads}
+\subsection{Scalability w.r.t. Input Data Sizes}
+\label{subsec:data-sizes-overheads}
+
+
+
+\input{plotsTex/data-size-overheads}
+
+
+
+
+
+\subsection{Overheads Breakdown}
+\label{subsec:overheads-breakdown}
+\input{plotsTex/overheads-breakdown}
 
 \input{tables/avxbenches-stats.tex}
 

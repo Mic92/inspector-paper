@@ -2,7 +2,7 @@
 
 % Dmitrii: couldn't find a way to make dynamic multicolumn with csvreader, so just copy-pasted result here from tables/data/avxbenches-stats.csv
 
-\begin{table}
+\begin{table*}[t]
 \footnotesize
 \centering
 
@@ -22,7 +22,8 @@ wc        & 2.24  & 70.9  &  6.14 & x264     & 2.00 & 59.3 & 3.26 \\
 \end{tabular}
 
 
-\caption{Runtime statistics for versions of benchmarks with 16 threads: ILP (in instr/cycle), fraction of AVX instructions (in percents), and increase in number of all instructions w.r.t. native.}\label{tab:avxbenches-stats}
-%\vspace{-4mm}
-\end{table}
-%\end{figure}
+\caption{Runtime statistics for versions of benchmarks with 16 threads: ILP (in instr/cycle), fraction of AVX instructions (in percents), and increase in number of all instructions w.r.t. native.}
+\label{tab:apps}
+
+\end{table*}
+
