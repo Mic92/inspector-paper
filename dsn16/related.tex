@@ -20,7 +20,7 @@ These systems leverage the semantics of distributed protocols to derive a state-
 
 
 
-\myparagraph{Multithreaded programs} ~\cite{cgo-compiler-provenance} special compiler-support for the application code and all run-time libraries.
+\myparagraph{Memory tracing} Our approach is complementary to the numerous run-time~\cite{valgrind,memtrace} and compile-time~\cite{cgo-compiler-provenance} tools that allow fine-grained byte-level memory read and writes made by threads. In contrast, our tool makes a trade-off of memory tracking at the granularity of memory pages, and uses a combination of OS support and the new ISA extensions to track the data flow for the entire program. Furthermore, we also record control and schedule dependencies for the multithreaded execution as part the data provenance graph. 
 
 
 
