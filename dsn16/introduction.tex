@@ -4,7 +4,7 @@
 Data provenance provides an explicit intermediate program representation recording control and data dependencies for a program execution.  The provenance trace is useful for a wide-range of workflows to improve the dependability, security, and efficiency of software systems; including, program debugging~\cite{fast-track-pldi}, parallel state machine replication~\cite{rex},  compiler optimizations~\cite{pgo}, incremental computation~\cite{ithreads}, program slicing~\cite{roly}, memory management~\cite{memprof}, and dynamic information flow tracking~\cite{dift}, etc. 
 
 Many existing systems provide support for data provenance (details in $\S$\ref{sec:related}); however,
-most existing solutions target sequential programs, while others that do support parallelism rely on restrictive application-specific programming model. As a result, the existing solutions have limited wide-spread adoption.
+most existing solutions target sequential programs, while others that do support parallelism rely on restrictive application-specific programming model. As a result, the existing solutions have limited adoption in practice.
 
 
 
@@ -17,13 +17,13 @@ In this paper, we propose an operating systems-based approach to data provenance
 
 \end{itemize}
 
-To achieve these goals, we present \projecttitle, a threading library for data provenance. To run a program using \projecttitle,  the user just needs to preload the \projecttitle library  by using the environment variable {\tt LD\_PRELOAD} or {\tt -rdynamic} flag, and then, run the program as usual. Thus, enabling the existing binaries to benefit from \projecttitle. The library exports the provenance information as an extended  {\tt perf} utility for data provenance. 
+To achieve these goals, we built \projecttitle, a data provenance library for multithreaded programs. To run a program using \projecttitle,  the user just needs to preload the \projecttitle library  by using the environment variable {\tt LD\_PRELOAD} or {\tt -rdynamic} flag, and then, run the program as usual. Thus, our library benefits existing binaries without any code changes or re-compilation. The library exports the provenance information to the {\tt perf} utility as an extended interface.
 
 
 Our high level approach is based on recording data, control, and schedule dependencies in a computation by constructing a {\em Concurrent Provenance Graph} (CPG). The CPG tracks the input data to a program, all sub-computations (a sub-computation is a unit of the computation), the data flow between sub-computations, intra-thread control flow, and inter-thread schedule dependencies for the multithreaded execution. 
 
 
-In this paper, we present a {\em parallel} algorithm to build the CPG. Our algorithm leverages the Release Consistency (RC) memory model to efficiently record the inter-thread data and schedule dependencies in a completely decentralized manner. We implemented our algorithm as a dynamically linkable shared library by leveraging process-level isolation, MMU-assisted memory tracking, and \intelpt ISA extensions released recently as part of the Broadwell (also Skylake) microarchitecture. 
+In this paper, we present a {\em parallel} algorithm to build the CPG. Our algorithm leverages the Release Consistency (RC) memory model to efficiently record the inter-thread data and schedule dependencies in a completely decentralized manner. We implemented our algorithm as a dynamically linkable shared library by leveraging process-level isolation, MMU-assisted memory tracking, and \intelpt ISA extensions, released recently as part of the Broadwell (also available in Skylake) microarchitecture. 
 
 %An additional challenge that we need to address in the library implementation is the excessive log data produced by \intelpt, especially for long running applications. Therefore, we further extended the library to support a live snapshot facility, where the user can analyze the provenance on-the-fly while the program is still running. The library periodically takes a consistent snapshot~\cite{chandy-lamport} of the CPG in a decentralized fashion.
 
