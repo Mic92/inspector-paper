@@ -8,10 +8,7 @@ Concurrent Provenance Graph} (CPG)  as a directed acyclic graph $G =
 vertices of the CPG represent {\em sub-computations}. The edges represent the dependencies between the sub-computations. %We distinguish between three kinds of edges: control, schedule, and data-dependence edges for recording control, schedule, and data dependencies, respectively. 
 
 \myparagraph{Sub-computations} We define a {\em sub-computation}  as the sequence of instructions
-executed by a thread between two \pthreads synchronization API calls. Using the RC memory model, we derive the synchronization and data dependencies at the granularity of a sub-computation.
-
-
-
+executed by a thread between two \pthreads synchronization API calls. %Using the RC memory model, we derive the synchronization and data dependencies at the granularity of a sub-computation.
 We further divide each sub-computation as sequence of code thunks, or {\em thunks} to record the control path taken by the executing thread within the sub-computation.
 
 
@@ -54,8 +51,8 @@ same thread ($t_1 = t_2$), and $L_{(t_1)}[\alpha_1]$ was executed before $L_{(t_
  $L_{(t_1)}[\alpha_!] \rightarrow L_{(t_3)}[\alpha_3] $ and $L_{(t_3)}[\alpha_3]  \rightarrow L_{(t_2)}[\alpha_2]$.
 
 
-\myparagraph{III: Data-dependence edges}  {\em Data dependence edges} are records the flow of data between sub-computations of the same or different threads. 
- We derive the data dependencies between sub-computations using the read/write sets. For a sub-computation $L_t[\alpha]$, the {\em read-set}
+\myparagraph{III: Data-dependence edges}  {\em Data dependence edges}  records the flow of data between sub-computations of the same or different threads. 
+ We derive the data dependencies between sub-computations using the read/write sets, and recorded partial order in control and synchronization edges. For a sub-computation $L_t[\alpha]$, the {\em read-set}
 ($L_t[\alpha].R$) and the {\em write-set} ($L_t[\alpha].W$) are the set of
 addresses that were respectively read from and written to by
 the thread while executing the sub-computation. 
