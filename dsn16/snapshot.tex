@@ -2,7 +2,7 @@
 \label{sec:snapshot}
 An additional challenge that we need to address in the library implementation is the excessive log data produced by \intelpt, especially for long running applications. Therefore, we further extended the library to support a live snapshot facility, where the user (or an application using \projecttitle) can analyze the provenance on-the-fly while the program is still running.
 
-For the snapshot facility, the library periodically takes a cut of the CPG. A cut is {\em consistent} for any synchronization operation on object $S$,  {\em acquire}($S$) operation in the cut implies that corresponding {\em release}($S$) is also included in the cut~\cite{chandy-lamport}.  To achieve so, we make use of modeling synchronization primitives as {\em acquire} and {\em release} operations (described in $\S$\ref{sec:algorithms}). Each thread invokes the snapshot operation on the latest  synchronization event ({\em acquire} or {\em release}) in the recorded trace.
+For the snapshot facility, the library periodically takes a cut of the CPG. A cut is {\em consistent} if, for any synchronization operation on object $S$ in the trace,  {\em acquire}($S$) operation being in the cut implies that corresponding {\em release}($S$) is also included in the cut~\cite{chandy-lamport}.  To achieve so, we make use of modeling synchronization primitives as {\em acquire} and {\em release} operations (described in $\S$\ref{sec:algorithms}). Each thread invokes the snapshot operation on the latest  synchronization event ({\em acquire} or {\em release}) in the recorded trace.
 
 
 
