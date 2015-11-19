@@ -32,7 +32,8 @@ shares parts of the execution context with the parent process (which implements 
 
 But this raises a new problem, which is that, unlike threads, processes do not share their address spaces. We address this by taking advantage of the RC memory model we defined for \projecttitle, where threads share the updates only at synchronization points.  
 \input{figure/figureTex/lib-architecture}
-\myparagraph{Shared memory commit} To implement the RC memory model, we use shared memory commit of  Dthreads~\cite{dthreads-sosp-2011} (originally proposed in distributed shared memory architectures such as TreadMarks~\cite{treadmark} and Munin~\cite{munin}) that allows threads to communicate at well-defined synchronization points.
+\myparagraph{Shared memory commit} To implement the RC memory model, we use shared memory commit of  Dthreads~\cite{dthreads-sosp-2011} (originally proposed in distributed shared memory architectures such as TreadMarks~\cite{treadmark})% and Munin~\cite{munin}) 
+that allows threads to communicate at well-defined synchronization points.
 Our shared memory commit is implemented using memory mapped files. In
 particular, the virtual address ranges for the shared portions (globals and heap) of
 the address space are mapped to memory mapped files, which are managed by the
