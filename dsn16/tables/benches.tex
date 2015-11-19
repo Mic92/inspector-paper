@@ -1,0 +1,28 @@
+\begin{table*}[t]
+\footnotesize
+\centering
+
+\begin{tabular}{l | r r r r r r r r}
+%[-8pt]
+    Name& Options& Logsize [MB]& Compressed Log [MB]& Wall time [s]& CPU time [s]& Instructions& Major faults \\
+  \hline \hline
+    blackscholes& 16 in\_64K.txt prices.txt& 922.645& 62.496& 0.972& 7.796& 11842873271& 14 \\
+    canneal& 15 10000 2000 100000.nets 32& 4815.147& 281.693& 9.037& 52.540& 41523503296& 24 \\
+    histogram& large.bmp& 362.331& 10.734& 0.396& 5.318& 7993744238& 4 \\
+    kmeans& -d 3 -c 500 -p 50000 -s 500& 12353.204& 521.753& 8.367& 88.052& 156173239938& 5 \\
+    linear\_regression& key\_file\_500MB.txt& 196.705& 5.692& 0.279& 3.485& 7217444008& 4 \\
+    matrix\_multiply& 2000 2000& 1965.896& 92.426& 19.988& 122.263& 47091910500& 20 \\
+    pca& -r 4000 -c 4000 -s 100& 1689.884& 109.082& 4.852& 51.093& 50291647128& 42 \\
+    reverse\_index& datafiles& 97.999& 2.728& 0.172& 1.187& 1792418849& 4 \\
+    streamcluster& 2 5 1 10 10 5 none output.txt 16& 27748.661& 740.458& 13.293& 180.056& 317114980878& 6 \\
+    string\_match& key\_file\_500MB.txt& 2425.324& 439.768& 1.432& 20.716& 40411387018& 22 \\
+    swaptions& -ns 128 -sm 50000 -nt 16& 6705.693& 924.682& 3.705& 54.951& 94023751236& 21 \\
+    word\_count& word\_100MB.txt& 4139.494& 531.470& 2.808& 36.554& 36230381654& 43 \\
+
+\hline
+\end{tabular}
+
+\caption{Runtime statistics of benchmarks with 16 threads}
+\label{tab:apps}
+
+\end{table*}
