@@ -23,6 +23,7 @@ These systems leverage the semantics of distributed protocols to derive a state-
 \myparagraph{Memory tracing} Our approach is complementary to the numerous run-time~\cite{valgrind,memtrace} and compile-time~\cite{cgo-compiler-provenance} tools that allow fine-grained byte-level memory read and writes made by threads. In contrast, our tool makes a trade-off of memory tracking at the granularity of memory pages, and uses a combination of OS support and the new ISA extensions to track the data flow for the entire program. Furthermore, we also record control and schedule dependencies for the multithreaded execution as part of the data provenance graph. 
 
 
+\myparagraph{Operating systems} Linux Provenance Module (LPM)~\cite{lpm}, a recently proposed system to provide operating system support to collect system-wide provenance. In contrast to LPM, \projecttitle is a user-space solution and does not require any modifications to the underlying OS. Secondly, unlike LPM, which collects provenance at the granularity of a process, we collect data provenance at a finer granularity of a thread.  
 
 \myparagraph{Programming languages} Programming languages researchers develop language-based provenance approaches relying on a new language with special data-types. These language-based approaches derive the provenance graph using techniques such as  program slicing~\cite{roly} or advancement such as self-adjusting computation~\cite{Acar05}. In contrast, our work supports unmodified existing programs without relying on any language-level support or a new type system.
 
