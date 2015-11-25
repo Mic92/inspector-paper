@@ -48,7 +48,7 @@ Formally, two sub-computations $L_{(t_1)}[\alpha_1]$ and
 $L_{(t_2)}[\alpha_2]$ are ordered by the happens-before relationship ($L_{(t_1)}[\alpha_1] \rightarrow
 L_{(t_2)}[\alpha_2]$) if:  ($i$)  they are sub-computations of the
 same thread ($t_1 = t_2$), and $L_{(t_1)}[\alpha_1]$ was executed before $L_{(t_2)}[\alpha_2]$; ($ii$)  $L_{(t_1)}[\alpha_1]$  is a release and $L_{(t_2)}[\alpha_2]$ is corresponding acquire on the same synchronization object $S$; ($iii$) due to transitivity if  
- $L_{(t_1)}[\alpha_!] \rightarrow L_{(t_3)}[\alpha_3] $ and $L_{(t_3)}[\alpha_3]  \rightarrow L_{(t_2)}[\alpha_2]$.
+ $L_{(t_1)}[\alpha_1] \rightarrow L_{(t_3)}[\alpha_3] $ and $L_{(t_3)}[\alpha_3]  \rightarrow L_{(t_2)}[\alpha_2]$.
 
 
 \myparagraph{III: Data-dependence edges}  {\em Data dependence edges}  records the flow of data between sub-computations of the same or different threads. 
@@ -57,7 +57,7 @@ same thread ($t_1 = t_2$), and $L_{(t_1)}[\alpha_1]$ was executed before $L_{(t_
 addresses that were respectively read from and written to by
 the thread while executing the sub-computation. 
 
-Essentially, data dependence edges establish the {\em update-use relationship} between sub-computations. The update-use relationship exists between two sub-computations if they can be  ordered based on the happens-before relationship, and the write-set of the  precedent  sub-computations intersects with the read-set of the antecedent sub-computations. 
+Essentially, data dependence edges establish the {\em update-use relationship} between sub-computations. The update-use relationship exists between two sub-computations if they can be  ordered based on the happens-before relationship, and the write-set of the  precedent  sub-computations transitively intersects with the read-set of the antecedent sub-computations. 
 
 
 
