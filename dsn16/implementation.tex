@@ -16,7 +16,7 @@ The threading library derives the data and schedule dependencies. The architectu
 
 To derive the read and write sets during sub-computation execution,  \projecttitle~uses standard memory protection  mechanism and signal handlers. In particular, \projecttitle protects the address space using {\tt mprotect(PROT\_NONE)} at the beginning of each sub-computation. This forces a trap (and the corresponding OS signal) the first time a page is read or written to in a given sub-computation. The respective signal handler, which is implemented by the \projecttitle library, records the information about the access, and also resets the protection bits so that subsequent accesses to the same page by the same thread in the same sub-computation can proceed without generating a trap, and therefore avoid a
 latency penalty.  
-\input{figure/figureTex/lib-architecture}
+
 However, a naive page protection mechanism raises an important problem because all threads in a process share the same virtual memory
 structures (namely the TLB and page table entries with the respective protection bits). This makes it difficult to keep track of which
 threads are responsible for which memory accesses or to enforce different protections for different threads. Otherwise, we need to re-protect the page after serving every load and store instruction causing a large number of page faults.
@@ -28,7 +28,7 @@ processes (an idea originally proposed by Grace~\cite{grace-oopsla-2009}).
 memory structures.   This gives us the ability to manipulate the page protection of threads individually while providing a simple way to implement the release consistency memory
 model. In particular, \projecttitle uses the {\tt clone} system call to fork off a new process on {\tt pthread\_create()}. The process that implements the newly created thread (i.e., the child process) already
 shares parts of the execution context with the parent process (which implements the calling thread) such as file descriptors and signal handlers. 
-
+\input{figure/figureTex/lib-architecture}
 
 But this raises a new problem, which is that, unlike threads, processes do not share their address spaces. We address this by taking advantage of the RC memory model we defined for \projecttitle, where threads share the updates only at synchronization points.  
 
@@ -57,7 +57,7 @@ to the same memory location we resolve them using a last-writer wins policy.
 
 To obtain the control flow dependencies, we use the new Intel ISA extensions, called Processor Trace (PT), recently released as part of the Broadwell (also in Skylake) microarchitecture. In Linux this processor feature is exposed to the user-space as a Performance Measuring Unit (PMU) in the {\tt perf} event interface. We make use of the \intelpt PMU to derive the control flow dependencies. Figure~\ref{fig:pt-OS-support} shows the architecture for the OS support for \intelpt.
 
- \input{figure/figureTex/pt-os}
+
 
 In particular, the {\tt perf} interface on Linux consists of a syscall, which gives back a file
 descriptor. Events are accessed by obtaining buffers via {\tt mmap(2)} and can be
@@ -72,7 +72,7 @@ default every child process belongs to the same process as its parent. Also for
 We create such a {\tt cgroup} exclusively for the application using \projecttitle. This is done because
 our threading library causes applications using threads to create multiple
 processes instead, whose process ids are not known it advance.
-
+ \input{figure/figureTex/pt-os}
 The subcommand {\tt perf record} is then used to dump the trace produced by \intelpt.
 \intelpt generates a stream of TNT packets, which denotes the
 condional branches taken and TIP packets for indirect branches and function
