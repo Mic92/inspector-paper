@@ -16,7 +16,7 @@ The threading library derives the data and schedule dependencies. The architectu
 
 To derive the read and write sets during sub-computation execution,  \projecttitle~uses standard memory protection  mechanism and signal handlers. In particular, \projecttitle protects the address space using {\tt mprotect(PROT\_NONE)} at the beginning of each sub-computation. This forces a trap (and the corresponding OS signal) the first time a page is read or written to in a given sub-computation. The respective signal handler, which is implemented by the \projecttitle library, records the information about the access, and also resets the protection bits so that subsequent accesses to the same page by the same thread in the same sub-computation can proceed without generating a trap, and therefore avoid a
 latency penalty.  
-
+\input{figure/figureTex/lib-architecture}
 However, a naive page protection mechanism raises an important problem because all threads in a process share the same virtual memory
 structures (namely the TLB and page table entries with the respective protection bits). This makes it difficult to keep track of which
 threads are responsible for which memory accesses or to enforce different protections for different threads. Otherwise, we need to re-protect the page after serving every load and store instruction causing a large number of page faults.
@@ -31,7 +31,7 @@ shares parts of the execution context with the parent process (which implements 
 
 
 But this raises a new problem, which is that, unlike threads, processes do not share their address spaces. We address this by taking advantage of the RC memory model we defined for \projecttitle, where threads share the updates only at synchronization points.  
-\input{figure/figureTex/lib-architecture}
+
 \myparagraph{Shared memory commit} To implement the RC memory model, we use shared memory commit of  Dthreads~\cite{dthreads-sosp-2011} (originally proposed in distributed shared memory architectures such as TreadMarks~\cite{treadmark})% and Munin~\cite{munin}) 
 that allows threads to communicate at well-defined synchronization points.
 Our shared memory commit is implemented using memory mapped files. In

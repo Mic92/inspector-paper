@@ -1,6 +1,8 @@
 \section{System Model}
 \label{sec:model}
 
+Before we formally describe the provenance algorithm ($\S$\ref{sec:algorithms}),  we first present the system model assumed by \projecttitle.% ($\S$~\ref{sec:model}).
+
 \myparagraph{Memory consistency model} Our approach relies on the use of the
 Release Consistency memory model (RC)~\cite{DSM-RC}, which requires that all shared memory accesses are done via synchronization primitives.
 %. This memory model  requires writes made by one thread to become visible only to another thread after the first thread releases a synchronization object and before the second thread acquires a synchronization object. 

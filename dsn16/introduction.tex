@@ -4,7 +4,7 @@
 Data provenance provides an explicit intermediate program representation recording control and data dependencies for a program execution.  The provenance trace is useful for a wide-range of workflows to improve the dependability, security, and efficiency of software systems; including, program debugging~\cite{fast-track-pldi}, parallel state machine replication~\cite{rex},  compiler optimizations~\cite{pgo}, incremental computation~\cite{ithreads}, program slicing~\cite{roly}, memory management~\cite{memprof}, and dynamic information flow tracking~\cite{dift}, etc. 
 
 Many existing systems provide support for data provenance (details in $\S$\ref{sec:related}); however,
-most existing solutions target sequential programs, while others that do support parallelism rely on restrictive application-specific programming model. As a result, the existing solutions have limited adoption in practice.
+most existing solutions target sequential programs, while others that do support parallelism rely on restrictive application-specific programming model. As a result, the existing solutions have limited adoption in practice for the general shared-memory multithreaded programs.
 
 
 
@@ -33,7 +33,7 @@ To summarize, we make the following contributions:
 
 \item We present a parallel algorithm for data provenance for multithreaded programs that records control, data, and schedule dependencies using a Concurrent Provenance Graph (CPG) ($\S$\ref{sec:algorithms}).
 
-\item We implemented our algorithm as a dynamically linkable shared library, which we call \projecttitle, leveraging MMU-assisted memory tracking, process-level isolation, and recently released \intelpt ISA extensions.  The \projecttitle library can be loaded and linked at run-time as a replacement to the \pthreads library, without any recompilation  of the application code ($\S$\ref{sec:implementation}).
+\item We implemented our algorithm as a dynamically linkable shared library, which we call \projecttitle, leveraging MMU-assisted memory tracking, process-level isolation, and \intelpt ISA extensions.  The \projecttitle library can be loaded and linked at run-time as a replacement to the \pthreads library, without any recompilation  of the application code ($\S$\ref{sec:implementation}).
 
 \item We further extended the library to support a live snapshot facility, where the user can analyze the provenance on-the-fly while the program is still running. The library periodically takes a consistent snapshot~\cite{chandy-lamport} of the CPG in a decentralized fashion ($\S$\ref{sec:snapshot}).
 
