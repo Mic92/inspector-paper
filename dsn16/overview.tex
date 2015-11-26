@@ -6,15 +6,17 @@
 %and writes to the shared memory, threads also employ different types of synchronization mechanisms to 
 %co-ordinate their progress, thereby ensuring correct semantics. 
 
+%We base our design on {\tt POSIX} threads, commonly referred to as
+%{\tt pthreads}, which is a widely used threading library for shared-memory
+%multithreading with a rich set of synchronization primitives.  This
+%choice has several advantages, namely that the {\tt POSIX} interface
+%is standardized across different architectures and operating systems. Furthermore, {\tt pthreads} is used as the underlying threading
+%library for many higher level abstractions for parallel programming
+%(e.g., {\tt OpenMP}). Therefore, our design choice benefits a lot of existing applications.
+
 We base our design on {\tt POSIX} threads, commonly referred to as
-{\tt pthreads}, which is a widely used threading library for shared-memory
-multithreading with a rich set of synchronization primitives.  This
-choice has several advantages, namely that the {\tt POSIX} interface
-is standardized across different architectures and operating systems. Furthermore, {\tt pthreads} is used as the underlying threading
-library for many higher level abstractions for parallel programming
-(e.g., {\tt OpenMP}). Therefore, our design choice benefits a lot of existing applications.
-
-
+{\tt pthreads}, a widely used threading library for shared-memory
+multithreading with a rich set of synchronization primitives.  
 
 
 \myparagraph{Basic approach} At a high level, we record data provenance for a multithreaded execution by constructing a {\em Concurrent Provenance Graph (or CPG)}. Informally,  the CPG records three types of dependencies; namely, control, data, and schedule dependencies for the multithreaded execution. To record these dependencies, we divide thread execution into sub-computations. We record the execution trace to construct the CPG that tracks the {\em data flow} between the sub-computations, {\em control flow} for each thread execution, and threads interleaving or {\em schedule dependency}  in the multithreaded execution.
