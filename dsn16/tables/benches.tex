@@ -1,28 +1,28 @@
-\begin{table*}[t]
-\footnotesize
+\begin{figure}[t]
 \centering
-
+\myfontsize
+\newcommand{\tworowcell}[2][c]{\begin{tabular}[#1]{@{}c@{}}#2\end{tabular}}
+{
 \begin{tabular}{l | r r r r}
 %[-8pt]
-    Application& Log size (compressed) [MB]& Log bandwith [MB/s]& Branch instr.& Page faults (Major/Minor) \\
+    Application& \tworowcell{compress. Log size [MB] \\ (bandwith [MB/s])}& Branch instr.& Segfaults \\
   \hline \hline
-    blackscholes& 922.645 (62.496)& 949.441& 2415739009.5& 14/22053 \\
-    canneal& 4815.147 (281.693)& 532.838& 12280650121.25& 24/1097112 \\
-    histogram& 362.331 (10.734)& 914.703& 2133485121.25& 4/41737 \\
-    kmeans& 12353.204 (521.753)& 1476.402& 48849850600.5& 5/680394 \\
-    linear\_regression& 196.705 (5.692)& 705.734& 744899694.75& 4/27993 \\
-    matrix\_multiply& 1965.896 (92.426)& 98.355& 8231550067.75& 20/227106 \\
-    pca& 1689.884 (109.082)& 348.272& 6622001247.75& 42/288424 \\
-    reverse\_index& 97.999 (2.728)& 568.281& 522875888.25& 4/18984 \\
-    streamcluster& 27748.661 (740.458)& 2087.408& 101271779354.75& 6/144472 \\
-    string\_match& 2425.324 (439.768)& 1693.297& 7511018643.5& 22/29917 \\
-    swaptions& 6705.693 (924.682)& 1809.859& 15852072502.5& 21/43993 \\
-    word\_count& 4139.494 (531.470)& 1474.157& 7339524577.25& 43/130521 \\
+    blackscholes& 61.861 (67.018)& 2.081E+09& 1644 \\
+    canneal& 316.580 (34.222)& 1.380E+10& 947642 \\
+    histogram& 6.848 (18.830)& 1.202E+09& 102 \\
+    kmeans& 517.107 (64.034)& 4.644E+10& 481946 \\
+    linear\_regression& 5.192 (17.955)& 6.846E+08& 52 \\
+    matrix\_multiply& 94.724 (4.791)& 7.987E+09& 3977 \\
+    pca& 114.732 (22.828)& 7.128E+09& 241403 \\
+    reverse\_index& 3.067 (16.648)& 4.962E+08& 262 \\
+    string\_match& 438.272 (283.542)& 8.038E+09& 53 \\
+    swaptions& 911.086 (246.814)& 1.648E+10& 1018 \\
+    word\_count& 529.935 (190.988)& 6.376E+09& 21709 \\
 
 \hline
 \end{tabular}
+}
 
-\caption{Runtime statistics of benchmarks with 16 threads (Detailed results available here: \href{https://goo.gl/UgPNdS}{goo.gl/UgPNdS})}
+\caption{Runtime statistics of benchmarks with 16 threads (Detailed results available here: \href{https://goo.gl/UgPNdS}{goo.gl/UgPNdS}) }
 \label{tab:apps}
-
-\end{table*}
+\end{figure}
