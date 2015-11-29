@@ -24,7 +24,12 @@ machine is running Linux with kernel 4.3.0 in 64-bit mode.
 \myparagraph{Applications and dataset}  We evaluated \projecttitle with applications from two multithreaded benchmark suites: Phoenix 2.0 \cite{phoenix} and PARSEC 3.0 \cite{parsec}. Table~\ref{tab:apps} lists the applications used for the evaluation along with the input data and benchmark parameters.
 
 
-\myparagraph{Measurements}  For all experiments,  we report {\tt time} measurements, i.e., run-time comparison, between the native {\tt pthreads} execution, and \projecttitle execution.  All applications were compiled using GCC 5.2.1 compiler with -$o3$ optimization flag. For all performance measurements, we report the average over 10 runs with minimum and maximum values discarded.
+\myparagraph{Measurements}  For all experiments,  we report {\tt time}
+measurements, i.e., run-time comparison, between the native {\tt pthreads}
+execution, and \projecttitle execution.  All applications were compiled using
+GCC 5.2.1 compiler with -$o3$ optimization flag. For all performance
+measurements, we report the average over 6 runs with minimum and maximum values
+discarded (truncated mean).
 
 \myparagraph{Additional results} Due to the space limitation, we only present  time measurements for all experiments. We also measured  {\em work} numbers, i.e., the overall CPUs utilization for all threads for both \pthreads and \projecttitle executions. (To measure work, we used the CPU accounting controller in {\tt cgroups} to account the CPU usage of all threads.) The work measurements are available online on the following anonymized link:  \href{https://goo.gl/UgPNdS}{goo.gl/UgPNdS}
 
