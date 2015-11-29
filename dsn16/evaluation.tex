@@ -82,5 +82,8 @@ Figure~\ref{fig:overheads-breakdown} shows the overheads breakdown with $16$ thr
 
 We also measured the overheads breakdown by
 quantifying the , and the space for he execution trace. Table~\ref{tab:apps} shows the performance breakdown for all applications  with~$16$ threads.
+The processor trace written by perf turns out to be highly compressable. We
+where able to achieve a compression ratio of between 15x and 30x times using lz4
+compression algorithm in the fastet compression mode.
 
 \input{tables/benches.tex}
