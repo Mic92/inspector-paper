@@ -61,7 +61,7 @@ to the same memory location we resolve them using a last-writer wins policy.
 
 To obtain the control flow dependencies, we use the new Intel ISA extensions, called Processor Trace (PT), recently released as part of the Broadwell (also in Skylake) microarchitecture. In Linux this processor feature is exposed to the user-space as a Performance Measuring Unit (PMU) in the {\tt perf} event interface. We make use of the \intelpt PMU to derive the control flow dependencies. Figure~\ref{fig:pt-OS-support} shows the architecture for the OS support for \intelpt.
 
-
+ \input{figure/figureTex/pt-os}
 
 In particular, the {\tt perf} interface on Linux consists of a syscall, which gives back a file
 descriptor. Events are accessed by obtaining buffers via {\tt mmap(2)} and can be
@@ -76,7 +76,7 @@ default every child process belongs to the same process as its parent. Also for
 We create such a {\tt cgroup} exclusively for the application using \projecttitle. This is done because
 our threading library causes applications using threads to create multiple
 processes instead, whose process ids are not known it advance.
- \input{figure/figureTex/pt-os}
+
 The subcommand {\tt perf record} is then used to dump the trace produced by \intelpt.
 \intelpt generates a stream of TNT packets, which denotes the
 condional branches taken and TIP packets for indirect branches and function
