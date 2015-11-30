@@ -61,32 +61,37 @@ The overhead of collecting processor trace while using native
 significant part of the of the slowdown.
 
 In {\tt Canneal} and {\tt Reverse Index} a high number of pages were modified.
-Reverse index does a lot of small memory allocations across the threads, This
+Reverse index does a lot of small memory allocations across the threads. This
 leads to more segmentation faults, because these allocations are located on
-different pages. In Streamcluster, we were hitting the memory limit to store the
-log in {\tt tmpfs} for 16 threads. In Kmeans during execution over 1000 threads
-were created. As processes take more time to create instead of threads, we see
-a slowdown here as well.
+different pages. In Kmeans during execution over 1000 threads were created. As
+processes take more time to create instead of threads, we see a slowdown here as
+well.
 
 For linear regression a speedup was measured. Because in this execution model,
 every “thread” has its own virtual memory: No cohearence protocol has to be run
 between commits. This prevents false sharing which results in a speedup even
 when recording the execution trace.
 
-The provenance overheads increases with the increase in the number of
-threads, because the serial phase between memory commits takes longer,
-with a higher number of threads.
-\input{plotsTex/overheads}
+The provenance overheads increases with the increase in the number of threads.
+This was expected, because the serial phase between memory commits takes longer,
+with a higher number of threads. In Streamcluster, we were hitting the memory
+limit to store the log in {\tt tmpfs} for 16 threads. To better understand the
+breakdown we chose 15 threads in Figure~\ref{fig:overheads}, where the log can
+fit into the main memory. \input{plotsTex/overheads}
 
 
 \subsection{Scalability w.r.t. Input Data Sizes}
 \label{subsec:data-sizes-overheads}
 
-To assess the performance of \projecttitle under different input sizes, we report the performance overheads for the benchmarks, which are
-available with three input sizes: small ($S$), medium ($M$), and large ($L$). Figure~\ref{fig:data-size-overheads} shows the performance overheads with
+To assess the performance of \projecttitle under different input sizes, we
+report the performance overheads for the benchmarks, which are available with
+three input sizes: small ($S$), medium ($M$), and large ($L$).
+Figure~\ref{fig:data-size-overheads} shows the performance overheads with
 
-These result shows the
-gap between \pthreads and \projecttitle widens as ....
+These result shows the gap between \pthreads and \projecttitle narrows with
+bigger input sizes. The algorithms used here divide input evenly between the
+threads. As the input size increase therefor the parallel phase increases and
+the overhead of the memory commit gets smaller in relatively.
 
 
 \input{plotsTex/data-size-overheads}
