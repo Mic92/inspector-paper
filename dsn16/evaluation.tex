@@ -51,11 +51,29 @@ discarded (truncated mean).
 \label{subsec:overheads}
 
 Figure~\ref{fig:overheads} shows the provenance overheads of \projecttitle with respect to the native \pthreads execution with varying number of
-threads (from $12$ to $64$ threads). We observe that except for {\tt canneal} benchmarks, we
-  obtain overheads of XXX for recording data proveance.  
-  
-  The provenance overheads increases/decreases with the increase in the number of
-  threads, because ....
+threads (from $12$ to $64$ threads). We observe, that most benchmarks have an
+overhead between 1x and 2.5x, when recording data provenance.
+
+The overhead of collecting processor trace while using native
+\pthreads was 2 slower on average and there for causes an
+significant part of the of the slowdown.
+
+In {\tt Canneal} and {\tt Reverse Index} a high number of pages were modified.
+Reverse index does a lot of small memory allocations across the threads, This
+leads to more segmentation faults, because these allocations are located on
+different pages. In Streamcluster, we were hitting the memory limit to store the
+log in {\tt tmpfs} for 16 threads. In Kmeans during execution over 1000 threads
+were created. As processes take more time to create instead of threads, we see
+a slowdown here as well.
+
+For linear regression a speedup was measured. Because in this execution model,
+every “thread” has its own virtual memory: No cohearence protocol has to be run
+between commits. This prevents false sharing which results in a speedup even
+when recording the execution trace.
+
+The provenance overheads increases with the increase in the number of
+threads, because the serial phase between memory commits takes longer,
+with a higher number of threads.
 \input{plotsTex/overheads}
 
 
@@ -63,7 +81,7 @@ threads (from $12$ to $64$ threads). We observe that except for {\tt canneal} be
 \label{subsec:data-sizes-overheads}
 
 To assess the performance of \projecttitle under different input sizes, we report the performance overheads for the benchmarks, which are
-available with three input sizes: small ($S$), medium ($M$), and large ($L$). Figure~\ref{fig:data-size-overheads} shows the performance overheads with 
+available with three input sizes: small ($S$), medium ($M$), and large ($L$). Figure~\ref{fig:data-size-overheads} shows the performance overheads with
 
 These result shows the
 gap between \pthreads and \projecttitle widens as ....
