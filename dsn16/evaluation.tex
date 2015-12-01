@@ -58,13 +58,10 @@ Figure~\ref{fig:overheads} shows the provenance overheads of \projecttitle w.r.t
 threads (from $2$ to $16$ threads). As expected, the provenance overheads increases with the increase in the number of threads. This is because the shared memory commit ($\S$\ref{sec:impl-lib}) takes longer time with a higher number of threads. 
 
 The experiment shows that the provenance overheads using \projecttitle vary across applications. 
-We observe that a majority of applications ($9$/$12$) have a reasonable overhead between $1\times$ up to $2.5\times$ w.r.t. the native execution. However, three applications have exceptionally high overheads:  {\em canneal}, {\em reverse\_index}, and {\em kmeans}. The high overheads could be explained as follows: {\em canneal} modifies a lot of memory pages leading that leads to a high number of page faults for deriving read and write sets. Whereas, {\em reverse\_index} does a lot of small memory allocations across threads leading to a large number of segmentation faults.  Finally, {\em kmeans}  {\em what is it ?? In  Kmeans during execution over 1000 threads were created. As
-processes take more time to create instead of threads, we see a slowdown here as
-well.}
+We observe that a majority of applications ($9$/$12$) have a reasonable overhead between $1\times$ up to $2.5\times$ w.r.t. the native execution. However, three applications have exceptionally high overheads:  {\em canneal}, {\em reverse\_index}, and {\em kmeans}. The high overheads could be explained as follows: {\em canneal} modifies a lot of memory pages leading that leads to a high number of page faults for deriving read and write sets. Whereas, {\em reverse\_index} does a lot of small memory allocations across threads leading to a large number of segmentation faults.  Finally, {\em kmeans} creates more than $400$ threads in an iterative convergence algorithms. Since, processes take more time to create instead of threads, we see a slowdown in {\em kmeans}.
 
 
-
-On the other hand, surprisingly, {\em linear\_regression} performs better than \pthreads, which is explained by the fact that our implementation of threads as processes ($\S$\ref{sec:implementation})  avoids false sharing, as previously noted by Dthreads~\cite{dthreads-sosp-2011}.
+On the other hand, {\em linear\_regression} performs better than \pthreads, which is explained by the fact that our implementation of threads as processes ($\S$\ref{sec:implementation})  avoids false sharing, as previously noted by Dthreads~\cite{dthreads-sosp-2011}.
 
 
 
