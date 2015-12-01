@@ -1,18 +1,18 @@
 \section{Evaluation}
 \label{sec:evaluation}
-
-In this section, we present an experimental evaluation of \projecttitle based on the implementation described in  \secref{implementation}. Our evaluation answers the following questions.
-
-\begin{itemize}
-\item What overheads does \projecttitle impose for recording data provenance? ($\S$~\ref{subsec:overheads})
-\item How do these overheads scale with increases in the size of input data? ($\S$~\ref{subsec:data-sizes-overheads})
-\item What are the sources for the provenance overheads? ($\S$~\ref{subsec:overheads-breakdown})
-\end{itemize}
+In this section, we present an experimental evaluation of \projecttitle.% based on the implementation described in  \secref{implementation}. 
+%Our evaluation answers the following questions.
+%
+%\begin{itemize}
+%\item What overheads does \projecttitle impose for recording data provenance? ($\S$~\ref{subsec:overheads})
+%%\item How do these overheads scale with increases in the size of input data? ($\S$~\ref{subsec:data-sizes-overheads})
+%\item What are the sources for the provenance overheads? ($\S$~\ref{subsec:overheads-breakdown})
+%\end{itemize}
 
 %Before answering these questions, we first describe the experimental setup used for the evaluation.
 \input{plotsTex/overheads}
 
-\subsection{Experimental Setup}
+%\subsection{Experimental Setup}
 
 
 \myparagraph{Experimental platform} We used an Intel Xeon processor based
@@ -25,8 +25,10 @@ machine is running Linux with kernel 4.3.0 in 64-bit mode. The log produced by
 %No additional core was provided for Perf.
 
 
-\myparagraph{Applications and dataset}  We evaluated \projecttitle using from two multithreaded benchmark suites: Phoenix 2.0 \cite{phoenix} and PARSEC 3.0 \cite{parsec}. %Table~\ref{tab:apps} lists the applications used for the evaluation along with the input data and benchmark parameters.
+\myparagraph{Applications and dataset}  We evaluated \projecttitle using from two multithreaded benchmark suites: Phoenix 2.0 and PARSEC 3.0. 
 
+%\myparagraph{Applications and dataset}  We evaluated \projecttitle using from two multithreaded benchmark suites: Phoenix 2.0 \cite{phoenix} and PARSEC 3.0 \cite{parsec}. %Table~\ref{tab:apps} lists the applications used for the evaluation along with the input data and benchmark parameters.
+%
 
 \myparagraph{Measurements}  For all experiments,  we report {\tt time}
 measurements, i.e., run-time comparison, between the native {\tt pthreads}
@@ -53,8 +55,10 @@ discarded (truncated mean).
 
 \subsection{Provenance Overheads}
 \label{subsec:overheads}
+First, we explain the overheads imposed by \projecttitle for recording data provenance. In this respect, we present the provenance overheads w.r.t the native \pthreads execution with increase in the number of threads, and increase in the input sizes.
 
-Figure~\ref{fig:overheads} shows the provenance overheads of \projecttitle w.r.t. the native \pthreads execution with varying number of
+
+\myparagraph{Scalability with threads} Figure~\ref{fig:overheads} shows the provenance overheads of \projecttitle w.r.t. the native \pthreads execution with varying number of
 threads (from $2$ to $16$ threads). As expected, the provenance overheads increases with the increase in the number of threads. This is because the shared memory commit ($\S$\ref{sec:impl-lib}) takes longer time with a higher number of threads. 
 
 The experiment shows that the provenance overheads using \projecttitle vary across applications. 
@@ -65,7 +69,7 @@ On the other hand, {\em linear\_regression} performs better than \pthreads, whic
 
 
 
-Lastly, in the case of {\em streamcluster}, we were hitting the memory limit to store the log in {\tt tmpfs} for $16$ threads. Therefore, we also show the overheads with $14$ and $15$ threads,  where the provenance log can fit into the main memory.  To better understand the breakdown of provenance, we chose $15$ threads for {\em streamcluster} in $\S$~\ref{subsec:overheads-breakdown}.
+Lastly, in the case of {\em streamcluster}, we were limited by our physical memory to store the log in {\tt tmpfs} for $16$ threads. Therefore, we also show the overheads with $14$ and $15$ threads,  where the provenance log can fit into the main memory.  %To better understand the breakdown of provenance, we chose $15$ threads for {\em streamcluster} in $\S$~\ref{subsec:overheads-breakdown}.
 
 
 %The overhead of collecting processor trace while using native
@@ -94,17 +98,17 @@ Lastly, in the case of {\em streamcluster}, we were hitting the memory limit to 
 %breakdown we chose 15 threads in Figure~\ref{fig:overheads}, where the log can
 %fit into the main memory. 
 
-\subsection{Scalability w.r.t. Input Data Sizes}
-\label{subsec:data-sizes-overheads}
 
-In addition to scalability w.r.t.  threads, we also measured the performance overheads with increases in the size of the input.  For that, we
+%\label{subsec:data-sizes-overheads}
+
+\myparagraph{Scalability w.r.t. input data sizes} In addition to scalability w.r.t.  threads, we also measured the performance overheads with increases in the size of the input.  For that, we
 report the performance overheads for four applications ({\em histogram}, {\em linear\_regression}, {\em string\_match}, and {\em word\_count}) that are available with
 three input sizes: small ($S$), medium ($M$), and large ($L$).
 
 
 Figure~\ref{fig:data-size-overheads} shows a bar plot of the performance overheads w.r.t. to the native \pthreads execution. For the reference, the input sizes are also shown by a line plot in the same figure on the $Y2$ axis. The result shows that the gap between \pthreads and \projecttitle narrows with bigger input sizes. This is due to the fact that most applications use a data-parallel programming model for parallelization, where the main threads divides the input data evenly between the worker threads. As the input size increases, each thread spends relatively more time outside the shared-memory commit to compute on the data, and therefore, it results in improved performance.
  
-
+\input{plotsTex/overheads-breakdown}
 %
 % algorithms used here divide input evenly between the
 %threads. As the input size increase therefor the parallel phase increases and
@@ -116,16 +120,15 @@ Figure~\ref{fig:data-size-overheads} shows a bar plot of the performance overhea
 
 \subsection{Overheads Breakdown}
 \label{subsec:overheads-breakdown}
-
-\projecttitle imposes two types of overheads: (1) performance overheads, and (2) space overheads for storing the provenance graph.
+Next, we present  the sources for the provenance overheads. \projecttitle imposes two types of overheads: (1) performance overheads, and (2) space overheads for storing the provenance graph.
 
 
 \myparagraph{Performance overheads} Figure~\ref{fig:overheads-breakdown} shows the breakdown of overheads with $16$ threads normalized to the native \pthreads execution. We quantify the breakdown as the time taken by the \projecttitle library ($\S$~\ref{sec:impl-lib}) and the OS support for \intelpt  ($\S$~\ref{sec:impl-OS}). The result shows an interesting pattern: the applications with unreasonably high overheads ({\em canneal}, {\em reverse\_index}, and {\em kmeans}) spend a majority of time in the \projecttitle library. Whereas, the processor trace overheads is a dominant factor for the other applications with the reasonable provenance overheads.
 
 
-\input{plotsTex/overheads-breakdown}
 
 
-\myparagraph{Space overheads} We also measured the space overheads for the provenance trace. Table~\ref{tab:apps} shows the space overheads for all applications with~$16$ threads (details of the log are available on the anonymized link). The provenance log written by {\tt perf} turns out to be highly compressible. We
+
+\myparagraph{Space overheads} We also measured the space overheads for the provenance trace. Table~\ref{tab:apps} shows the space overheads for all applications with~$16$ threads. The provenance log written by {\tt perf} turns out to be highly compressible. We
 are able to achieve a compression ratio of between $15\times$ and $30\times$ times using the lz4 compression algorithm.
 \input{tables/benches.tex}
