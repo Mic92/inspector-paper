@@ -54,45 +54,64 @@ discarded (truncated mean).
 \subsection{Provenance Overheads}
 \label{subsec:overheads}
 
-Figure~\ref{fig:overheads} shows the provenance overheads of \projecttitle with respect to the native \pthreads execution with varying number of
-threads (from $12$ to $64$ threads). We observe, that most benchmarks have an
-overhead between 1x and 2.5x, when recording data provenance.
+Figure~\ref{fig:overheads} shows the provenance overheads of \projecttitle w.r.t. the native \pthreads execution with varying number of
+threads (from $2$ to $16$ threads). As expected, the provenance overheads increases with the increase in the number of threads. This was expected, because the shared memory commit ($\S$\ref{sec:implementation}) takes longer time with a higher number of threads. 
 
-The overhead of collecting processor trace while using native
-\pthreads was 2 slower on average and there for causes an
-significant part of the of the slowdown.
-
-In {\tt Canneal} and {\tt Reverse Index} a high number of pages were modified.
-Reverse index does a lot of small memory allocations across the threads. This
-leads to more segmentation faults, because these allocations are located on
-different pages. In Kmeans during execution over 1000 threads were created. As
+The experiment shows that the provenance overheads using \projecttitle vary across applications. 
+We observe that a majority of applications ($9$/$12$) have a reasonable overhead between $1\times$ up to $2.5\times$ w.r.t. the native execution. However, three applications have exceptionally high overheads:  {\em canneal}, {\em reverse\_index}, and {\em kmeans}. The high overheads could be explained as follows: {\em canneal} modifies a lot of memory pages leading that leads to a high number of page faults for deriving read and write sets. Whereas, {\em reverse\_index} does a lot of small memory allocations across threads leading to a large number of segmentation faults.  Finally, {\em kmeans}  In {\bf what is it ?? Kmeans during execution over 1000 threads were created. As
 processes take more time to create instead of threads, we see a slowdown here as
-well.
+well.}
 
-For linear regression a speedup was measured. Because in this execution model,
-every “thread” has its own virtual memory: No cohearence protocol has to be run
-between commits. This prevents false sharing which results in a speedup even
-when recording the execution trace.
 
-The provenance overheads increases with the increase in the number of threads.
-This was expected, because the serial phase between memory commits takes longer,
-with a higher number of threads. In Streamcluster, we were hitting the memory
-limit to store the log in {\tt tmpfs} for 16 threads. To better understand the
-breakdown we chose 15 threads in Figure~\ref{fig:overheads}, where the log can
-fit into the main memory. 
+
+On the other hand, surprisingly, {\em linear\_regression} performs better than \pthreads, which is explained by the fact that our implementation of threads as processes ($\S$\ref{sec:implementation})  avoids false sharing, as previously noted by Dthreads~\cite{dthreads-sosp-2011}.
+
+
+
+Lastly, in the case of {\em streamcluster}, we were hitting the memory limit to store the log in {\tt tmpfs} for $16$ threads. Therefore, we also show the overheads with $14$ and $15$ threads,  where the provenance log can fit into the main memory.  To better understand the breakdown of provenance, we chose $15$ threads for {\em streamcluster} in $\S$~\ref{subsec:overheads-breakdown}.
+
+
+%The overhead of collecting processor trace while using native
+%\pthreads was 2 slower on average and there for causes an
+%significant part of the of the slowdown.
+
+%In {\tt Canneal} and {\tt Reverse Index} a high number of pages were modified.
+%Reverse index does a lot of small memory allocations across the threads. This
+%leads to more segmentation faults, because these allocations are located on
+%different pages. In Kmeans during execution over 1000 threads were created. As
+%processes take more time to create instead of threads, we see a slowdown here as
+%well.
+%
+%For linear regression a speedup was measured. Because in this execution model,
+%every “thread” has its own virtual memory: No cohearence protocol has to be run
+%between commits. This prevents false sharing which results in a speedup even
+%when recording the execution trace.
+
+%The provenance overheads increases with the increase in the number of threads.
+%This was expected, because the serial phase between memory commits takes longer,
+%with a higher number of threads. 
+
+%
+%In Streamcluster, we were hitting the memory
+%limit to store the log in {\tt tmpfs} for 16 threads. To better understand the
+%breakdown we chose 15 threads in Figure~\ref{fig:overheads}, where the log can
+%fit into the main memory. 
 
 \subsection{Scalability w.r.t. Input Data Sizes}
 \label{subsec:data-sizes-overheads}
 
-To assess the performance of \projecttitle under different input sizes, we
-report the performance overheads for the benchmarks, which are available with
+In addition to scalability w.r.t.  threads, we also measured the performance overheads with increases in the size of the input.  For that, we
+report the performance overheads for four applications ({\em histogram}, {\em linear\_regression}, {\em string\_match}, and {\em word\_count}) that are available with
 three input sizes: small ($S$), medium ($M$), and large ($L$).
-Figure~\ref{fig:data-size-overheads} shows the performance overheads with
 
-These result shows the gap between \pthreads and \projecttitle narrows with
-bigger input sizes. The algorithms used here divide input evenly between the
-threads. As the input size increase therefor the parallel phase increases and
-the overhead of the memory commit gets smaller in relatively.
+
+Figure~\ref{fig:data-size-overheads} shows a bar plot of the performance overheads w.r.t. to the native \pthreads execution. For references, the input sizes are also shown by the line plot in the same figure on $Y2$ axis. These result shows the gap between \pthreads and \projecttitle narrows with bigger input sizes. This can be explained by the fact that most applications use a data-parallel programming model for the parallelization, where the main threads divides the input data evenly between the worker threads. As the input size increases, each thread spends relatively more time outside the shared-memory commit, and results improved performance.
+ 
+
+%
+% algorithms used here divide input evenly between the
+%threads. As the input size increase therefor the parallel phase increases and
+%the overhead of the memory commit gets smaller in relatively.
 
 
 \input{plotsTex/data-size-overheads}
