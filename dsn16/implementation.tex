@@ -9,6 +9,7 @@ This section describes the architecture and implementation of \projecttitle. We 
 \input{figure/figureTex/fig_system_basic}
 
 \subsection{Threading Library}
+\label{sec:impl-lib}
 The threading library derives the data and schedule dependencies. The architecture of the threading library is shown in Figure~\ref{fig:lib-architecture}. 
 
  
@@ -58,7 +59,7 @@ to the same memory location we resolve them using a last-writer wins policy.
 
 
 \subsection{OS Support for \intelpt}
-
+\label{sec:impl-OS}
 To obtain the control flow dependencies, we use the new Intel ISA extensions, called Processor Trace (PT), recently released as part of the Broadwell (also in Skylake) microarchitecture. In Linux this processor feature is exposed to the user-space as a Performance Measuring Unit (PMU) in the {\tt perf} event interface. We make use of the \intelpt PMU to derive the control flow dependencies. Figure~\ref{fig:pt-OS-support} shows the architecture for the OS support for \intelpt.
 
  \input{figure/figureTex/pt-os}

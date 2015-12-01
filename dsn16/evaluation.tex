@@ -58,7 +58,7 @@ Figure~\ref{fig:overheads} shows the provenance overheads of \projecttitle w.r.t
 threads (from $2$ to $16$ threads). As expected, the provenance overheads increases with the increase in the number of threads. This was expected, because the shared memory commit ($\S$\ref{sec:implementation}) takes longer time with a higher number of threads. 
 
 The experiment shows that the provenance overheads using \projecttitle vary across applications. 
-We observe that a majority of applications ($9$/$12$) have a reasonable overhead between $1\times$ up to $2.5\times$ w.r.t. the native execution. However, three applications have exceptionally high overheads:  {\em canneal}, {\em reverse\_index}, and {\em kmeans}. The high overheads could be explained as follows: {\em canneal} modifies a lot of memory pages leading that leads to a high number of page faults for deriving read and write sets. Whereas, {\em reverse\_index} does a lot of small memory allocations across threads leading to a large number of segmentation faults.  Finally, {\em kmeans}  In {\bf what is it ?? Kmeans during execution over 1000 threads were created. As
+We observe that a majority of applications ($9$/$12$) have a reasonable overhead between $1\times$ up to $2.5\times$ w.r.t. the native execution. However, three applications have exceptionally high overheads:  {\em canneal}, {\em reverse\_index}, and {\em kmeans}. The high overheads could be explained as follows: {\em canneal} modifies a lot of memory pages leading that leads to a high number of page faults for deriving read and write sets. Whereas, {\em reverse\_index} does a lot of small memory allocations across threads leading to a large number of segmentation faults.  Finally, {\em kmeans}  {\em what is it ?? In  Kmeans during execution over 1000 threads were created. As
 processes take more time to create instead of threads, we see a slowdown here as
 well.}
 
@@ -105,7 +105,7 @@ report the performance overheads for four applications ({\em histogram}, {\em li
 three input sizes: small ($S$), medium ($M$), and large ($L$).
 
 
-Figure~\ref{fig:data-size-overheads} shows a bar plot of the performance overheads w.r.t. to the native \pthreads execution. For references, the input sizes are also shown by the line plot in the same figure on $Y2$ axis. These result shows the gap between \pthreads and \projecttitle narrows with bigger input sizes. This can be explained by the fact that most applications use a data-parallel programming model for the parallelization, where the main threads divides the input data evenly between the worker threads. As the input size increases, each thread spends relatively more time outside the shared-memory commit, and results improved performance.
+Figure~\ref{fig:data-size-overheads} shows a bar plot of the performance overheads w.r.t. to the native \pthreads execution. For references, the input sizes are also shown by the line plot in the same figure on $Y2$ axis. These result shows the gap between \pthreads and \projecttitle narrows with bigger input sizes. This can be explained by the fact that most applications use a data-parallel programming model for the parallelization, where the main threads divides the input data evenly between the worker threads. As the input size increases, each thread spends relatively more time outside the shared-memory commit, and results in improved performance.
  
 
 %
@@ -120,16 +120,15 @@ Figure~\ref{fig:data-size-overheads} shows a bar plot of the performance overhea
 \subsection{Overheads Breakdown}
 \label{subsec:overheads-breakdown}
 
-Figure~\ref{fig:overheads-breakdown} shows the overheads breakdown with $16$ threads....
+\projecttitle imposes two types of overheads: (1) performance overheads, and (2) space overheads for storing the provenance graph.
+
+
+\myparagraph{Performance overheads} Figure~\ref{fig:overheads-breakdown} shows the breakdown of overheads with $16$ threads normalized to the native \pthreads execution. We quantify the breakdown as the time taken by the \projecttitle library ($\S$~\ref{sec:impl-lib}) and the OS support for \intelpt  ($\S$~\ref{sec:impl-OS}). The result shows an interesting pattern: the applications with unreasonably high overheads ({\em canneal}, {\em reverse\_index}, and {\em kmeans}) spend a majority of time in the \projecttitle library. Whereas, the processor trace overheads is a dominant factor for the other applications with the reasonable provenance overheads.
 
 
 \input{plotsTex/overheads-breakdown}
 
 
-We also measured the overheads breakdown by
-quantifying the , and the space for he execution trace. Table~\ref{tab:apps} shows the performance breakdown for all applications  with~$16$ threads.
-The processor trace written by perf turns out to be highly compressable. We
-where able to achieve a compression ratio of between 15x and 30x times using lz4
-compression algorithm in the fastet compression mode.
-
+\myparagraph{Space overheads} We also measured the space overheads for the provenance trace. Table~\ref{tab:apps} shows the space overheads for all applications with~$16$ threads (details of the log are available on the anonymized link). The provenance log written by {\tt perf} turns out to be highly compressible. We
+are able to achieve a compression ratio of between $15\times$ and $30\times$ times using the lz4 compression algorithm.
 \input{tables/benches.tex}
