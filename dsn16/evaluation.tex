@@ -55,7 +55,7 @@ discarded (truncated mean).
 \label{subsec:overheads}
 
 Figure~\ref{fig:overheads} shows the provenance overheads of \projecttitle w.r.t. the native \pthreads execution with varying number of
-threads (from $2$ to $16$ threads). As expected, the provenance overheads increases with the increase in the number of threads. This was expected, because the shared memory commit ($\S$\ref{sec:implementation}) takes longer time with a higher number of threads. 
+threads (from $2$ to $16$ threads). As expected, the provenance overheads increases with the increase in the number of threads. This was expected, because the shared memory commit ($\S$\ref{sec:impl-lib}) takes longer time with a higher number of threads. 
 
 The experiment shows that the provenance overheads using \projecttitle vary across applications. 
 We observe that a majority of applications ($9$/$12$) have a reasonable overhead between $1\times$ up to $2.5\times$ w.r.t. the native execution. However, three applications have exceptionally high overheads:  {\em canneal}, {\em reverse\_index}, and {\em kmeans}. The high overheads could be explained as follows: {\em canneal} modifies a lot of memory pages leading that leads to a high number of page faults for deriving read and write sets. Whereas, {\em reverse\_index} does a lot of small memory allocations across threads leading to a large number of segmentation faults.  Finally, {\em kmeans}  {\em what is it ?? In  Kmeans during execution over 1000 threads were created. As
