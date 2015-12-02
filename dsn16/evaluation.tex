@@ -37,8 +37,7 @@ GCC 5.2.1 compiler with -$o3$ optimization flag. For all performance
 measurements, we report the average over 6 runs with minimum and maximum values
 discarded (truncated mean).
 
-\myparagraph{Additional results} We also measured  {\em work} numbers, i.e., the overall CPUs utilization for all threads for both \pthreads and \projecttitle executions. (To measure work, we used the CPU accounting controller in {\tt cgroups} to account the CPU usage of all threads.) Due to space limitations, the work measurements are available online on the following anonymized link:  \href{https://goo.gl/UgPNdS}{goo.gl/UgPNdS}
-
+\myparagraph{Additional results} We also measured  {\em work} numbers, i.e., the overall CPUs utilization for all threads for both \pthreads and \projecttitle executions. (To measure work, we used the CPU accounting controller in {\tt cgroups} to account the CPU usage of all threads.) Due to space limitations, the work measurements are available online on the following anonymized link:  \href{https://goo.gl/0wp1kC}{https://goo.gl/0wp1kC}
 %Due to the space limitation, we only present  time measurements for all experiments. 
 
 %\myparagraph{Metrics: Time and Work}  We consider two types of measures to report the performance metrics: {\em time} and {\em work}. In a nutshell, time measurements reflect the end user perceived latency, whereas work measurements assess the overall resource (CPU) utilization.  More specifically,  time refers to the end-to-end computation time for the multithreaded applications. Work refers to the total computation performed by all threads, and it is measured as the cumulative CPU time for all threads. To measure work, we used the CPU accounting controller in {\tt cgroups} to account the CPU usage of all threads.

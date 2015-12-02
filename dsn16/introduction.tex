@@ -17,7 +17,10 @@ In this paper, we propose an operating systems-based approach to data provenance
 
 \end{itemize}
 
-To achieve these goals, we built \projecttitle, a data provenance library for multithreaded programs. To run a program using \projecttitle,  the user just needs to preload the \projecttitle library  by using the environment variable {\tt LD\_PRELOAD} or {\tt -rdynamic} flag, and then, run the program as usual. Thus, our library supports existing binaries without any code changes or re-compilation. The library exports the provenance information to the {\tt perf} utility as an extended interface.
+To achieve these goals, we built \projecttitle, a data provenance library for multithreaded programs. We implemented \projecttitle as a dynamically linkable shared library. To run a program using \projecttitle,  the user just needs to preload the \projecttitle library, and then, run the program as usual. Thus, our library supports existing binaries without any code changes or re-compilation. The library exports the provenance information to the {\tt perf} utility as an extended interface.
+
+%To run a program using \projecttitle,  the user just needs to preload the \projecttitle library  by using the environment variable {\tt LD\_PRELOAD} or {\tt -rdynamic} flag, and then, run the program as usual. 
+
 
 
 Our high level approach is based on recording data, control, and schedule dependencies in a computation by constructing a {\em Concurrent Provenance Graph} (CPG). The CPG tracks the input data to a program, all sub-computations (a sub-computation is a unit of the computation), the data flow between sub-computations, intra-thread control flow, and inter-thread schedule dependencies for the multithreaded execution. 
@@ -44,7 +47,7 @@ To summarize, we make the following contributions:
 
 
 
-We  empirically demonstrate  the effectiveness of \projecttitle by applying it to applications of  PARSEC~\cite{parsec} and Phoneix~\cite{phoenix} benchmark suites. Our experiments show that \projecttitle~incurs reasonable overhead to record data provenance for a majority of applications ($\S$\ref{sec:evaluation}). 
+We  empirically demonstrate  the effectiveness of \projecttitle by applying it to applications of  PARSEC and Phoneix benchmark suites. Our experiments show that \projecttitle~incurs reasonable overhead to record data provenance for a majority of applications ($\S$\ref{sec:evaluation}). 
 
 Furthermore, we briefly describe three on-going case-studies where the generic provenance interface exported by \projecttitle is being used to improve the dependability, security, and efficiency of software systems  ($\S$\ref{sec:discussion}). \projecttitle is an active open-source project and the library is publicly available to the research community for further use in other workflows.  
 
