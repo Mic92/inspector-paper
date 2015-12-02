@@ -100,7 +100,7 @@ Lastly, in the case of {\em streamcluster}, we were limited by our physical memo
 
 
 %\label{subsec:data-sizes-overheads}
-
+\input{plotsTex/data-size-overheads}
 \myparagraph{Scalability w.r.t. input data sizes} In addition to scalability w.r.t.  threads, we also measured the performance overheads with increases in the size of the input.  For that, we
 report the performance overheads for four applications ({\em histogram}, {\em linear\_regression}, {\em string\_match}, and {\em word\_count}) that are available with
 three input sizes: small ($S$), medium ($M$), and large ($L$).
@@ -108,14 +108,14 @@ three input sizes: small ($S$), medium ($M$), and large ($L$).
 
 Figure~\ref{fig:data-size-overheads} shows a bar plot of the performance overheads w.r.t. to the native \pthreads execution. For the reference, the input sizes are also shown by a line plot in the same figure on the $Y2$ axis. The result shows that the gap between \pthreads and \projecttitle narrows with bigger input sizes. This is due to the fact that most applications use a data-parallel programming model for parallelization, where the main threads divides the input data evenly between the worker threads. As the input size increases, each thread spends relatively more time outside the shared-memory commit to compute on the data, and therefore, it results in improved performance.
  
-\input{plotsTex/overheads-breakdown}
+
 %
 % algorithms used here divide input evenly between the
 %threads. As the input size increase therefor the parallel phase increases and
 %the overhead of the memory commit gets smaller in relatively.
 
 
-\input{plotsTex/data-size-overheads}
+
 
 
 \subsection{Overheads Breakdown}
@@ -126,7 +126,7 @@ Next, we present  the sources for the provenance overheads. \projecttitle impose
 \myparagraph{Performance overheads} Figure~\ref{fig:overheads-breakdown} shows the breakdown of overheads with $16$ threads normalized to the native \pthreads execution. We quantify the breakdown as the time taken by the \projecttitle library ($\S$~\ref{sec:impl-lib}) and the OS support for \intelpt  ($\S$~\ref{sec:impl-OS}). The result shows an interesting pattern: the applications with unreasonably high overheads ({\em canneal}, {\em reverse\_index}, and {\em kmeans}) spend a majority of time in the \projecttitle library. Whereas, the processor trace overheads is a dominant factor for the other applications with the reasonable provenance overheads.
 
 
-
+\input{plotsTex/overheads-breakdown}
 
 
 \myparagraph{Space overheads} We also measured the space overheads for the provenance trace. Table~\ref{tab:apps} shows the space overheads for all applications with~$16$ threads. The provenance log written by {\tt perf} turns out to be highly compressible. We
