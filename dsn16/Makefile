@@ -32,3 +32,5 @@ clean::
 
 distclean:: clean
 	rm $(TARGET).ps
+
+.PHONY: all
