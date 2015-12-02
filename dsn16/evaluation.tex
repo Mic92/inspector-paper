@@ -130,4 +130,8 @@ Next, we present  the sources for the provenance overheads. \projecttitle impose
 
 \myparagraph{Space overheads} We also measured the space overheads for the provenance trace. Table~\ref{tab:apps} shows the space overheads for all applications with~$16$ threads. The provenance log written by {\tt perf} turns out to be highly compressible. We
 are able to achieve a compression ratio of between $6\times$ and $37\times$ times using the lz4 compression algorithm.
+It also shows a strong correlation between Bandwith and Branch Instruction per
+second with a correlation coefficient of 0.89, which was expected, because the
+log consist of taken branches.
 \input{tables/benches.tex}
+
