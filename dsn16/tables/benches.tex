@@ -2,22 +2,22 @@
 \centering
 \myfontsize
 {
-\begin{tabular}{m{1cm}|m{1cm}|m{1.4cm}|m{1.25cm}|m{1.25cm}}
-       & \multicolumn{2}{c|}{ Provenance log details [MB] }   &  Bandwidth & Branch instr. \\
-   { Application} & Size & Compressed & [MB/sec] &  [Instr/sec] \\
+\begin{tabular}{m{1.4cm}|m{.8cm}|m{1.1cm}|m{.6cm}|m{1.2cm}|m{1.2cm}}
+       & \multicolumn{3}{c|}{ Provenance log details [MB] }   &  Bandwidth & Branch instr. \\
+   { Application} & Size & Compressed & Ratio & [MB/sec] &  [Instr/sec] \\
   \hline \hline
-    blackscho.& 851& 57.3 (15x)& 882& 2.49E+09 \\
-    canneal& 5343& 315.0 (17x)& 547& 1.55E+09 \\
-    histogram& 381& 11.3 (34x)& 961& 4.17E+09 \\
-    kmeans& 11900& 522.0 (23x)& 1438& 5.79E+09 \\
-    linear\_reg& 183& 5.5 (34x)& 707& 3.81E+09 \\
-    matrix\_mul& 2101& 97.0 (22x)& 105& 4.05E+08 \\
-    pca& 1900& 116.0 (16x)& 364& 1.42E+09 \\
-    reverve\_idx& 192& 5.7 (34x)& 764& 2.87E+09 \\
-    streamcl.& 29300& 787.0 (37x)& 2083& 7.78E+09 \\
-    string\_ma.& 2751& 430.0 (6x)& 1763& 5.61E+09 \\
-    swaptions& 7061& 929.0 (8x)& 1830& 4.84E+09 \\
-    word\_c& 4121& 508.0 (8x)& 1435& 2.80E+09 \\
+    blackscholes& 851& 57.3 &15$\times$& 882& 2.49E+09 \\
+    canneal& 5343& 315.0 & 17$\times$& 547& 1.55E+09 \\
+    histogram& 381& 11.3 & 34$\times$& 961& 4.17E+09 \\
+    kmeans& 11900& 522.0 &23$\times$& 1438& 5.79E+09 \\
+    linear\_regression& 183& 5.5 &34$\times$& 707& 3.81E+09 \\
+    matrix\_multiply& 2101& 97.0 &22$\times$& 105& 4.05E+08 \\
+    pca& 1900& 116.0 &16$\times$& 364& 1.42E+09 \\
+    reverve\_index& 192& 5.7 & 34$\times$& 764& 2.87E+09 \\
+    streamcluster& 29300& 787.0 &37$\times$& 2083& 7.78E+09 \\
+    string\_match& 2751& 430.0 &6$\times$& 1763& 5.61E+09 \\
+    swaptions& 7061& 929.0 &8$\times$& 1830& 4.84E+09 \\
+    word\_count& 4121& 508.0 & 8$\times$& 1435& 2.80E+09 \\
 
 \hline
 \end{tabular}
