@@ -15,17 +15,17 @@ In this section, we present an experimental evaluation of \projecttitle.% based 
 %\subsection{Experimental Setup}
 
 
-\myparagraph{Experimental platform} We used an Intel Xeon processor (Broadwell microarchitecture) based
-multicore architecture as our host machine for our evaluation. The
-host system consists of 8 cores (16 hyperthreads) of Intel(R) Xeon(R) CPU Processor D-1540
-(12M Cache, 2.00 GHz) and 32 GB of DRAM main memory. The host
-machine is running Linux with kernel 4.3.0 in 64-bit mode. The log produced by
+\myparagraph{Experimental platform} We used an Intel Xeon processor based on Broadwell microarchitecture
+as our host machine for our evaluation. The
+host system consists of $8$ cores ($16$ hyperthreads) of Intel(R) Xeon(R) CPU Processor D-$1540$
+($12$M Cache, $2.00$ GHz) and $32$ GB of DRAM main memory. The host
+machine is running Linux with kernel $4.3.0$ in $64$-bit mode. The log produced by
 {\tt perf} was written to {\tt /tmp} on {\tt tmpfs} to allow high throughput.
 %When varying the number of threads, we also regulate the numbers of active cpu cores.
 %No additional core was provided for Perf.
 
 
-\myparagraph{Applications and dataset}  We evaluated \projecttitle using two multithreaded benchmark suites: Phoenix 2.0 and PARSEC 3.0. 
+\myparagraph{Applications and dataset}  We evaluated \projecttitle using two multithreaded benchmark suites: Phoenix $2.0$ and PARSEC $3.0$. 
 
 %\myparagraph{Applications and dataset}  We evaluated \projecttitle using from two multithreaded benchmark suites: Phoenix 2.0 \cite{phoenix} and PARSEC 3.0 \cite{parsec}. %Table~\ref{tab:apps} lists the applications used for the evaluation along with the input data and benchmark parameters.
 %
@@ -33,11 +33,11 @@ machine is running Linux with kernel 4.3.0 in 64-bit mode. The log produced by
 \myparagraph{Measurements}  For all experiments,  we report {\tt time}
 measurements, i.e., run-time comparison, between the native {\tt pthreads}
 execution, and \projecttitle execution.  All applications were compiled using
-GCC 5.2.1 compiler with -$o3$ optimization flag. For all performance
-measurements, we report the average over 6 runs with minimum and maximum values
+GCC $5.2.1$ compiler with {\tt -o3} optimization flag. For all
+measurements, we report the average over $6$ runs with minimum and maximum values
 discarded (truncated mean).
 
-\myparagraph{Additional results} We also measured  {\em work} numbers, i.e., the overall CPUs utilization for all threads for both \pthreads and \projecttitle executions. (To measure work, we used the CPU accounting controller in {\tt cgroups} to account the CPU usage of all threads.) Due to space limitations, the work measurements are available online on the following anonymized link:  \href{https://goo.gl/0wp1kC}{Additional results Web-link.}
+\myparagraph{Additional results} In addition to time measurements, we also measured  {\em work} numbers, i.e., the overall CPUs utilization for all threads for both \pthreads and \projecttitle executions. (To measure work, we used the CPU accounting controller in {\tt cgroups} to account the CPU usage of all threads.) Due to space limitations, the work measurements are available online on the following anonymized link:  \href{https://goo.gl/0wp1kC}{Additional results Web-link.}
 %Due to the space limitation, we only present  time measurements for all experiments. 
 
 %\myparagraph{Metrics: Time and Work}  We consider two types of measures to report the performance metrics: {\em time} and {\em work}. In a nutshell, time measurements reflect the end user perceived latency, whereas work measurements assess the overall resource (CPU) utilization.  More specifically,  time refers to the end-to-end computation time for the multithreaded applications. Work refers to the total computation performed by all threads, and it is measured as the cumulative CPU time for all threads. To measure work, we used the CPU accounting controller in {\tt cgroups} to account the CPU usage of all threads.
