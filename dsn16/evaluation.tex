@@ -68,7 +68,7 @@ On the other hand, {\em linear\_regression} performs better than \pthreads, whic
 
 
 
-Lastly, in the case of {\em streamcluster}, we were limited by our physical memory to store the log in {\tt tmpfs} for $16$ threads. Therefore, we also show the overheads with $14$ and $15$ threads,  where the provenance log can fit into the main memory.  %To better understand the breakdown of provenance, we chose $15$ threads for {\em streamcluster} in $\S$~\ref{subsec:overheads-breakdown}.
+Lastly, in the case of {\em streamcluster}, we were limited by our physical memory to store the log in {\tt tmpfs} for $16$ threads. Therefore, we also show the overheads with $14$ and $15$ threads,  where the provenance log can fit into the main memory.  To better understand the breakdown of provenance, we chose $15$ threads for {\em streamcluster} in $\S$~\ref{subsec:overheads-breakdown}.
 
 
 %The overhead of collecting processor trace while using native
@@ -119,19 +119,18 @@ Figure~\ref{fig:data-size-overheads} shows a bar plot of the performance overhea
 
 \subsection{Overheads Breakdown}
 \label{subsec:overheads-breakdown}
-Next, we present  the sources for the provenance overheads. \projecttitle imposes two types of overheads: (1) performance overheads, and (2) space overheads for storing the provenance graph.
+Next, we present  the sources for the provenance overheads. \projecttitle imposes two types of overheads: (1) performance overhead, and (2) space overhead for storing the provenance graph.
 
 
-\myparagraph{I: Performance overheads} Figure~\ref{fig:overheads-breakdown} shows the breakdown of overheads with $16$ threads normalized to the native \pthreads execution. We quantify the breakdown as the time taken by the \projecttitle library ($\S$~\ref{sec:impl-lib}) and the OS support for \intelpt  ($\S$~\ref{sec:impl-OS}). The result shows an interesting pattern: the applications with unreasonably high overheads ({\em canneal}, {\em reverse\_index}, and {\em kmeans}) spend a majority of time in the \projecttitle library. Whereas, the processor trace overheads is a dominant factor for the other applications with the reasonable provenance overheads.
+\myparagraph{I: Performance overheads} Figure~\ref{fig:overheads-breakdown} shows the breakdown of overheads with $16$ threads normalized to the native \pthreads execution. We quantify the breakdown as the time taken by the \projecttitle library ($\S$~\ref{sec:impl-lib}) and the OS support for \intelpt  ($\S$~\ref{sec:impl-OS}). The result shows an interesting pattern: the applications with unreasonably high overheads ({\em canneal}, {\em reverse\_index}, and {\em kmeans}) spend a majority of time in the \projecttitle library for the above mentioned reasons. Whereas, the processor trace overheads is a dominant factor for the other applications.% with the reasonable provenance overheads.
 
 
 \input{plotsTex/overheads-breakdown}
 
 
-\myparagraph{II: Space overheads} We also measured the space overheads for the provenance trace. Table~\ref{tab:apps} shows the space overheads for all applications with~$16$ threads. The provenance log written by {\tt perf} turns out to be highly compressible. We
+\myparagraph{II: Space overheads} We also measured the space overhead for the provenance trace. Table~\ref{tab:apps} shows the space overhead for all applications with~$16$ threads. The provenance log written by {\tt perf} turns out to be highly compressible. We
 are able to achieve a compression ratio of between $6\times$ and $37\times$ times using the lz4 compression algorithm.
-It also shows a strong correlation between Bandwith and Branch Instruction per
-second with a correlation coefficient of 0.89, which was expected, because the
-log consist of taken branches.
+It also shows a strong correlation between the log bandwidth and branch instructions with a correlation coefficient of 0.89, which was expected, because the
+log consists of taken branches.
 \input{tables/benches.tex}
 
