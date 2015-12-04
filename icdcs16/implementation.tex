@@ -37,7 +37,7 @@ shares parts of the execution context with the parent process (which implements 
 
 But this raises a new problem, which is that, unlike threads, processes do not share their address spaces. We address this by taking advantage of the RC memory model we defined for \projecttitle, where threads share the updates only at synchronization points.  
 
-\myparagraph{Shared memory commit} To implement the RC memory model, we use shared memory commit of  Dthreads~\cite{dthreads-sosp-2011} (originally proposed in distributed shared memory architectures such as TreadMarks~\cite{treadmark}) % and Munin~\cite{munin}) 
+\myparagraph{Shared memory commit} To implement the RC memory model, we use shared memory commit of  Dthreads~\cite{dthreads-sosp-2011} (originally proposed in distributed shared memory architectures such as TreadMarks~\cite{treadmark} and Munin~\cite{munin}) 
 that allows threads to communicate at well-defined synchronization points.
 Our shared memory commit is implemented using memory mapped files. In
 particular, the virtual address ranges for the shared portions (globals and heap) of
@@ -55,7 +55,7 @@ copied to the shared memory page; if there are overlapping writes
 to the same memory location we resolve them using a last-writer wins policy.
 
 
-\myparagraph{Input} In addition to providing wrappers for {\tt pthreads} and {\tt malloc} related API calls, we also implemented shim layer for a number of {\tt glibc} library calls for reading the input. For instance, we provide wrappers for {\tt mmap} to record the data-flow from the input. In particular, the threading library differentiates between the {\tt mmap} calls made by the library itself and the target application. This allows us to record the mapping of the input file in the input address space. And, as described before, the library uses {\tt mprotect()} to derive the data flow from the input. 
+\myparagraph{Input support} In addition to providing wrappers for {\tt pthreads} and {\tt malloc} related API calls, we also implemented shim layer for a number of {\tt glibc} library calls for reading the input. For instance, we provide wrappers for {\tt mmap} to record the data-flow from the input. In particular, the threading library differentiates between the {\tt mmap} calls made by the library itself and the target application. This allows us to record the mapping of the input file in the input address space. And, as described before, the library uses {\tt mprotect()} to derive the data flow from the input. 
 
 
 \subsection{OS Support for \intelpt}

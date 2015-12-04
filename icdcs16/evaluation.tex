@@ -2,18 +2,18 @@
 
 \section{Evaluation}
 \label{sec:evaluation}
-In this section, we present an experimental evaluation of \projecttitle.% based on the implementation described in  \secref{implementation}. 
-%Our evaluation answers the following questions.
-%
-%\begin{itemize}
-%\item What overheads does \projecttitle impose for recording data provenance? ($\S$~\ref{subsec:overheads})
-%%\item How do these overheads scale with increases in the size of input data? ($\S$~\ref{subsec:data-sizes-overheads})
-%\item What are the sources for the provenance overheads? ($\S$~\ref{subsec:overheads-breakdown})
-%\end{itemize}
+In this section, we present an experimental evaluation of \projecttitle based on the implementation described in  \secref{implementation}. 
+Our evaluation answers the following questions.
 
-%Before answering these questions, we first describe the experimental setup used for the evaluation.
+\begin{itemize}
+\item What overheads does \projecttitle impose for recording data provenance? ($\S$~\ref{subsec:overheads})
+\item How do these overheads scale with increases in the size of input data? ($\S$~\ref{subsec:data-sizes-overheads})
+\item What are the sources for the provenance overheads? ($\S$~\ref{subsec:overheads-breakdown})
+\end{itemize}
 
-%\subsection{Experimental Setup}
+Before answering these questions, we first describe the experimental setup used for the evaluation.
+
+\subsection{Experimental Setup}
 
 
 \myparagraph{Experimental platform} We used an Intel Xeon processor based on Broadwell microarchitecture
@@ -26,9 +26,9 @@ machine is running Linux with kernel $4.3.0$ in $64$-bit mode. The log produced 
 %No additional core was provided for Perf.
 
 
-\myparagraph{Applications and dataset}  We evaluated \projecttitle using two multithreaded benchmark suites: Phoenix $2.0$~\cite{phoenix} and PARSEC $3.0$~\cite{parsec}. 
+%\myparagraph{Applications and dataset}  We evaluated \projecttitle using two multithreaded benchmark suites: Phoenix $2.0$~\cite{phoenix} and PARSEC $3.0$~\cite{parsec}. 
 
-%\myparagraph{Applications and dataset}  We evaluated \projecttitle using from two multithreaded benchmark suites: Phoenix 2.0 \cite{phoenix} and PARSEC 3.0 \cite{parsec}. %Table~\ref{tab:apps} lists the applications used for the evaluation along with the input data and benchmark parameters.
+\myparagraph{Applications and dataset}  We evaluated \projecttitle using from two multithreaded benchmark suites: Phoenix 2.0 \cite{phoenix} and PARSEC 3.0 \cite{parsec}. Table~\ref{tab:apps} lists the applications used for the evaluation along with the input data and benchmark parameters.
 %
 
 \myparagraph{Measurements}  For all experiments,  we report {\tt time}
@@ -45,13 +45,13 @@ discarded (truncated mean).
 
 %\myparagraph{Measurements} All applications were compiled using GCC 5.2.1 compiler with -$o3$ optimization flag. For all performance measurements, we report the average over 10 runs with minimum and maximum values discarded.
 
-%\myparagraph{Performance metrics: Work and Time}  For each run, we consider two types of measures: \emph{work} and
-% {\em time}. Work refers to the total amount of
-%computation performed by all threads and is measured as the total
-%run-time of all threads. Time refers to the amount of (end-to-end)
-%run-time to complete the parallel computation. Both metrics are important
-%and complementary: time measurements reflect the end user perceived latency,
-%whereas work measurements assess the overall resource (CPU) utilization.
+\myparagraph{Performance metrics: Work and Time}  For each run, we consider two types of measures: \emph{work} and
+ {\em time}. Work refers to the total amount of
+computation performed by all threads and is measured as the total
+run-time of all threads. Time refers to the amount of (end-to-end)
+run-time to complete the parallel computation. Both metrics are important
+and complementary: time measurements reflect the end user perceived latency,
+whereas work measurements assess the overall resource (CPU) utilization.
 
 \subsection{Provenance Overheads}
 \label{subsec:overheads}
