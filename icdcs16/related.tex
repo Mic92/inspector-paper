@@ -1,0 +1,75 @@
+\section{Related Work}
+\label{sec:related}
+
+
+
+%Data provenance is a well-studied concept because of it's wide applicability in different complex computer systems. 
+
+
+In this section, we review the related work in data provenance from different domains.
+
+
+%Data provenance is a well-studied concept because of it's wide applicability in different complex computer systems. In this section, we review some of the previous work in data provenance from different domains.
+
+
+
+
+\myparagraph{Database systems} Provenance has been shown to be important in databases to understand the lineage of annotations in materialized views,  to probabilistic databases, to data integration, curated databases, and many more applications (see a survey paper for more details~\cite{provenance-database-tutorial}). Almost, all existing provenance work in databases leverage explicit database schema and structured layout of input records in tables to build the provenance graph, whereas, \projecttitle does not assume any structured layout of the input data.
+%, and targets general shared-memory multithreaded programs.
+
+ 
+\myparagraph{``Big Data" analytics} Data provenance is being increasingly used in ``big data"  processing for  debugging complex workflows~\cite{nova}, and also for incremental computation~\cite{incoop}.  These ``big data" systems leverage the underlying tasks-based programming model such as MapReduce or Dryad for building the provenance graph. 
+%In particular, these systems construct the provenance graph based on the data-flow graph generated from the data-parallel programming model. 
+Instead of relying on the underlying programming model,  \projecttitle derives the graph automatically for shared-memory multithreaded programs.
+
+
+\myparagraph{Distributed and network systems} Many distributed and network systems propose provenance techniques for tracing the  execution of distributed protocols to provide accountability, fault detection, forensics, verifiability, network debugging, negative provenance~\cite{snp}. %, exspan, wu-2014-negative-provenance, dtap}. 
+These systems leverage the semantics of distributed protocols to derive a state-machine, and capture the lineage information by modifying the state-machine. Instead, we don't require any protocol-specific provenance. Albeit, we currently do not support distributed systems.
+%To make the lineage secure in the presence of adversaries in distributed settings, they further embed techniques like tamper-proof logging~\cite{peer-review} along lineage for non-repudiability.  
+ %As opposed to these semantic-based approaches, again, we target general multithreaded programs, albeit at the granularity of memory pages instead of protocol-specific provenance.
+
+
+\myparagraph{Storage systems} Storage systems supporting provenance collect meta-data of newly created objects in the system, %(via the OS support), 
+and  maintain their lineage information such as the chain of ownership and the transformations performed on objects. In this context, one of the most important line of work is Provenance-Aware Storage Systems (PASS).  
+%that automates collection and maintenance of provenance~\cite{pass-atc} of objects in the system. %In addition, PASS also supports queries, tracing the lineage of objects, upon the provenance data. 
+In contrast to PASS that tracks objects in storage systems, our focus is on tracing the lineage of shared-memory accesses in multithreaded programs at the granularity of memory pages. Like PASS, we also rely on the OS support for tracking of memory pages.
+
+
+\myparagraph{Memory tracing} Our approach is complementary to the numerous run-time~\cite{valgrind,memtrace} and compile-time~\cite{cgo-compiler-provenance} tools that allow fine-grained byte-level memory read and writes made by threads. In contrast, our tool makes a trade-off of memory tracking at the granularity of memory pages, and uses a combination of OS support and the new ISA extensions to track the data flow for the entire program. Furthermore, we also record control and schedule dependencies for the multithreaded execution as part of the data provenance graph. 
+
+
+\myparagraph{Operating systems} Linux Provenance Module (LPM)~\cite{lpm} provides OS support to collect system-wide provenance. In contrast to LPM, \projecttitle is a user-space solution and does not require any modifications to the underlying OS. Secondly, unlike LPM, which collects provenance at the granularity of a process, we collect data provenance at a finer granularity of a thread.  On the other hand, LPM benefits from the integrated OS approach to secure the provenance information. 
+
+\myparagraph{Programming languages} Programming languages researchers develop language-based provenance approaches relying on a new language with special data-types. These language-based approaches derive the provenance graph using techniques such as self-adjusting computation~\cite{Acar05}. In contrast, our work supports existing programs without relying on any language-level support or a new type system.
+
+
+
+%\if 0
+%
+%Data provenance is a well-studied concept because of it's wide applicability in different complex computer systems. In this section, we review some of the previous work in data provenance from different domains.
+%
+%
+%
+%
+%
+%\myparagraph{Storage systems} Storage systems supporting provenance collect meta-data of newly created objects in the system (via the OS support), and  maintain their lineage information such as the chain of ownership and the transformations performed on objects. In this context, one of the most important line of work is on Provenance-Aware Storage Systems (PASS) that automates collection and maintenance of provenance~\cite{pass-papers, pass-atc} of objects in the system. In addition, PASS also supports queries, tracing the lineage of objects, upon the provenance data. In contrast to PASS that tracks objects in storage systems, our focus is on tracing the lineage of shared-memory accesses in multithreaded programs at the granularity of memory pages. Like PASS, we also rely on the OS support for tracking of memory pages.
+%
+%
+%\myparagraph{Database systems} Provenance has been shown to be important in databases to understand the lineage of annotations in materialized views,  to probabilistic databases, to data integration, curated databases, and many more applications (see a survey paper for more details~\cite{provenance-database-tutorial}). Almost, all existing provenance work in databases leverage explicit database schema and structured layout of input records in tables to build the provenance graph, whereas, \projecttitle does not assume any structured layout of the input data.
+%
+% 
+%\myparagraph{``Big Data" analytics} Data provenance is being increasingly used in ``big data"  processing for  debugging complex workflows~\cite{nova, sixt, lipstick}, and also for incremental computation~\cite{incoop, slider, dryadinc, cbp}.  These ``big data" systems leverage the underlying data-parallel programming model such as MapReduce~\cite{mapreduce} or Dryad~\cite{dryad} for building the provenance graph. In particular, these systems construct the provenance graph based on the data-flow graph generated from the data-parallel programming model. The data-flow graph is represented by a DAG, where vertices are tasks (e.g. Map or Reduce), and directed edges correspond to data and control dependencies between tasks. Instead of relying on the underlying data-parallel programming model for building the provenance graph,  \projecttitle derives the graph automatically for the general shared-memory multithreaded programming model. 
+%
+%
+%
+%\myparagraph{Distributed and network systems} Many distributed and network systems propose provenance techniques for tracing the  execution of distributed protocols to provide accountability, fault detection, forensics, verifiability, network debugging, negative provenance~\cite{snp, exspan, wu-2014-negative-provenance, dtap}. These systems leverage the semantics of distributed protocols to derive a state-machine, and capture the lineage information by modifying the state-machine. To make the lineage secure in the presence of adversaries in distributed settings, they further embed techniques like tamper-proof logging~\cite{peer-review} along lineage for non-repudiability.   As opposed to these semantic-based approaches, again, we target general multithreaded programs, albeit at the granularity of memory pages instead of protocol-specific provenance.
+%
+%
+%
+%\myparagraph{Multithreaded programs} ~\cite{cgo-compiler-provenance} special compiler-support for the application code and all run-time libraries.
+%
+%
+%
+%\myparagraph{Programming languages} Programming languages researchers develop language-based provenance approaches relying on a new language with special data-types. These language-based approaches derive the provenance graph using techniques such as  program slicing~\cite{roly} or advancement such as self-adjusting computation~\cite{Acar05, roly-calculas}. In contrast, our work supports unmodified existing programs without relying on any language-level support or a new type system.
+%
+%\fi 

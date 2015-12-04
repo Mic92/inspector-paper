@@ -1,0 +1,78 @@
+\documentclass{IEEEtran}
+\usepackage{epsfig,endnotes,url,color}
+\usepackage{array}
+\usepackage[english]{babel}
+\usepackage{xspace}
+\usepackage{verbatim}
+\usepackage[ruled, vlined]{algorithm2e}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{natbib}
+\usepackage{fancyhdr}
+
+ % Add navigation window to pdf
+\usepackage{hyperref}
+\hypersetup{pdftex,colorlinks=true,allcolors=blue}
+\usepackage{hypcap}
+\usepackage{xr}
+
+%special fonts
+%\usepackage{mathpazo} % math & rm
+%\linespread{1.03}        % Palatino needs more leading (space between lines)
+
+\input{space-tricks}
+
+
+\input{mac}
+\input{defs}
+
+\newcommand{\myfontsize}{\fontsize{7}{9}\selectfont}
+
+\newcommand{\projecttitle}{\textsc{XY}\xspace}
+\newcommand{\pthreads}{{\tt pthreads}\xspace}
+\newcommand{\dthreads}{{\tt Dthreads}\xspace}
+\newcommand{\intel}{{Intel}\xspace}
+\newcommand{\intelpt}{{Intel PT}\xspace}
+%\newcommand{\intelpt}{{Intel\textsuperscript{\textregistered} PT}\xspace}
+%\newcommand{\intel}{{Intel\textsuperscript{\textregistered}}\xspace}
+
+
+
+
+
+\begin{document}
+
+
+
+\author{
+%\IEEEauthorblockN{J{\"o}rg Thalheim, Pramod Bhatotia, and Christof Fetzer}\\
+%\IEEEauthorblockA{TU Dresden}\\
+Tool paper\\Paper \# 58 (8 pages)
+}
+
+\title{\huge \projecttitle: A Data Provenance Library for Multithreaded Programs}
+\maketitle
+\input{abstract}
+
+
+\input{introduction}
+\input{overview}
+\input{model}
+\input{algorithms}
+\input{implementation}
+\input{snapshot}
+
+\input{evaluation}
+\input{discussions}
+
+
+\input{related}
+\input{conclusion}
+\footnotesize
+\bibliographystyle{abbrv}
+
+\bibliography{main} 
+%\appendix
+
+
+\end{document}

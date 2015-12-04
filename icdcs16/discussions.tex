@@ -1,0 +1,20 @@
+\section{Discussion: Case-studies}
+\label{sec:discussion}
+While data provenance is useful across a wide range of workflows, we discuss three active projects where \projecttitle is being used to increase the dependability, security, and efficiency of software systems. 
+
+\myparagraph{Dependability: Debugging programs~\cite{fast-track-pldi}} Multithreaded programs are notoriously difficult to debug because of the inherent non-deterministic thread scheduling by the OS.  Currently, debugging techniques rely on examining the memory state during the program execution or by analyzing core dumps after the crash. These techniques mainly target ``what" is the state of the program without revealing much about ``why" is it the state of the program is like that. Our library can be extended to aid the developers to better understand the failed execution by augmenting the existing debugging techniques with the provenance of the memory state.
+
+
+%
+%Multithreaded programs are notoriously difficult to debug. This difficulty arises from the fact that multithreaded programs are inherently non-deterministic. Consequently, threads accessing the shared-memory region with different inter-leavings may lead to undesirable concurrency bugs, like program crash or data corruption. 
+%
+%
+%Currently, debugging techniques rely on examining memory state during the program execution or by analyzing core dumps after the program crashes. These techniques mainly target ``what" is the state of the program without revealing much about ``why" is it the state of the program like that. We can aid the developers to better understand the failed execution by augmenting the existing debugging techniques with the lineage information of the memory state or ``why"-provenance or simply data-provenance.
+
+
+\myparagraph{Security: Dynamic Information Flow Tracking (DIFT)~\cite{dift}} DIFT protects software against data leaks by restricting the suspicious I/O calls. Our library can be extended to support DIFT by carrying a taint for the sensitive data as part of the provenance, and  restricting the output activities at the level of system calls. In particular, a policy checker can analyze the taint provenance to disallow sensitive data leaks. The policy checker can be embedded at the level of {\tt glibc} wrappers for the output system calls. Note that we currently target accidental, but not malicious threat model because our library is a user-space solution.
+
+
+
+\myparagraph{Efficiency: Memory management for NUMA architecture~\cite{memprof}} The recent advancement in NUMA architectures offers a wide range of configurations for the interconnects with varying memory bandwidth, and  it is unclear how these different configurations affect the OS support for memory management. Our library can be extended to investigate the potential impact of interconnect topologies on memory management, and can be extended to  optimize the memory layout for a given interconnect topology. This optimization requires memory access patterns that could be easily derived from the CPG.
+
