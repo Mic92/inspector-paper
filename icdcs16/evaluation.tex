@@ -6,9 +6,10 @@ In this section, we present an experimental evaluation of \projecttitle based on
 Our evaluation answers the following questions.
 
 \begin{itemize}
-\item What overheads does \projecttitle impose for recording data provenance? ($\S$~\ref{subsec:overheads})
+\item What performance overheads does \projecttitle impose for recording data provenance? ($\S$~\ref{subsec:overheads})
+\item What are the sources for the provenance overheads? ($\S$~\ref{subsec:performance-overheads-breakdown})
 \item How do these overheads scale with increases in the size of input data? ($\S$~\ref{subsec:data-sizes-overheads})
-\item What are the sources for the provenance overheads? ($\S$~\ref{subsec:overheads-breakdown})
+\item What are the space overheads for storing the the provenance graph? ($\S$~\ref{subsec:overheads-breakdown})
 \end{itemize}
 
 Before answering these questions, we first describe the experimental setup used for the evaluation.
@@ -31,27 +32,38 @@ machine is running Linux with kernel $4.3.0$ in $64$-bit mode. The log produced 
 \myparagraph{Applications and dataset}  We evaluated \projecttitle using from two multithreaded benchmark suites: Phoenix 2.0 \cite{phoenix} and PARSEC 3.0 \cite{parsec}. Table~\ref{tab:apps} lists the applications used for the evaluation along with the input data and benchmark parameters.
 %
 
-\myparagraph{Measurements}  For all experiments,  we report {\tt time}
-measurements, i.e., run-time comparison, between the native {\tt pthreads}
-execution, and \projecttitle execution.  All applications were compiled using
+
+\myparagraph{Performance metrics: Work and Time}  For each run, we consider two types of measures: \emph{time} and
+ {\em work}.  Time refers to the amount of (end-to-end)
+run-time to complete the parallel computation.  Work refers to the total amount of
+computation performed by all threads and is measured as the total
+run-time of all threads. Both metrics are important
+and complementary: time measurements reflect the end user perceived latency,
+whereas work measurements assess the overall resource (CPU) utilization.
+
+
+\myparagraph{Measurements} All applications were compiled using
 GCC $5.2.1$ compiler with {\tt -o3} optimization flag. For all
 measurements, we report the average over $6$ runs with minimum and maximum values
 discarded (truncated mean).
 
-\myparagraph{Additional results} In addition to time measurements, we also measured  {\em work} numbers, i.e., the overall CPUs utilization for all threads for both \pthreads and \projecttitle executions. (To measure work, we used the CPU accounting controller in {\tt cgroups} to account the CPU usage of all threads.) Due to space limitations, the work measurements are available online on the following anonymized link:  \href{https://goo.gl/0wp1kC}{Additional results Web-link.}
+ We measured  {\em work} numbers, i.e., the overall CPUs utilization for all threads for both \pthreads and \projecttitle executions. To measure work, we used the CPU accounting controller in {\tt cgroups} to account the CPU usage of all threads. For time measurement, we report {\tt time} measurements, i.e., run-time comparison, between the native {\tt pthreads} execution, and \projecttitle execution.  
+
+%For all experiments,  
+
+
+\myparagraph{Additional results}  Due to space limitations, the detailed analysis is  available online on the following link: \href{https://goo.gl/kSM8zb}{Additional results weblink}.
+
+ %\href{https://goo.gl/0wp1kC}{Additional results Web-link.}
+
+%In addition to time measurements, we also measured  {\em work} numbers, i.e., the overall CPUs utilization for all threads for both \pthreads and \projecttitle executions. (To measure work, we used the CPU accounting controller in {\tt cgroups} to account the CPU usage of all threads.)
 %Due to the space limitation, we only present  time measurements for all experiments. 
 
 %\myparagraph{Metrics: Time and Work}  We consider two types of measures to report the performance metrics: {\em time} and {\em work}. In a nutshell, time measurements reflect the end user perceived latency, whereas work measurements assess the overall resource (CPU) utilization.  More specifically,  time refers to the end-to-end computation time for the multithreaded applications. Work refers to the total computation performed by all threads, and it is measured as the cumulative CPU time for all threads. To measure work, we used the CPU accounting controller in {\tt cgroups} to account the CPU usage of all threads.
 
 %\myparagraph{Measurements} All applications were compiled using GCC 5.2.1 compiler with -$o3$ optimization flag. For all performance measurements, we report the average over 10 runs with minimum and maximum values discarded.
 
-\myparagraph{Performance metrics: Work and Time}  For each run, we consider two types of measures: \emph{work} and
- {\em time}. Work refers to the total amount of
-computation performed by all threads and is measured as the total
-run-time of all threads. Time refers to the amount of (end-to-end)
-run-time to complete the parallel computation. Both metrics are important
-and complementary: time measurements reflect the end user perceived latency,
-whereas work measurements assess the overall resource (CPU) utilization.
+
 
 \subsection{Provenance Overheads}
 \label{subsec:overheads}
@@ -99,6 +111,10 @@ Lastly, in the case of {\em streamcluster}, we were limited by our physical memo
 
 %\label{subsec:data-sizes-overheads}
 
+\subsection{Performance overheads breakdown} 
+\label{subsec:performance-overheads-breakdown}
+Figure~\ref{fig:overheads-breakdown} shows the breakdown of overheads with $16$ threads normalized to the native \pthreads execution. We quantify the breakdown as the time taken by the \projecttitle library ($\S$~\ref{sec:impl-lib}) and the OS support for \intelpt  ($\S$~\ref{sec:impl-OS}). The result shows an interesting pattern: the applications with unreasonably high overheads ({\em canneal}, {\em reverse\_index}, and {\em kmeans}) spend a majority of time in the \projecttitle library for the above mentioned reasons. Whereas, the processor trace overheads is a dominant factor for the other applications.% with the reasonable provenance overheads.
+
 
 
 \input{plotsTex/data-size-overheads}
@@ -126,18 +142,16 @@ Figure~\ref{fig:data-size-overheads} shows a bar plot of the performance overhea
 
 
 
-\subsection{Overheads Breakdown}
+
+%Next, we present  the sources for the provenance overheads. \projecttitle imposes two types of overheads: (1) performance overhead, and (2) space overhead for storing the provenance graph.
+
+
+
+
+
+\subsection{Space overheads for provenance}
 \label{subsec:overheads-breakdown}
-Next, we present  the sources for the provenance overheads. \projecttitle imposes two types of overheads: (1) performance overhead, and (2) space overhead for storing the provenance graph.
-
-
-\myparagraph{Performance overheads} Figure~\ref{fig:overheads-breakdown} shows the breakdown of overheads with $16$ threads normalized to the native \pthreads execution. We quantify the breakdown as the time taken by the \projecttitle library ($\S$~\ref{sec:impl-lib}) and the OS support for \intelpt  ($\S$~\ref{sec:impl-OS}). The result shows an interesting pattern: the applications with unreasonably high overheads ({\em canneal}, {\em reverse\_index}, and {\em kmeans}) spend a majority of time in the \projecttitle library for the above mentioned reasons. Whereas, the processor trace overheads is a dominant factor for the other applications.% with the reasonable provenance overheads.
-
-
-
-
-
-\myparagraph{Space overheads} We also measured the space overhead for the provenance trace. Table~\ref{tab:apps} shows the space overhead for all applications with~$16$ threads. The provenance log written by {\tt perf} turns out to be highly compressible. We
+We also measured the space overhead for the provenance trace. Table~\ref{tab:apps} shows the space overhead for all applications with~$16$ threads. The provenance log written by {\tt perf} turns out to be highly compressible. We
 are able to achieve a compression ratio of between $6\times$ and $37\times$ times using the lz4 compression algorithm.
 It also shows a strong correlation between the log bandwidth and branch instructions with a correlation coefficient of 0.89, which was expected, because the
 log consists of taken branches.
