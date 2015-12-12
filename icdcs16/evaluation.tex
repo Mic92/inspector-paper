@@ -1,4 +1,4 @@
-\input{plotsTex/overheads}
+
 
 \section{Evaluation}
 \label{sec:evaluation}
@@ -14,6 +14,7 @@ Our evaluation answers the following questions.
 
 Before answering these questions, we first describe the experimental setup used for the evaluation.
 
+\input{plotsTex/overheads}
 \subsection{Experimental Setup}
 
 
@@ -115,16 +116,19 @@ Lastly, in the case of {\em streamcluster}, we were limited by our physical memo
 \label{subsec:performance-overheads-breakdown}
 Figure~\ref{fig:overheads-breakdown} shows the breakdown of overheads with $16$ threads normalized to the native \pthreads execution. We quantify the breakdown as the time taken by the \projecttitle library ($\S$~\ref{sec:impl-lib}) and the OS support for \intelpt  ($\S$~\ref{sec:impl-OS}). The result shows an interesting pattern: the applications with unreasonably high overheads ({\em canneal}, {\em reverse\_index}, and {\em kmeans}) spend a majority of time in the \projecttitle library for the above mentioned reasons. Whereas, the processor trace overheads is a dominant factor for the other applications.% with the reasonable provenance overheads.
 
+\input{plotsTex/overheads-breakdown}
+
+\input{tables/benches_mix}
 
 
-\input{plotsTex/data-size-overheads}
 
-\input{tables/benches.tex}
+
 
 
 \subsection{Scalability with input data}
 \label{subsec:data-sizes-overheads}
 
+\input{plotsTex/data-size-overheads}
  In addition to scalability w.r.t.  threads, we also measured the performance overheads with increases in the size of the input.  For that, we
 report the performance overheads for four applications ({\em histogram}, {\em linear\_regression}, {\em string\_match}, and {\em word\_count}) that are available with
 three input sizes: small ($S$), medium ($M$), and large ($L$).
@@ -155,5 +159,6 @@ We also measured the space overhead for the provenance trace. Table~\ref{tab:app
 are able to achieve a compression ratio of between $6\times$ and $37\times$ times using the lz4 compression algorithm.
 It also shows a strong correlation between the log bandwidth and branch instructions with a correlation coefficient of 0.89, which was expected, because the
 log consists of taken branches.
+\input{tables/benches.tex}
 
-\input{plotsTex/overheads-breakdown}
+
