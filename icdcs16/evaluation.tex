@@ -5,6 +5,8 @@
 In this section, we present an experimental evaluation of \projecttitle based on the implementation described in  \secref{implementation}. 
 Our evaluation answers the following questions.
 
+\input{plotsTex/overheads}
+
 \begin{itemize}
 \item What performance overheads does \projecttitle impose for recording the data provenance? ($\S$~\ref{subsec:overheads})
 \item What are the sources for the provenance overheads? ($\S$~\ref{subsec:performance-overheads-breakdown})
@@ -14,7 +16,7 @@ Our evaluation answers the following questions.
 
 Before answering these questions, we first describe the experimental setup used for the evaluation.
 
-\input{plotsTex/overheads}
+
 \subsection{Experimental Setup}
 
 
@@ -51,9 +53,9 @@ discarded (truncated mean).
  We measured  {\em work} numbers, i.e., the overall CPUs utilization for all threads for both \pthreads and \projecttitle executions. To measure work, we used the CPU accounting controller in {\tt cgroups} to account the CPU usage of all threads. For time measurement, we report {\tt time} measurements, i.e., run-time comparison, between the native {\tt pthreads} execution, and \projecttitle execution.  
 
 %For all experiments,  
-
-
-\myparagraph{Additional results}   Due to the space limitations, the work measurements are available online on the following link: \href{https://mic92.github.io/inspector/index.html}{Work results weblink}.
+\input{plotsTex/overheads-breakdown}
+\input{tables/benches_mix}
+\myparagraph{Additional results}   Due to the space limitations, the work measurements are available online on the following link: \href{https://mic92.github.io/inspector/index.html}{Work results web-link}.
 
  %\href{https://goo.gl/0wp1kC}{Additional results Web-link.}
 
@@ -116,9 +118,9 @@ Lastly, in the case of {\em streamcluster}, we were limited by our physical memo
 \label{subsec:performance-overheads-breakdown}
 Figure~\ref{fig:overheads-breakdown} shows the breakdown of overheads with $16$ threads normalized to the native \pthreads execution. We quantify the breakdown as the time taken by the \projecttitle library ($\S$~\ref{sec:impl-lib}) and the OS support for \intelpt  ($\S$~\ref{sec:impl-OS}). The result shows an interesting pattern: the applications with unreasonably high overheads ({\em canneal}, {\em reverse\_index}, and {\em kmeans}) spend a majority of time in the \projecttitle library for the above mentioned reasons. Whereas, the processor trace overheads is a dominant factor for the other applications.% with the reasonable provenance overheads.
 
-\input{plotsTex/overheads-breakdown}
 
-\input{tables/benches_mix}
+
+
 
 
 
@@ -155,10 +157,12 @@ Figure~\ref{fig:data-size-overheads} shows a bar plot of the performance overhea
 
 \subsection{Space overheads for provenance}
 \label{subsec:overheads-breakdown}
-We also measured the space overhead for the provenance trace. Table~\ref{tab:apps} shows the space overhead for all applications with~$16$ threads. The provenance log written by {\tt perf} turns out to be highly compressible. We
+We also measured the space overhead for the provenance trace. Table~\ref{tab:space-overheads} shows the space overhead for all applications with~$16$ threads. The provenance log written by {\tt perf} turns out to be highly compressible. We
 are able to achieve a compression ratio of between $6\times$ and $37\times$ times using the lz4 compression algorithm.
 It also shows a strong correlation between the log bandwidth and branch instructions with a correlation coefficient of 0.89, which was expected, because the
 log consists of taken branches.
+
+
 \input{tables/benches.tex}
 
 

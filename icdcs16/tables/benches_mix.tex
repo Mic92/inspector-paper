@@ -1,29 +1,30 @@
-\begin{figure*}[t]
+\begin{figure}[t]
 \centering
 \myfontsize
-\newcommand{\tworowcell}[2][c]{\begin{tabular}[#1]{@{}c@{}}#2\end{tabular}}
 {
-\begin{tabular}{l | r r r r}
-%[-8pt]
-    Application& \tworowcell{Compressed log size [MB] \\ (Bandwith [MB/s])}& Branch instr. & Segfaults \\
+\begin{tabular}{m{1.6cm}|m{3.4cm}| m{1.5cm}|m{1.4cm}}
+   %   & & \multicolumn{2}{c|}{ Page faults }   &  Bandwidth & Branch instr. \\
+   { Application} & Dataset / Parameters & Page fault & Page faults/sec\\
   \hline \hline
-    blackscholes& 57.277 (59.376)& 2.404E+09& 1644 \\
-    canneal& 315.016 (32.225)& 1.512E+10& 947672 \\
-    histogram& 11.338 (28.625)& 1.651E+09& 102 \\
-    kmeans& 522.188 (62.990)& 4.803E+10& 481947 \\
-    linear\_regression& 5.464 (21.093)& 9.881E+08& 52 \\
-    matrix\_multiply& 97.019 (4.868)& 8.067E+09& 3977 \\
-    pca& 115.647 (22.158)& 7.408E+09& 241404 \\
-    reverse\_index& 3.222 (17.032)& 4.564E+08& 262 \\
-    streamcluster& 786.507 (55.866)& 1.095E+11& 15703 \\
-    string\_match& 430.184 (275.674)& 8.749E+09& 53 \\
-    swaptions& 929.152 (240.805)& 1.867E+10& 1018 \\
-    word\_count& 507.992 (176.956)& 8.047E+09& 21709 \\
+    blackscholes& 16 in\_64K.txt prices.txt &851& 57.3 \\
+    canneal& 15 10000 2000 100000.nets 32 & 5343& 315.0 \\
+    histogram& large.bmp & 381& 11.3  \\
+    kmeans& -d 3 -c 500 -p 50000 -s 500 & 11900& 522.0  \\
+    linear\_regression& key\_file\_500MB.txt & 183& 5.5  \\
+    matrix\_multiply& 2000 2000 & 2101& 97.0  \\
+    pca& -r 4000 -c 4000 -s 100 & 1900& 116.0\\
+    reverve\_index & datafiles & 192& 5.7  \\
+    streamcluster& 2 5 1 10 10 5 none output.txt 16 & 29300& 787.0\\
+    string\_match &key\_file\_500MB.txt & 2751& 430.0\\
+    swaptions & -ns 128 -sm 50000 -nt 16  & 7061& 929.0 \\
+    word\_count& word\_100MB.txt	 & 4121& 508.0  \\
 
 \hline
 \end{tabular}
 }
 
-\caption{Runtime statistics of benchmarks with 16 threads (Detailed results available here: \href{https://goo.gl/UgPNdS}{goo.gl/UgPNdS}) }
-\label{tab:apps}
-\end{figure*}
+
+\caption{\label{tab:apps} Runtime statistics for all benchmarks with 16 threads (Detailed results are available here: \href{https://mic92.github.io/inspector/index.html\#measurement_table}{Log details web-link}) }                                                                                                                                  
+
+
+\end{figure}
