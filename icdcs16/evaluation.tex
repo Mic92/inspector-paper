@@ -14,7 +14,7 @@ Our evaluation answers the following questions.
 \item What are the space overheads for storing the provenance graph? ($\S$~\ref{subsec:overheads-breakdown})
 \end{itemize}
 
-Before answering these questions, we first describe the experimental setup used for the evaluation.
+%Before answering these questions, we first describe the experimental setup used for the evaluation.
 
 
 \subsection{Experimental Setup}
@@ -54,7 +54,7 @@ discarded (truncated mean).
 
 %For all experiments,  
 \input{plotsTex/overheads-breakdown}
-\input{tables/benches_mix}
+
 \myparagraph{Additional results}   Due to the space limitations, the work measurements are available online on the following link: \href{https://mic92.github.io/inspector/index.html}{Work results web-link}.
 
  %\href{https://goo.gl/0wp1kC}{Additional results Web-link.}
@@ -130,7 +130,7 @@ Figure~\ref{fig:overheads-breakdown} shows the breakdown of overheads with $16$ 
 \subsection{Scalability with input data}
 \label{subsec:data-sizes-overheads}
 
-\input{plotsTex/data-size-overheads}
+\input{tables/benches_mix}
  In addition to scalability w.r.t.  threads, we also measured the performance overheads with increases in the size of the input.  For that, we
 report the performance overheads for four applications ({\em histogram}, {\em linear\_regression}, {\em string\_match}, and {\em word\_count}) that are available with
 three input sizes: small ($S$), medium ($M$), and large ($L$).
@@ -161,8 +161,8 @@ We also measured the space overhead for the provenance trace. Table~\ref{tab:spa
 are able to achieve a compression ratio of between $6\times$ and $37\times$ times using the lz4 compression algorithm.
 It also shows a strong correlation between the log bandwidth and branch instructions with a correlation coefficient of 0.89, which was expected, because the
 log consists of taken branches.
+\input{plotsTex/data-size-overheads}
 
 
-\input{tables/benches.tex}
 
 
