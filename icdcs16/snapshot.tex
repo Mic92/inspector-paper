@@ -5,7 +5,7 @@ An additional challenge that we need to address in the implementation is the exc
 For the snapshot facility, the library periodically takes a consistent cut of the CPG. A cut is {\em consistent} if, for any synchronization operation on object $S$ in the trace,  {\em acquire}($S$) operation being in the cut implies that corresponding {\em release}($S$) is also included in the cut~\cite{chandy-lamport}.  To achieve so, we make use of modeling synchronization primitives as {\em acquire} and {\em release} operations (described in $\S$\ref{sec:algorithms}). Each thread invokes the snapshot operation on the latest synchronization event ({\em acquire} or {\em release}) in the recorded trace.
 
 
-\input{figure/figureTex/fig_snapshot}
+%\input{figure/figureTex/fig_snapshot}
 
 We implemented the snapshot facility using Intel PT interface for {\tt perf},
 which provides mechanism for the full trace, and a snapshot mode.
