@@ -2,22 +2,22 @@
 \centering
 \myfontsize
 {
-\begin{tabular}{m{1.6cm}|m{3.2cm}| m{1.2cm}|m{1.2cm}}
+\begin{tabular}{m{1.6cm}|m{3.2cm}| m{1.1cm}|m{1.3cm}}
    %   & & \multicolumn{2}{c|}{ Page faults }   &  Bandwidth & Branch instr. \\
-   { Application} & Dataset / Parameters & Page fault & Page faults/sec\\
+   { Application} & Dataset / Parameters & Page fault & Faults/sec\\
   \hline \hline
-    blackscholes& 16 in\_64K.txt prices.txt &851& 57.3 \\
-    canneal& 15 10000 2000 100000.nets 32 & 5343& 315.0 \\
-    histogram& large.bmp & 381& 11.3  \\
-    kmeans& -d 3 -c 500 -p 50000 -s 500 & 11900& 522.0  \\
-    linear\_regression& key\_file\_500MB.txt & 183& 5.5  \\
-    matrix\_multiply& 2000 2000 & 2101& 97.0  \\
-    pca& -r 4000 -c 4000 -s 100 & 1900& 116.0\\
-    reverve\_index & datafiles & 192& 5.7  \\
-    streamcluster& 2 5 1 10 10 5 none output.txt 16 & 29300& 787.0\\
-    string\_match &key\_file\_500MB.txt & 2751& 430.0\\
-    swaptions & -ns 128 -sm 50000 -nt 16  & 7061& 929.0 \\
-    word\_count& word\_100MB.txt	 & 4121& 508.0  \\
+    blackscholes& 16 in\_64K.txt prices.txt & 2.49E+04& 1704 \\
+    canneal& 15 10000 2000 100000.nets 32 & 2.11E+06 & 9.69E+04 \\
+    histogram& large.bmp & 4.27E+04 & 258	  \\
+    kmeans& -d 3 -c 500 -p 50000 -s 500 & 1.16E+06 & 5.81E+04  \\
+    linear\_regression& key\_file\_500MB.txt & 2.88E+04 & 201  \\
+    matrix\_multiply& 2000 2000 & 2.32E+05 & 200  \\
+    pca& -r 4000 -c 4000 -s 100 & 5.34E+05 & 4.63E+04\\
+    reverve\_index & datafiles & 2.61E+04 & 4241  \\
+    streamcluster& 2 5 1 10 10 5 none output.txt 16 & 1.64E+05 & 1115\\
+    string\_match &key\_file\_500MB.txt & 3.11E+04 & 34\\
+    swaptions & -ns 128 -sm 50000 -nt 16  & 4.66E+04 & 264 \\
+    word\_count& word\_100MB.txt	 & 1.56E+05 & 7562  \\
 
 \hline
 \end{tabular}
