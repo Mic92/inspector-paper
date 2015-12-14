@@ -10,7 +10,7 @@ Our evaluation answers the following questions.
 \item What performance overheads does \projecttitle impose for recording the provenance graph? ($\S$\ref{subsec:overheads})
 \item What are the sources for these overheads? ($\S$\ref{subsec:performance-overheads-breakdown})
 \item How do these overheads scale with increase in the size of input data? ($\S$\ref{subsec:data-sizes-overheads})
-\item What are the space overheads for storing the provenance graph? ($\S$\ref{subsec:overheads-breakdown})
+\item What are the space overheads for the CPG? ($\S$\ref{subsec:overheads-breakdown})
 \end{itemize}
 
 %Before answering these questions, we first describe the experimental setup used for the evaluation.
@@ -74,7 +74,7 @@ First, we explain the provenance overheads imposed by \projecttitle w.r.t the na
 threads (from $2$ to $16$ threads). As expected, the provenance overheads increases with the increase in the number of threads. This is because the shared memory commit ($\S$\ref{sec:impl-lib}) takes longer time with a higher number of threads. 
 
 The experiment shows that the provenance overheads using \projecttitle vary across applications. 
-We observe that a majority of applications ($9$/$12$) have a reasonable overhead between $1\times$ up to $2.5\times$ w.r.t. the native execution. However, three applications have exceptionally high overheads:  {\em canneal}, {\em reverse\_index}, and {\em kmeans}. The high overheads is explained as follows: {\em canneal} modifies a lot of memory pages that leads to a high number of page faults for deriving read and write sets (see Table~\ref{tab:apps}). Whereas, {\em reverse\_index} does a lot of small memory allocations across threads leading to a large number of segmentation faults (around $4241$ segmentation faults for memory allocation per second of the execution run-time, details omitted --- see  \href{https://mic92.github.io/inspector/index.html\#measurement_table}{Web-link}).  Finally, {\em kmeans} creates more than $400$ threads until the cluster co-efficient converges, when we specify $500$ as the parameter for the iterative convergence algorithm (see Table~\ref{tab:apps}). Since, creating a process takes more time than creating a thread, we see a slowdown in {\em kmeans}.
+We observe that a majority of applications ($9$/$12$) have a reasonable overhead between $1\times$ up to $2.5\times$ w.r.t. the native execution. However, three applications have exceptionally high overheads:  {\em canneal}, {\em reverse\_index}, and {\em kmeans}. The high overheads is explained as follows: {\em canneal} modifies a lot of memory pages that leads to a high number of page faults for deriving read and write sets (see Table~\ref{tab:apps}). Whereas, {\em reverse\_index} does a lot of small memory allocations across threads leading to a large number of segmentation faults ($4241$ segmentation faults for memory allocation per second of the execution run-time, details omitted --- see  \href{https://mic92.github.io/inspector/index.html\#measurement_table}{Web-link}).  Finally, {\em kmeans} creates more than $400$ threads until the cluster co-efficient converges, when we specify $500$ as the parameter for the iterative convergence algorithm (see Table~\ref{tab:apps}). Since, creating a process takes more time than creating a thread, we see a slowdown in {\em kmeans}.
 
 
 On the other hand, {\em linear\_regression} performs better than \pthreads, which is explained by the fact that our implementation of threads as processes ($\S$\ref{sec:implementation})  avoids false sharing, as previously noted by Dthreads~\cite{dthreads-sosp-2011}, which leads to improved performance.
@@ -115,15 +115,9 @@ Lastly, in the case of {\em streamcluster}, we were limited by our physical memo
 
 \subsection{Performance overheads breakdown} 
 \label{subsec:performance-overheads-breakdown}
-Figure~\ref{fig:overheads-breakdown} shows the breakdown of overheads with $16$ threads normalized to the native \pthreads execution. We quantify the breakdown as the time taken by the \projecttitle library ($\S$~\ref{sec:impl-lib}) and the OS support for \intelpt  ($\S$~\ref{sec:impl-OS}). The result shows an interesting pattern: the applications with unreasonably high overheads ({\em canneal}, {\em reverse\_index}, and {\em kmeans}) spend a majority of time in the \projecttitle library for the above mentioned reasons. Whereas, the processor trace overheads is a dominant factor for the other applications.% with the reasonable provenance overheads.
 
-
-
-
-
-
-
-
+Next, we investigated the breakdown of the provenance overheads. Recall that our system implementation has two major components: (1) the threading library ($\S$\ref{sec:impl-lib}), and (2) the OS support for \intelpt ($\S$\ref{sec:impl-OS}). 
+Figure~\ref{fig:overheads-breakdown} shows the breakdown of overheads with $16$ threads normalized to the native \pthreads execution. We quantify the breakdown as the time taken by the \projecttitle library  and the OS support for \intelpt  . The result shows an interesting pattern: the applications with unreasonably high overheads ({\em canneal}, {\em reverse\_index}, and {\em kmeans}) spend a majority of time in the \projecttitle library for the above mentioned reasons. Whereas, the overheads for tracing the control flow due to \intelpt  is a dominant factor for the other applications. These results highlight that for a majority of applications ($9/12$) the underlying hardware is still a bottleneck to achieve low provenance overheads.  
 
 
 \subsection{Scalability with input data}
@@ -131,11 +125,10 @@ Figure~\ref{fig:overheads-breakdown} shows the breakdown of overheads with $16$ 
 
 \input{tables/benches_mix}
  In addition to scalability w.r.t.  threads, we also measured the performance overheads with increases in the size of the input.  For that, we
-report the performance overheads for four applications ({\em histogram}, {\em linear\_regression}, {\em string\_match}, and {\em word\_count}) that are available with
-three input sizes: small ($S$), medium ($M$), and large ($L$).
+report the performance overheads for four applications that are available with
+three input sizes: small ($S$), medium ($M$), and large ($L$). These four applications are: {\em histogram}, {\em linear\_regression}, {\em string\_match}, and {\em word\_count}.
 
-
-Figure~\ref{fig:data-size-overheads} shows a bar plot of the performance overheads w.r.t. to the native \pthreads execution. For the reference, the input sizes are also shown by a line plot in the same figure on the $Y2$ axis. The result shows that the gap between \pthreads and \projecttitle narrows with bigger input sizes. This is due to the fact that most applications use a data-parallel programming model for parallelization, where the main threads divides the input data evenly between the worker threads. As the input size increases, each thread spends relatively more time outside the shared-memory commit to compute on the data, and therefore, it results in improved performance.
+In this experiment, we kept the number of threads to a constant  ($16$ threads), and we varied the input sizes for these applications.  Figure~\ref{fig:data-size-overheads} shows the results for our experiment. The bar plot shows the performance overheads w.r.t. to the native \pthreads execution on the $Y1$-axis for three input sizes ($S$, $M$, $L$). For the reference, the input sizes are also shown by a line plot in the same figure on the $Y2$-axis. The result shows that the gap between \pthreads and \projecttitle narrows with bigger input sizes. This is due to the fact that most applications use a data-parallel programming model for parallelization, where the main threads divides the input data evenly between the worker threads. As the input size increases, each thread needs to perform more work (or compute on a larger input size) than the time spend on synchronization. Therefore, in our implementation, each thread spends relatively more time outside the shared-memory commit to compute on the data, and therefore, it results in improved performance.
  
 
 %
@@ -156,10 +149,15 @@ Figure~\ref{fig:data-size-overheads} shows a bar plot of the performance overhea
 
 \subsection{Space overheads for provenance}
 \label{subsec:overheads-breakdown}
-We also measured the space overhead for the provenance trace. Table~\ref{tab:space-overheads} shows the space overhead for all applications with~$16$ threads. The provenance log written by {\tt perf} turns out to be highly compressible. We
-are able to achieve a compression ratio of between $6\times$ and $37\times$ times using the lz4 compression algorithm.
-It also shows a strong correlation between the log bandwidth and branch instructions with a correlation coefficient of 0.89, which was expected, because the
+
+Finally, we present the space overhead for storing the provenance graph. A major limitation of using \intelpt is that it produces a large amounts of trace data. Furthermore, the threading library also collects trace data to record the data and schedule dependencies.  Table~\ref{tab:space-overheads} shows the space overhead for all applications with~$16$ threads. Note that we report the combined space overheads for the \projecttitle, the individual breakdown between the threading library and the OS support for \intelpt is available online:  \href{https://mic92.github.io/inspector/index.html\#measurement_table}{Web-link}. The space overheads vary across applications: it can be as low as $183$ MB for {\em linear\_regression} and as high as $29.3$ GB for {\em streamcluster}. The results shows a strong correlation between the log bandwidth and branch instructions with a correlation coefficient of 0.89, which was expected, because the
 log consists of taken branches.
+
+Fortunately,  the provenance log written by {\tt perf} turns out to be highly compressible. We
+are able to achieve a compression ratio of between $6\times$ and $37\times$ times using the lz4 compression algorithm. 
+Furthermore, the snapshot facility (described in $\S$\ref{sec:snapshot}) restricts the active area of space usage to $4$MB, and the user can reuse the space in the ring buffer after analyzing the log.
+
+
 \input{plotsTex/data-size-overheads}
 
 
