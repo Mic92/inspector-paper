@@ -18,12 +18,14 @@ Data provenance is a well-studied concept because of it's wide applicability in 
 %, and targets general shared-memory multithreaded programs.
 
  
-\myparagraph{``Big Data" analytics} Data provenance is being increasingly used in ``big data"  processing for  debugging complex workflows~\cite{nova}, and also for incremental computation~\cite{incoop}.  These ``big data" systems leverage the underlying tasks-based programming model such as MapReduce~\cite{mapreduce} or Dryad~\cite{dryad} for building the provenance graph. 
+\myparagraph{``Big Data" analytics} Data provenance is being increasingly used in ``big data"  processing for  debugging complex workflows~\cite{nova}, and also for incremental computation~\cite{incoop}.  These ``big data" systems leverage the underlying tasks-based programming model such as MapReduce or Dryad %~\cite{mapreduce} or Dryad~\cite{dryad} 
+for building the provenance graph. 
 In particular, these systems construct the provenance graph based on the data-flow graph generated from the data-parallel programming model. 
 Instead of relying on the underlying programming model,  \projecttitle derives the graph automatically for shared-memory multithreaded programs.
 
 
-\myparagraph{Distributed and network systems} Many distributed and network systems propose provenance techniques for tracing the  execution of distributed protocols to provide accountability, fault detection, forensics, verifiability, network debugging, negative provenance~\cite{snp, exspan, wu-2014-negative-provenance, dtap}. To make the lineage secure in the presence of adversaries in distributed settings, they further embed techniques like tamper-proof logging~\cite{peer-review} along lineage for non-repudiability.  
+\myparagraph{Distributed and network systems} Many distributed and network systems propose provenance techniques for tracing the  execution of distributed protocols to provide accountability, fault detection, forensics, verifiability, network debugging, negative provenance~\cite{snp}. % exspan, wu-2014-negative-provenance, dtap}. 
+To make the lineage secure in the presence of adversaries in distributed settings, they further embed techniques like tamper-proof logging~\cite{peer-review} along lineage for non-repudiability.  
 These systems leverage the semantics of distributed protocols to derive a state-machine, and capture the lineage information by modifying the state-machine. Instead, we don't require any protocol-specific provenance. Albeit, we currently do not support distributed systems.
 
  %As opposed to these semantic-based approaches, again, we target general multithreaded programs, albeit at the granularity of memory pages instead of protocol-specific provenance.
@@ -35,7 +37,7 @@ and  maintain their lineage information such as the chain of ownership and the t
 In contrast to PASS that tracks objects in storage systems, our focus is on tracing the lineage of shared-memory accesses in multithreaded programs at the granularity of memory pages. Like PASS, we also rely on the OS support for tracking of memory pages.
 
 
-\myparagraph{Memory tracing} Our approach is complementary to the numerous run-time~\cite{valgrind,memtrace} and compile-time~\cite{cgo-compiler-provenance} tools that allow fine-grained byte-level memory read and writes made by threads. In contrast, our tool makes a trade-off of memory tracking at the granularity of memory pages, and uses a combination of OS support and the new ISA extensions to track the data flow for the entire program. Furthermore, we also record control and schedule dependencies for the multithreaded execution as part of the data provenance graph. 
+\myparagraph{Memory tracing} Our approach is complementary to the numerous run-time~\cite{memtrace} and compile-time~\cite{cgo-compiler-provenance} tools that allow fine-grained byte-level memory read and writes made by threads. In contrast, our tool makes a trade-off of memory tracking at the granularity of memory pages, and uses a combination of OS support and the new ISA extensions to track the data flow for the entire program. Furthermore, we also record control and schedule dependencies for the multithreaded execution as part of the data provenance graph. 
 
 
 \myparagraph{Operating systems} Linux Provenance Module (LPM)~\cite{lpm} provides OS support to collect system-wide provenance. In contrast to LPM, \projecttitle is a user-space solution and does not require any modifications to the underlying OS. Secondly, unlike LPM, which collects provenance at the granularity of a process, we collect data provenance at a finer granularity of a thread.  On the other hand, LPM benefits from the integrated OS approach to secure the provenance information. 
