@@ -34,7 +34,7 @@ machine is running Linux with kernel $4.3.0$ in $64$-bit mode.
 %
 
 
-\myparagraph{Performance metrics: Work and Time}  For each run, we consider two types of measures: \emph{time} and
+\myparagraph{Performance metrics: Time and Work}  For each run, we consider two types of measures: \emph{time} and
  {\em work}.  Time refers to the amount of (end-to-end)
 run-time to complete the parallel computation.  Work refers to the total amount of
 computation performed by all threads and is measured as the overall CPUs utilization for all threads. 
@@ -130,7 +130,9 @@ Figure~\ref{fig:overheads-breakdown} shows the breakdown of overheads with $16$ 
 report the performance overheads for four applications that are available with
 three input sizes: small ($S$), medium ($M$), and large ($L$). These four applications are: {\em histogram}, {\em linear\_regression}, {\em string\_match}, and {\em word\_count}.
 
-In this experiment, we kept the number of threads to a constant  ($16$ threads), and we varied the input sizes for these applications.  Figure~\ref{fig:data-size-overheads} shows the results for our experiment. The bar plot shows the performance overheads w.r.t. to the native \pthreads execution on the $Y1$-axis for three input sizes ($S$, $M$, $L$). For the reference, the input sizes are also shown by a line plot in the same figure on the $Y2$-axis. The result shows that the gap between \pthreads and \projecttitle narrows with bigger input sizes. This is due to the fact that most applications use a data-parallel programming model for parallelization, where the main threads divides the input data evenly between the worker threads. As the input size increases, each thread needs to perform more work (or compute on a larger input size) than the time spend on synchronization. Therefore, in our implementation, each thread spends relatively more time outside the shared-memory commit to compute on the data, and therefore, it results in improved performance.
+In this experiment, we kept the number of threads to a constant  ($16$ threads), and we varied the input sizes for these applications.  Figure~\ref{fig:data-size-overheads} shows the results for our experiment. The bar plot shows the performance overheads w.r.t. to the native \pthreads execution on the $Y1$-axis for three input sizes ($S$, $M$, $L$). For the reference, the input sizes are also shown by a line plot in the same figure on the $Y2$-axis. 
+
+The result shows that the gap between \pthreads and \projecttitle narrows with bigger input sizes. This is due to the fact that most applications use a data-parallel programming model for parallelization, where the main threads divides the input data evenly between the worker threads. As the input size increases, each thread needs to perform more work (or compute on a larger input size) than the time spend on synchronization. Therefore, in our implementation, each thread spends relatively more time outside the shared-memory commit to compute on the data, and therefore, it results in improved performance.
  
 
 %
@@ -152,7 +154,9 @@ In this experiment, we kept the number of threads to a constant  ($16$ threads),
 \subsection{Space overheads for provenance}
 \label{subsec:overheads-breakdown}
 
-Finally, we present the space overhead for storing the provenance graph. A major limitation of using \intelpt is that it produces a large amounts of trace data. Furthermore, the threading library also collects trace data to record the data and schedule dependencies.  Table~\ref{tab:space-overheads} shows the space overhead for all applications with~$16$ threads. Note that we report the combined space overheads for \projecttitle, the individual breakdown between the threading library and the OS support for \intelpt is available online:  \href{https://mic92.github.io/inspector/index.html\#measurement_table}{Web-link}. The space overheads vary across applications: it can be as low as $183$ MB for {\em linear\_regression} and as high as $29.3$ GB for {\em streamcluster}. The result shows a strong correlation between the log bandwidth and branch instructions with a correlation coefficient of 0.89, which was expected, because the
+Finally, we present the space overhead for storing the provenance graph. A major limitation of using \intelpt is that it produces a large amounts of trace data. Furthermore, the threading library also produces trace data to record the data and schedule dependencies.  Table~\ref{tab:space-overheads} shows the space overhead for all applications with~$16$ threads. Note that we report the combined space overheads for \projecttitle, the individual breakdown between the threading library and the OS support for \intelpt is available online:  \href{https://mic92.github.io/inspector/index.html\#measurement_table}{Web-link}. 
+
+The space overheads vary across applications: it can be as low as $183$ MB for {\em linear\_regression} and as high as $29.3$ GB for {\em streamcluster}. The result shows a strong correlation between the log bandwidth and branch instructions with a correlation coefficient of 0.89, which was expected, because the
 log consists of taken branches.
 
 Fortunately,  the provenance log written by {\tt perf} turns out to be highly compressible. We
