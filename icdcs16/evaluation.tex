@@ -126,13 +126,13 @@ Figure~\ref{fig:overheads-breakdown} shows the breakdown of overheads with $16$ 
 \label{subsec:data-sizes-overheads}
 
 \input{tables/benches_mix}
- In addition to scalability w.r.t.  threads, we also measured the performance overheads with increases in the size of the input.  For that, we
+ In addition to scalability w.r.t.  threads, we also measured the performance overheads with increase in the size of the input data.  For that, we
 report the performance overheads for four applications that are available with
 three input sizes: small ($S$), medium ($M$), and large ($L$). These four applications are: {\em histogram}, {\em linear\_regression}, {\em string\_match}, and {\em word\_count}.
 
 In this experiment, we kept the number of threads to a constant  ($16$ threads), and we varied the input sizes for these applications.  Figure~\ref{fig:data-size-overheads} shows the results for our experiment. The bar plot shows the performance overheads w.r.t. to the native \pthreads execution on the $Y1$-axis for three input sizes ($S$, $M$, $L$). For the reference, the input sizes are also shown by a line plot in the same figure on the $Y2$-axis. 
 
-The result shows that the gap between \pthreads and \projecttitle narrows with bigger input sizes. This is due to the fact that most applications use a data-parallel programming model for parallelization, where the main threads divides the input data evenly between the worker threads. As the input size increases, each thread needs to perform more work (or compute on a larger input size) than the time spend on synchronization. Therefore, in our implementation, each thread spends relatively more time outside the shared-memory commit to compute on the data, and therefore, it results in improved performance.
+The result shows that the gap between \pthreads and \projecttitle narrows with bigger input sizes. This is due to the fact that most applications use a data-parallel programming model for parallelization, where the main threads divides the input data evenly between the worker threads. As the input size increases, each thread needs to perform more work (or compute on a larger input size) than the time spent for synchronization. As a result, each thread spends relatively more time outside the shared-memory commit to compute on the data, and thus, it results in improved performance.
  
 
 %
@@ -161,7 +161,7 @@ log consists of taken branches.
 
 Surprisingly,  the provenance log written by {\tt perf} turns out to be highly compressible. We
 are able to achieve a compression ratio of between $6\times$ and $37\times$ times using the lz4 compression algorithm. 
-Furthermore, the snapshot facility (described in $\S$\ref{sec:snapshot}) restricts the active area of space usage to $4$MB, and the user can reuse the space in the ring buffer after analyzing the log.
+Furthermore, the snapshot facility (described in $\S$\ref{sec:snapshot}) restricts the active area of space usage, and the user can reuse the space in the ring buffer after analyzing the log.
 
 
 \input{plotsTex/data-size-overheads}
