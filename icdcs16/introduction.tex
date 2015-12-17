@@ -19,7 +19,7 @@ In this paper, we propose an operating systems-based approach to data provenance
 
 \end{itemize}
 
-To achieve these goals, we built \projecttitle, a data provenance library for multithreaded programs. We implemented \projecttitle as a dynamically linkable shared library. To run a program using \projecttitle,  the user just needs to preload the \projecttitle library, and then, run the program as usual. Thus, our library supports existing binaries without any code changes or re-compilation. The library exports the provenance information to the {\tt perf} utility as an extended interface.
+To achieve these goals, we present \projecttitle, a data provenance library for multithreaded programs. We implemented \projecttitle as a dynamically linkable shared library. To run a program using \projecttitle,  the user just needs to preload the \projecttitle library, and then, run the program as usual. Thus, our library supports existing binaries without any code changes or re-compilation. The library exports the provenance information to the {\tt perf} utility as an extended interface.
 
 %To run a program using \projecttitle,  the user just needs to preload the \projecttitle library  by using the environment variable {\tt LD\_PRELOAD} or {\tt -rdynamic} flag, and then, run the program as usual. 
 
@@ -32,8 +32,7 @@ In this paper, we present a {\em parallel} algorithm to build the CPG. Our algor
 
 %An additional challenge that we need to address in the library implementation is the excessive log data produced by \intelpt, especially for long running applications. Therefore, we further extended the library to support a live snapshot facility, where the user can analyze the provenance on-the-fly while the program is still running. The library periodically takes a consistent snapshot~\cite{chandy-lamport} of the CPG in a decentralized fashion.
 
-
-To summarize, we make the following contributions:
+More specifically, we make the following contributions:
 \begin{itemize}
 
 \item We present a parallel algorithm for data provenance for multithreaded programs that records control, data, and schedule dependencies using a Concurrent Provenance Graph (CPG) ($\S$\ref{sec:algorithms}).
