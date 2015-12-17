@@ -69,7 +69,7 @@ Finally, the log produced by
 
 
 
-\subsection{Provenance Overheads}
+\subsection{Performance Overheads for Data Provenance}
 \label{subsec:overheads}
 %First, we explain the provenance overheads imposed by \projecttitle w.r.t the native \pthreads execution.  We present the overheads with increase in: (1) the number of threads, and (2)  the input sizes.
 First, we explain the provenance overheads imposed by \projecttitle w.r.t. the native \pthreads execution with increase in the number of threads. Figure~\ref{fig:overheads} shows the provenance overheads of \projecttitle w.r.t. the native \pthreads execution with varying number of
@@ -115,14 +115,14 @@ Lastly, in the case of {\em streamcluster}, we were limited by our physical memo
 
 %\label{subsec:data-sizes-overheads}
 
-\subsection{Performance overheads breakdown} 
+\subsection{Performance Overheads Breakdown} 
 \label{subsec:performance-overheads-breakdown}
 
 Next, we investigated the breakdown of the provenance overheads. Recall that our system implementation has two major components: (1) the threading library ($\S$\ref{sec:impl-lib}), and (2) the OS support for \intelpt ($\S$\ref{sec:impl-OS}). 
 Figure~\ref{fig:overheads-breakdown} shows the breakdown of overheads with $16$ threads normalized to the native \pthreads execution. We quantify the breakdown as the time taken by the \projecttitle library  and the OS support for \intelpt  . The result shows an interesting pattern: the applications with unreasonably high overheads ({\em canneal}, {\em reverse\_index}, and {\em kmeans}) spend a majority of time in the \projecttitle library for the above mentioned reasons. Whereas, the overheads for tracing the control flow due to \intelpt  is a dominant factor for the other applications. These results highlight that for a majority of applications ($9/12$) the underlying hardware is still a bottleneck to achieve low provenance overheads.  
 
 
-\subsection{Scalability with the input data}
+\subsection{Scalability with the Input Data}
 \label{subsec:data-sizes-overheads}
 
 \input{tables/benches_mix}
@@ -151,7 +151,7 @@ The result shows that the gap between \pthreads and \projecttitle narrows with b
 
 
 
-\subsection{Space overheads for the provenance graph}
+\subsection{Space Overheads for the Provenance Graph}
 \label{subsec:overheads-breakdown}
 
 Finally, we present the space overhead for storing the provenance graph. A major limitation of using \intelpt is that it produces a large amounts of trace data. Furthermore, the threading library also produces trace data to record the data and schedule dependencies.  Table~\ref{tab:space-overheads} shows the space overhead for all applications with~$16$ threads. Note that we report the combined space overheads for \projecttitle, the individual breakdown between the threading library and the OS support for \intelpt is available online:  \href{https://mic92.github.io/inspector/index.html\#measurement_table}{web-link}. 
