@@ -9,8 +9,9 @@
 %In this section, we review the related work in data provenance from different domains.
 
 
-Data provenance is a well-studied concept because of it's wide applicability in different complex computer systems. 
-In this section, we review some of the previous work in data provenance from different domains.
+Data provenance is a well-studied concept because of it's wide applicability in different complex computer systems. Next, we review related work from different domains.
+
+%In this section, we review some of the previous work in data provenance from different domains.
 
 
 
@@ -26,7 +27,7 @@ In particular, these systems construct the provenance graph based on the data-fl
 Instead of relying on the underlying programming model,  \projecttitle derives the graph automatically for shared-memory multithreaded programs.
 
 
-\myparagraph{Distributed and network systems} Many distributed and network systems propose provenance techniques for tracing the  execution of distributed protocols to provide accountability, fault detection, forensics, verifiability, network debugging, negative provenance~\cite{snp, wu-2014-negative-provenance}. % exspan, wu-2014-negative-provenance, dtap}. 
+\myparagraph{Distributed and network systems} Many distributed and network systems propose provenance techniques for tracing the  execution of distributed protocols to provide accountability, fault detection, forensics, verifiability, network debugging, negative provenance~\cite{ wu-2014-negative-provenance, snp, dtap}. % exspan, wu-2014-negative-provenance, dtap}. 
 %To make the lineage secure in the presence of adversaries in distributed settings, they further embed techniques like tamper-proof logging~\cite{peer-review} along lineage for non-repudiability.  
 These systems leverage the semantics of distributed protocols to derive a state-machine, and capture the lineage information by manually modifying the state-machine. Instead, we don't require any protocol-specific state-machine. Albeit, we currently do not support distributed systems.
 
