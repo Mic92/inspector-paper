@@ -88,11 +88,11 @@ default every child process belongs to the same process as its parent. Also for
 
 We create such a {\tt cgroup} exclusively for the application using \projecttitle. This is done because
 our threading library causes applications using threads to create multiple
-processes instead, whose process ids are not known it advance.
+processes instead, whose process ids are not known in advance.
 
 The subcommand {\tt perf record} is then used to dump the trace produced by \intelpt.
 \intelpt generates a stream of TNT packets, which denotes the
-condional branches taken and TIP packets for indirect branches and function
+conditional branches taken and TIP packets for indirect branches and function
 returns. The data is referenced as a sample event in the {\tt perf} event list and
 stored in a ring buffer called \emph{AUX area}. If perf tool cannot
 keep up with processor trace it is possible (for example an interrupt occurs),
@@ -102,7 +102,7 @@ there will be gaps in the trace. %PSB packets allow to resynchronize over these 
 
 After execution the result can be further processed by using a set of tools
 for example {\tt perf script}. The branch information is still in a compressed
-form and needs to be decoded. We make use of the Intel Processor Decoder Library for Intel PT  that is integrated with the {\tt perf} utility. % has a decoder integrated to achieve this.
+form and needs to be decoded. We make use of the Intel Processor Decoder Library for Intel PT  that is integrated in the {\tt perf} utility. % has a decoder integrated to achieve this.
 To map the trace onto binaries, it needs access to executables and linked
 libraries of the application. For that, we track mmap events to
 know the location of each loadable during the execution. 
