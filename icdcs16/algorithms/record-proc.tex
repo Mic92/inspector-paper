@@ -42,15 +42,15 @@ $\forall (i\in \{1, ...,T\}): L_t[\alpha] .C[i] \leftarrow C_t[i]$;
 }
 
 
-\underline{{\bf onMemoryAccess()}}\\ 
+\underline{{\bf onMemoryAccess({\tt instruction})}}\\ 
 \Begin{
 // Update read/write sets of the executing sub-computation \\
 
-\uIf{{\tt load} }{
-$ L_t[\alpha].R \leftarrow L_t[\alpha] .R \cup \{$ {\tt pageID} $\}$; // On read access\\
+\uIf{{\tt instruction} is {\tt load} }{
+$ L_t[\alpha].R \leftarrow L_t[\alpha] .R \cup \{${\tt pageID}$\}$; // On read access\\
 }
 \Else{
- $L_t[\alpha] .W \leftarrow L_t[\alpha] .W \cup \{$ {\tt pageID} $\}$; // On write access
+ $L_t[\alpha] .W \leftarrow L_t[\alpha] .W \cup \{${\tt pageID}$\}$; // On write access
 }
 
 
