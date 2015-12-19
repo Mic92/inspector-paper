@@ -3,7 +3,7 @@
 
 
 
-This section describes the architecture and implementation of \projecttitle. We implemented \projecttitle as a dynamically linkable shared library for the GNU/Linux OS that can be loaded and linked  at runtime for {\tt POSIX} threads (replacing the \pthreads library). The application executables can simply link the library (without any recompilation) either using {\tt LD\_PRELOAD} or the {\tt -rdynamic} flag, specifying the path of the \projecttitle library.  The \projecttitle library exports the CPG as an extended interface in the {\tt perf} utility for supporting data provenance.   The architecture of \projecttitle (shown in Figure~\ref{fig:basicSystem}) consists of two main components: threading library and OS support for \intelpt. We next describe these two components in detail.
+This section describes the architecture and implementation of \projecttitle. We implemented \projecttitle as a dynamically linkable shared library for the GNU/Linux OS that can be loaded and linked  at runtime for {\tt POSIX} threads (replacing the \pthreads library). The application executables can simply link the library (without any recompilation) either using {\tt LD\_PRELOAD} or the {\tt -rdynamic} flag, specifying the path of the \projecttitle library.  The \projecttitle library exports the CPG as an extended interface in the {\tt perf} utility for supporting data provenance.   The architecture of \projecttitle (shown in Figure~\ref{fig:basicSystem}) consists of two main components: threading library ($\S$\ref{sec:impl-lib}) and OS support for \intelpt ($\S$\ref{sec:impl-OS}). We next describe these two components in detail.
 
 
 \input{figure/figureTex/fig_system_basic}

@@ -1,8 +1,11 @@
 \section{Design}
 \label{sec:algorithms}
-In the section, we first formally define the CPG, and next, we present the provenance algorithm.
+In this section, we first formally define the CPG ($\S$\ref{subsec:cpg}), and then present the algorithm to build the CPG ($\S$\ref{subsec:prov-algo}).
 
-\subsection{Concurrent Provenance Graph}  We define the {\em
+\subsection{Concurrent Provenance Graph} 
+\label{subsec:cpg}
+
+ We define the {\em
 Concurrent Provenance Graph} (CPG)  as a directed acyclic graph $G =
 (V,$ $E)$ with vertices ($V$) and edges ($E$). The
 vertices of the CPG represent {\em sub-computations}. The edges represent the dependencies between the sub-computations. %We distinguish between three kinds of edges: control, schedule, and data-dependence edges for recording control, schedule, and data dependencies, respectively. 
@@ -75,6 +78,7 @@ Essentially, data dependence edges establish the {\em update-use relationship} b
  
  
  \subsection{ Provenance Algorithm}
+ \label{subsec:prov-algo}
 
  
  

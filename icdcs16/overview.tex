@@ -39,6 +39,7 @@ Lastly,   we need to record {\em data dependencies} between sub-computations as 
 
 
 
+
 %consider a case of the input change where the value of variable $y$ is changed during an execution. Assuming that thread $T_1$ gets to acquire the lock before thread $T_2$, the writes made by sub-computation $T_1.a$ will affect the read made by $T_2.b$ because of the changed value of $y$ via  $x$. Therefore, we need to capture {\em data dependencies} between sub-computations as a part of the partial order. Our algorithm captures data dependencies by tracking read and write sets of a sub-computation, i.e., the set of memory locations read or written by the sub-computation, respectively.
 %
 % 
