@@ -62,7 +62,7 @@ to the same memory location we resolve them using a last-writer wins policy.
 To obtain the control flow dependencies, we use Intel Processor Trace (PT) ISA extensions. We next present the implementation details of the OS support for \intelpt. 
 %recently released as part of the Broadwell (also in Skylake) micro-architecture. 
 
-\myparagraph{Intel Processor Trace (Intel PT)}   \intelpt is an extension of Intel Architecture that logs information about software execution with minimal performance impact. The processor collects information such as control flow, execution modes and timings and formats it into highly compressed binary packets. Traditionally, Intel architectures provided Branch Trace Store (BTS) for tracing branch execution. However, BTS was slow and imprecise. Therefore, it was not adopted in practice. To overcome the limitations of BTS,  Intel recently introduced PT ISA extensions as part of the Broadwell micro-architecture.
+\myparagraph{Intel Processor Trace (Intel PT)}   \intelpt is an extension of Intel Architecture that logs information about software execution with minimal performance impact. The processor collects information such as control flow, execution modes and timings and formats it into highly compressed binary packets. Traditionally, Intel architectures provided Branch Trace Store (BTS) for tracing branch execution. However, BTS was slow and imprecise. Therefore, it was not adopted in practice. To overcome the limitations of BTS,  Intel recently introduced PT ISA extensions as part of the Broadwell  (also available in Skylake) micro-architecture.
 
  %in Intel Core M and 5th generation Intel Core processors that are based on the Intel micro-architecture code name Broadwell. 
 

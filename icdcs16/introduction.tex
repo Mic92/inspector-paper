@@ -1,12 +1,12 @@
 \section{Introduction}
 \label{sec:introduction}
 
-A data provenance-aware system gathers and reports the lineage of execution. This allows the user to track, and understand, how the computation was performed.  The provenance trace is useful for a wide-range of workflows to improve the dependability, security, and efficiency of software systems; including, program debugging~\cite{fast-track-pldi}, parallel state machine replication~\cite{rex},  compiler optimizations~\cite{pgo}, incremental computation~\cite{ithreads}, program slicing~\cite{roly}, memory management~\cite{memprof}, and dynamic information flow tracking~\cite{dift}, etc.
+A data provenance-aware system gathers and reports the lineage of execution. This allows the user to track, and understand, how the computation was performed.  The provenance trace is useful for a wide-range of workflows to improve the dependability, security, and efficiency of software systems; including, program debugging~\cite{fast-track-pldi}, state machine replication~\cite{rex},  compiler optimizations~\cite{pgo}, incremental computation~\cite{ithreads}, program slicing~\cite{roly}, memory management~\cite{memprof}, and dynamic information flow tracking~\cite{dift}, etc.
 
 
 More specifically, the data provenance trace provides an explicit intermediate program representation recording control and data dependencies for a program execution. 
 Many existing systems provide support for data provenance (details in $\S$\ref{sec:related}); however,
-most existing solutions target sequential programs (or the entire process), while others that do support parallelism rely on restrictive application-specific programming model. As a result, the existing solutions have limited adoption in practice for the general shared-memory multithreaded programs.
+most existing solutions target sequential programs (or at the granularity of the entire process), while others that do support parallelism rely on restrictive application-specific programming model. As a result, the existing solutions have limited adoption in practice for the general shared-memory multithreaded programs.
 
 
 
@@ -28,7 +28,7 @@ To achieve these goals, we present \projecttitle, a data provenance library for 
 Our high level approach is based on recording data, control, and schedule dependencies in a computation by constructing a {\em Concurrent Provenance Graph} (CPG). The CPG tracks the input data to a program, all sub-computations (a sub-computation is a unit of the computation), the data flow between sub-computations, intra-thread control flow, and inter-thread schedule dependencies for the multithreaded execution. 
 
 
-In this paper, we present a {\em parallel} algorithm to build the CPG. Our algorithm leverages the Release Consistency (RC) memory model~\cite{DSM-RC} to efficiently record the inter-thread data and schedule dependencies in a completely decentralized manner. We implemented our algorithm as a dynamically linkable shared library by leveraging process-level isolation, MMU-assisted memory tracking, and \intelpt ISA extensions, released recently as part of the Broadwell (also available in Skylake) micro-architecture.  %Furthermore, we extended the library to support a consistent snapshot facility, where the user can analyze the provenance on-the-fly while the program is still running.
+In this paper, we present a {\em parallel} algorithm to build the CPG. Our algorithm leverages the Release Consistency (RC) memory model~\cite{DSM-RC} to efficiently record the inter-thread data and schedule dependencies in a completely decentralized manner. We implemented our algorithm as a dynamically linkable shared library by leveraging process-level isolation, MMU-assisted memory tracking, and \intelpt ISA extensions, released recently as part of the Broadwell micro-architecture.  %Furthermore, we extended the library to support a consistent snapshot facility, where the user can analyze the provenance on-the-fly while the program is still running.
 
 %An additional challenge that we need to address in the library implementation is the excessive log data produced by \intelpt, especially for long running applications. Therefore, we further extended the library to support a live snapshot facility, where the user can analyze the provenance on-the-fly while the program is still running. The library periodically takes a consistent snapshot~\cite{chandy-lamport} of the CPG in a decentralized fashion.
 

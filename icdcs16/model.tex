@@ -13,7 +13,7 @@ points in an execution where inter-thread communication can occur, we avoid
 having to track individual {\tt load}/{\tt store} instructions, %(given that any of these accesses could potentially be inter-thread communication), 
 which would be extremely inefficient with current hardware. 
 
-A natural consequence of the RC memory model is that the granularity of sub-computations for provenance for \projecttitle is the sequence of instructions between two \pthreads API calls instead of  individual {\tt load}/{\tt store} instructions. Note that the RC memory model is weaker
+A natural consequence of the RC memory model is that the granularity of sub-computations for provenance in \projecttitle is the sequence of instructions between two \pthreads API calls instead of  individual {\tt load}/{\tt store} instructions. Note that the RC memory model is weaker
 than, for example, the Sequential Consistency model (SC)~\cite{scLamport}, but
 still guarantees correctness and liveness for applications that are data race
 free. In fact,  the semantics provided by
