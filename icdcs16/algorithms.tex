@@ -90,7 +90,7 @@ Algorithm~\ref{fig:ithreadsRecord} presents the overview of the provenance algor
 
 %explain the algorithm using figure.
 \myparagraph{Overview}   The provenance algorithm (shown in Algorithm~\ref{fig:ithreadsRecord}) is executed by all threads in parallel. During a thread execution, the thread traces memory accesses on {\tt load/store} instructions, and adds them to the read and
-the write set of the executing sub-computation for deriving data dependencies. Additionally, threads also traces all branch instructions, and adds this information to thunks for the executing sub-computation as part of the recording control dependencies.
+the write set of the executing sub-computation for deriving data dependencies. Additionally, the executing thread traces all branch instructions, and adds this information for thunks of the executing sub-computation to record control dependencies.
 The thread continues to execute instructions until a synchronization primitive call is made to the \pthreads  library. At the synchronization point, we define the end point for the executing sub-computation. 
 Thereafter, we let the thread perform the actual synchronization operation. At synchronization points, the algorithm derives control  and synchronization edges at the granularity of sub-computation by recording the happens-before order between sub-computations. Finally, we start a new sub-computation and repeat the process until the executing thread
 terminates. 
