@@ -21,7 +21,7 @@ Data provenance is a well-studied concept because of it's wide applicability in 
 %, and targets general shared-memory multithreaded programs.
 
  
-\myparagraph{``Big Data" analytics} Data provenance is being increasingly used in ``big data"  processing for  debugging complex workflows~\cite{nova}, and also for incremental computation~\cite{incoop}.  These ``big data" systems leverage the underlying task-based programming model such as MapReduce~\cite{mapreduce} or Dryad~\cite{dryad} 
+\myparagraph{``Big Data" analytics} Data provenance is being increasingly used in ``big data"  processing for  debugging complex workflows~\cite{nova, conductor-nsdi-2012, conductor-ladis-2010, conductor-podc-2010}, and also for incremental computation~\cite{incoop, slider, incoop-hotcloud, contraction-tree, shredder, Bhatotia15}.  These ``big data" systems leverage the underlying task-based programming model such as MapReduce or Dryad
 for building the provenance graph. 
 In particular, these systems construct the provenance graph based on the data-flow graph generated from the data-parallel programming model. 
 Instead of relying on the constrained task-based programming model,  \projecttitle derives the graph automatically for shared-memory multithreaded programs.
