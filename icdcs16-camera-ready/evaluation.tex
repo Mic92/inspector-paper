@@ -16,7 +16,7 @@ Our evaluation answers the following questions.
 %Before answering these questions, we first describe the experimental setup used for the evaluation.
 %\vspace{-4mm}
 
-\subsection{Experimental Setup}
+%\subsection{Experimental Setup}
 
 
 \myparagraph{Experimental platform} We used an Intel Xeon processor based on Broadwell micro-architecture
@@ -37,11 +37,13 @@ machine is running Linux with kernel $4.3.0$ in $64$-bit mode.
 \myparagraph{Performance metrics: Time and Work}  For each run, we consider two types of measures: \emph{time} and
  {\em work}.  Time refers to the amount of (end-to-end)
 run-time to complete the parallel computation.  Work refers to the total amount of
-computation performed by all threads and is measured as the overall CPUs utilization for all threads. 
+computation performed by all threads and is measured as the overall CPUs utilization for all threads.  
+
+%A detailed technical report covering the additional results is available online. 
 %as the total run-time of all threads. 
-Both metrics are important
-and complementary: time measurements reflect the end user perceived latency,
-whereas work measurements assess the overall resource (CPU) utilization.
+%Both metrics are important
+%and complementary: time measurements reflect the end user perceived latency,
+%whereas work measurements assess the overall resource (CPU) utilization.
 
 
 \myparagraph{Measurements} All applications were compiled using
@@ -56,7 +58,9 @@ Finally, the log produced by
 %For all experiments,  
 \input{plotsTex/overheads-breakdown}
 
-\myparagraph{Additional results}   Due to the space limitation, the work measurements are available on the following: \href{https://mic92.github.io/inspector/index.html}{web-link}.
+\myparagraph{Additional results}  Due to the space limitation, the work measurements are covered in a technical report~\cite{inspector-techreport} and also available here: \href{https://mic92.github.io/inspector/index.html}{web-link}.
+
+% Due to the space limitation, the work measurements are available on the following: \href{https://mic92.github.io/inspector/index.html}{web-link}.
 
  %\href{https://goo.gl/0wp1kC}{Additional results Web-link.}
 
