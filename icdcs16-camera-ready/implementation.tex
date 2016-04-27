@@ -14,7 +14,7 @@ The threading library derives the data and schedule dependencies. The architectu
 
  
 \myparagraph{Memory protection} A central challenge of the implementation of the
-algorithm is keeping track of the data dependencies for shared-memory accesses
+algorithm is keeping track of the data dependencies for the shared-memory accesses
 by all possible interleaving threads. Since monitoring every load and store to
 each memory word would be too costly, we instead rely on the OS's
 (hardware-assisted) segmentation fault mechanism to keep track of reads and writes at the granularity of memory pages.
@@ -27,12 +27,12 @@ threads are responsible for which memory accesses or to enforce different protec
 processes (an idea  proposed by Grace~\cite{grace-oopsla-2009} and  Dthreads~\cite{dthreads-sosp-2011}).
 
 \myparagraph{Threads as processes} \projecttitle  implements threads as separate processes thus allowing each thread has its own private address space and control over the virtual
-memory structures.   This gives us the ability to manipulate the page protection of threads individually while providing a simple way to implement the release consistency memory
+memory structures.   This gives us the ability to manipulate the page protection of threads individually while providing a simple way to implement the Release Consistency (RC) memory
 model. In particular, \projecttitle uses the {\tt clone} system call to fork off a new process on {\tt pthread\_create()}. The process that implements the newly created thread (i.e., the child process) already
 shares parts of the execution context with the parent process (which implements the calling thread) such as file descriptors and signal handlers. 
 \input{figure/figureTex/lib-architecture}
 
-But this raises a new problem, which is that, unlike threads, processes do not share their address spaces. We address this by taking advantage of the RC memory model we defined for \projecttitle, where threads share the updates only at synchronization points.  
+But this raises a new problem, which is that, unlike threads, processes do not share their address spaces. We address this by taking advantage of the RC memory model we defined for \projecttitle, where threads share the updates only at the synchronization points.  
 
 \myparagraph{Shared memory commit} To implement the RC memory model, we use shared memory commit (originally proposed in distributed shared memory architectures such as TreadMarks~\cite{treadmark} and Munin~\cite{munin}) 
 that allows threads to communicate at well-defined synchronization points.

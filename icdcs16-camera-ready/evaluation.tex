@@ -13,10 +13,7 @@ Our evaluation answers the following questions.
 \item What are the space overheads for the CPG? ($\S$\ref{subsec:overheads-breakdown})
 \end{itemize}
 
-%Before answering these questions, we first describe the experimental setup used for the evaluation.
-%\vspace{-4mm}
 
-%\subsection{Experimental Setup}
 
 
 \myparagraph{Experimental platform} We used an Intel Xeon processor based on Broadwell micro-architecture
@@ -24,26 +21,15 @@ as our host machine. The
 host system consists of $8$ cores ($16$ hyper-threads) of Intel(R) Xeon(R) CPU Processor D-$1540$
 ($12$M Cache, $2.00$ GHz) and $32$ GB of DRAM main memory. The host
 machine is running Linux with kernel $4.3.0$ in $64$-bit mode. 
-%When varying the number of threads, we also regulate the numbers of active cpu cores.
-%No additional core was provided for Perf.
 
-
-%\myparagraph{Applications and dataset}  We evaluated \projecttitle using two multithreaded benchmark suites: Phoenix $2.0$~\cite{phoenix} and PARSEC $3.0$~\cite{parsec}. 
 
 \myparagraph{Applications and dataset}  We evaluated \projecttitle using applications from two multithreaded benchmark suites: Phoenix 2.0 \cite{phoenix} and PARSEC 3.0 \cite{parsec}. Table~\ref{tab:apps} lists the applications used for the evaluation along with the input data and benchmark parameters.
-%
 
 
 \myparagraph{Performance metrics: Time and Work}  For each run, we consider two types of measures: \emph{time} and
  {\em work}.  Time refers to the amount of (end-to-end)
 run-time to complete the parallel computation.  Work refers to the total amount of
 computation performed by all threads and is measured as the overall CPUs utilization for all threads.  
-
-%A detailed technical report covering the additional results is available online. 
-%as the total run-time of all threads. 
-%Both metrics are important
-%and complementary: time measurements reflect the end user perceived latency,
-%whereas work measurements assess the overall resource (CPU) utilization.
 
 
 \myparagraph{Measurements} All applications were compiled using
@@ -55,74 +41,36 @@ discarded (truncated mean).
 
 Finally, the log produced by
 {\tt perf} was written to {\tt /tmp} on {\tt tmpfs} to allow high throughput.
-%For all experiments,  
+
 \input{plotsTex/overheads-breakdown}
 
 \myparagraph{Additional results}  Due to the space limitation, the work measurements are covered in a technical report~\cite{inspector-techreport} and also available here: \href{https://mic92.github.io/inspector/index.html}{web-link}.
 
-% Due to the space limitation, the work measurements are available on the following: \href{https://mic92.github.io/inspector/index.html}{web-link}.
 
- %\href{https://goo.gl/0wp1kC}{Additional results Web-link.}
-
-%In addition to time measurements, we also measured  {\em work} numbers, i.e., the overall CPUs utilization for all threads for both \pthreads and \projecttitle executions. (To measure work, we used the CPU accounting controller in {\tt cgroups} to account the CPU usage of all threads.)
-%Due to the space limitation, we only present  time measurements for all experiments. 
-
-%\myparagraph{Metrics: Time and Work}  We consider two types of measures to report the performance metrics: {\em time} and {\em work}. In a nutshell, time measurements reflect the end user perceived latency, whereas work measurements assess the overall resource (CPU) utilization.  More specifically,  time refers to the end-to-end computation time for the multithreaded applications. Work refers to the total computation performed by all threads, and it is measured as the cumulative CPU time for all threads. To measure work, we used the CPU accounting controller in {\tt cgroups} to account the CPU usage of all threads.
-
-%\myparagraph{Measurements} All applications were compiled using GCC 5.2.1 compiler with -$o3$ optimization flag. For all performance measurements, we report the average over 10 runs with minimum and maximum values discarded.
 
 
 
 \subsection{Performance Overheads for Data Provenance}
 \label{subsec:overheads}
-%First, we explain the provenance overheads imposed by \projecttitle w.r.t the native \pthreads execution.  We present the overheads with increase in: (1) the number of threads, and (2)  the input sizes.
+
 First, we explain the provenance overheads imposed by \projecttitle w.r.t. the native \pthreads execution. Figure~\ref{fig:overheads} shows the provenance overheads of \projecttitle w.r.t. the native \pthreads execution with varying number of
 threads (from $2$ to $16$ threads). As expected, the provenance overheads increases with the increase in the number of threads. This is because the shared memory commit ($\S$\ref{sec:impl-lib}) takes longer time with a higher number of threads, as each thread spends less time computing on the input data.  
 
-%This is because most benchmarks follow a data-parallel design pattern, where the total work (or the input data) is divided roughly equally among all worker threads. Therefore, the shared memory commit ($\S$\ref{sec:impl-lib}) takes longer time with a higher number of threads, as each thread spends less time computing on the input data.  
 
-%This is because the shared memory commit ($\S$\ref{sec:impl-lib}) takes longer time with a higher number of threads, as each thread spends less time computing on the input data.  
 
 The experiment shows that the provenance overheads using \projecttitle vary across applications. 
-We observe that a majority of applications ($9$/$12$) have a reasonable overhead between $1\times$ up to $2.5\times$ w.r.t. the native execution. However, three applications have exceptionally high overheads:  {\em canneal}, {\em reverse\_index}, and {\em kmeans}. The high overheads is explained as follows: {\em canneal} modifies a lot of memory pages that leads to a high number of page faults for deriving read and write sets (see Table~\ref{tab:apps}). Whereas, {\em reverse\_index} does a lot of small memory allocations across threads leading to a large number of segmentation faults %($4241$ segmentation faults for memory allocation per second of the execution run-time,
+We observe that a majority of applications ($9$/$12$) have a reasonable overhead between $1\times$ up to $2.5\times$ w.r.t. the native execution. However, three applications have exceptionally high overheads:  {\em canneal}, {\em reverse\_index}, and {\em kmeans}. The high overheads is explained as follows: {\em canneal} modifies a lot of memory pages that leads to a high number of page faults for deriving read and write sets (see Table~\ref{tab:apps}). Whereas, {\em reverse\_index} does a lot of small memory allocations across threads leading to a large number of segmentation faults 
 (details omitted --- see  \href{https://mic92.github.io/inspector/index.html\#measurement_table}{web-link}).  Finally, {\em kmeans} creates more than $400$ threads until the clusters co-efficient converges, when we specify $500$ as the parameter for the iterative convergence algorithm (see Table~\ref{tab:apps}). Since, creating a process takes more time than creating a thread, we see a slowdown in {\em kmeans}.
 
 
-On the other hand, {\em linear\_regression} performs better than \pthreads, which is explained by the fact that our implementation of threads as processes ($\S$\ref{sec:implementation})  avoids false sharing, as previously noted by Sheriff~\cite{false-sharing-sheriff}, which leads to improved performance. %Dthreads~\cite{dthreads-sosp-2011}, which leads to improved performance.
+On the other hand, {\em linear\_regression} performs better than \pthreads, which is explained by the fact that our implementation of threads as processes ($\S$\ref{sec:implementation})  avoids false sharing, as previously noted by Sheriff~\cite{false-sharing-sheriff}, which leads to improved performance. 
 
 
 
 Lastly, in the case of {\em streamcluster}, we were limited by our physical memory to store the log in {\tt tmpfs} for $16$ threads (see $\S$\ref{subsec:overheads-breakdown}). Therefore, we also show the overheads with $14$ and $15$ threads,  where the provenance log can fit into the main memory.  To better understand the breakdown of provenance, we chose $15$ threads for {\em streamcluster} in $\S$\ref{subsec:performance-overheads-breakdown}.
 
 
-%The overhead of collecting processor trace while using native
-%\pthreads was 2 slower on average and there for causes an
-%significant part of the of the slowdown.
 
-%In {\tt Canneal} and {\tt Reverse Index} a high number of pages were modified.
-%Reverse index does a lot of small memory allocations across the threads. This
-%leads to more segmentation faults, because these allocations are located on
-%different pages. In Kmeans during execution over 1000 threads were created. As
-%processes take more time to create instead of threads, we see a slowdown here as
-%well.
-%
-%For linear regression a speedup was measured. Because in this execution model,
-%every “thread” has its own virtual memory: No cohearence protocol has to be run
-%between commits. This prevents false sharing which results in a speedup even
-%when recording the execution trace.
-
-%The provenance overheads increases with the increase in the number of threads.
-%This was expected, because the serial phase between memory commits takes longer,
-%with a higher number of threads. 
-
-%
-%In Streamcluster, we were hitting the memory
-%limit to store the log in {\tt tmpfs} for 16 threads. To better understand the
-%breakdown we chose 15 threads in Figure~\ref{fig:overheads}, where the log can
-%fit into the main memory. 
-
-
-%\label{subsec:data-sizes-overheads}
 
 \subsection{Performance Overheads Breakdown} 
 \label{subsec:performance-overheads-breakdown}
@@ -144,20 +92,6 @@ In this experiment, we kept the number of threads to a constant  ($16$ threads),
 The result shows that the gap between \pthreads and \projecttitle narrows with bigger input sizes. This is due to the fact that most applications use a data-parallel programming design pattern for parallelization, where the main threads divides the input data evenly between the worker threads. As the input size increases, each thread needs to perform more work (or compute on a larger input size) than the time spent for synchronization. As a result, each thread spends relatively more time outside the shared-memory commit to compute on the data, and thus, it results in improved performance.
  
 
-%
-% algorithms used here divide input evenly between the
-%threads. As the input size increase therefor the parallel phase increases and
-%the overhead of the memory commit gets smaller in relatively.
-
-
-
-
-
-
-%Next, we present  the sources for the provenance overheads. \projecttitle imposes two types of overheads: (1) performance overhead, and (2) space overhead for storing the provenance graph.
-
-
-
 
 
 \subsection{Space Overheads for the Provenance Graph}
@@ -169,7 +103,7 @@ The space overheads vary across applications: it can be as low as $183$MB for {\
 log consists of taken branches.
 
 Fortunately,  the provenance log written by {\tt perf} turns out to be highly compressible. We
-were able to achieve a compression ratio of between $6\times$ and $37\times$ times using the lz4 compression algorithm. 
+were able to achieve a compression ratio of between $6\times$ and $37\times$ times using the $lz4$ compression algorithm. 
 Furthermore, the snapshot facility (described in $\S$\ref{sec:snapshot}) restricts the active area of space usage, and the user can reuse the space in the ring buffer after analyzing (or collecting) the provenance graph.
 
 
