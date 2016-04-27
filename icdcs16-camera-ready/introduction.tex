@@ -21,16 +21,14 @@ In this paper, we propose an operating systems-based approach to data provenance
 
 To achieve these goals, we present \projecttitle, a data provenance library for multithreaded programs. We implemented \projecttitle as a dynamically linkable shared library. To run a program using \projecttitle,  the user just needs to preload the \projecttitle library, and then, run the program as usual. Thus, our library supports existing binaries without any code changes or re-compilation. The library exports the provenance information to the {\tt perf} utility as an extended interface.
 
-%To run a program using \projecttitle,  the user just needs to preload the \projecttitle library  by using the environment variable {\tt LD\_PRELOAD} or {\tt -rdynamic} flag, and then, run the program as usual. 
 
 
 
 Our high level approach is based on recording data, control, and schedule dependencies in a computation by constructing a {\em Concurrent Provenance Graph} (CPG). The CPG tracks the input data to a program, all sub-computations (a sub-computation is a unit of the computation), the data flow between sub-computations, intra-thread control flow, and inter-thread schedule dependencies for the multithreaded execution. 
 
 
-In this paper, we present a {\em parallel} algorithm to build the CPG. Our algorithm leverages the Release Consistency (RC) memory model~\cite{DSM-RC} to efficiently record the inter-thread data and schedule dependencies in a completely decentralized manner. We implemented our algorithm as a dynamically linkable shared library by leveraging process-level isolation, MMU-assisted memory tracking, and \intelpt ISA extensions, released recently as part of the Broadwell micro-architecture.  %Furthermore, we extended the library to support a consistent snapshot facility, where the user can analyze the provenance on-the-fly while the program is still running.
+In this paper, we present a {\em parallel} algorithm to build the CPG. Our algorithm leverages the Release Consistency (RC) memory model~\cite{DSM-RC} to efficiently record the inter-thread data and schedule dependencies in a completely decentralized manner. We implemented our algorithm as a dynamically linkable shared library by leveraging process-level isolation, MMU-assisted memory tracking, and \intelpt ISA extensions, released recently as part of the Broadwell micro-architecture.  Furthermore, we extended the library to support a consistent snapshot facility, where the user can analyze the provenance on-the-fly while the program is still running.
 
-%An additional challenge that we need to address in the library implementation is the excessive log data produced by \intelpt, especially for long running applications. Therefore, we further extended the library to support a live snapshot facility, where the user can analyze the provenance on-the-fly while the program is still running. The library periodically takes a consistent snapshot~\cite{chandy-lamport} of the CPG in a decentralized fashion.
 
 In particular, we make the following contributions:
 \begin{itemize}
@@ -42,7 +40,6 @@ In particular, we make the following contributions:
 \item We further extended the library to support a live snapshot facility, where the user can analyze the provenance on-the-fly while the program is still running. The library periodically takes a consistent snapshot~\cite{chandy-lamport} of the CPG in a decentralized fashion ($\S$\ref{sec:snapshot}).
 
 
-%\item  We  empirically demonstrate  the effectiveness of \projecttitle by applying it to applications of  PARSEC~\cite{parsec} and Phoneix~\cite{phoenix} benchmark suites. Our experiments show that \projecttitle~incurs reasonable overhead to record data provenance for a majority of applications ($\S$\ref{sec:evaluation}). 
 
 \end{itemize}
 
@@ -50,6 +47,5 @@ In particular, we make the following contributions:
 
 We  empirically demonstrate  the effectiveness of \projecttitle by applying it to applications of  PARSEC~\cite{parsec} and Phoenix~\cite{phoenix} benchmark suites. Our experiments show that \projecttitle~incurs reasonable overhead to record data provenance for a majority of applications ($\S$\ref{sec:evaluation}). 
 
-Furthermore, we briefly describe three on-going projects where the generic provenance interface exported by \projecttitle is being used to improve the dependability, security, and efficiency of software systems  ($\S$\ref{sec:discussion}). \projecttitle is an open-source project and the library is publicly available to the research community for further use in other workflows.  
+Furthermore, we briefly describe three on-going projects where the generic provenance interface exported by \projecttitle is being used to improve the dependability, security, and efficiency of software systems  ($\S$\ref{sec:discussion}). \projecttitle is an active open-source project and the library is publicly available to the research community for further use in other workflows.  
 
-%\projecttitle is an active open-source project, and the library is publicly available to the research community. We believe that the provenance abstraction exported by \projecttitle is useful to support a wide-range of workflows in improving the dependability and security of software systems ($\S$~\ref{sec:discussion}).
