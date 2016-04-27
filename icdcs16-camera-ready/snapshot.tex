@@ -1,5 +1,6 @@
 \section{Snapshot Mechanism}
 \label{sec:snapshot}
+
 An additional challenge that we need to address in the implementation of \projecttitle is to deal with the excessive log data produced by \intelpt, especially for long running applications. Therefore, we further extend the library to support a live snapshot facility, where the user (or an application using \projecttitle) can analyze the provenance on-the-fly while the program is still running. Thus, the snapshot facility provides a practical alternative to restrict the space overheads imposed for storing the CPG. 
 
 For the snapshot facility, the library periodically takes a consistent cut of the CPG. A cut is {\em consistent} if, for any synchronization operation on object $S$ in the trace,  {\em acquire}($S$) operation being in the cut implies that corresponding {\em release}($S$) is also included in the cut~\cite{chandy-lamport}.  To achieve so, we make use of modeling synchronization primitives as {\em acquire} and {\em release} operations (described in $\S$\ref{sec:algorithms}). Each thread invokes the snapshot operation on the latest synchronization event ({\em acquire} or {\em release}) in the recorded trace.
@@ -7,13 +8,11 @@ For the snapshot facility, the library periodically takes a consistent cut of th
 
 We implemented the consistent cut facility using \intelpt interface for {\tt perf},
 which provides mechanism for the full trace, and a snapshot mode.
-When the full trace is enabled then the kernel does not overwrite the data that the user-space has not collected yet. %is already processed bythe userspace (indicated by advancing a pointer). 
+When the full trace is enabled then the kernel does not overwrite the data that the user-space has not collected yet. 
 This results in gaps in the trace, if the user-space process is not fast enough in collecting the log data. 
 Whereas, in the snapshot mode, however, the old data in this ring buffer is constantly overwritten so that an application
-can start and stop tracing around a certain event. %
+can start and stop tracing around a certain event. 
 The {\tt perf} tool exposes this feature by installing a handler on
 signal {\tt SIGUSR2}, which triggers the start of a trace. \projecttitle makes use of the signal
-and forwards it to {\tt perf} to record a consistent snapshot of the trace based on the aforementioned checkpointing mechanism.  Using this signal, we implemented a simple ring buffer with a configurable number of slots (each slot size is set to $4$MB). As the user (or the application using \projecttitle) finishes the live analysis on the recorded snapshots of the CPG, we reuse those slots for storing the new incoming snapshots of the CPG. %This way, \projecttitle restricts the space usage for the CPG. 
-
-
+and forwards it to {\tt perf} to record a consistent snapshot of the trace based on the aforementioned checkpointing mechanism.  Using this signal, we implemented a simple ring buffer with a configurable number of slots (each slot size is set to $4$MB). As the user (or the application using \projecttitle) finishes the live analysis on the recorded snapshots of the CPG, we reuse those slots for storing the new incoming snapshots of the CPG. 
 
