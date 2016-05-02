@@ -1,0 +1,31 @@
+\begin{figure}[t]
+\centering
+\myfontsize
+{
+\begin{tabular}{m{1.6cm}|m{.8cm}|m{1.1cm}|m{.6cm}|m{1.1cm}|m{1.3cm}}
+       & \multicolumn{3}{c|}{ Provenance log details [MB] }   &  Bandwidth & Branch instr. \\
+   { Application} & Size & Compressed & Ratio & [MB/sec] &  [Instr/sec] \\
+  \hline \hline
+    blackscholes& 851& 57.3 &15$\times$& 882& 2.49E+09 \\
+    canneal& 5343& 315.0 & 17$\times$& 547& 1.55E+09 \\
+    histogram& 381& 11.3 & 34$\times$& 961& 4.17E+09 \\
+    kmeans& 11900& 522.0 &23$\times$& 1438& 5.79E+09 \\
+    linear\_regression& 183& 5.5 &34$\times$& 707& 3.81E+09 \\
+    matrix\_multiply& 2101& 97.0 &22$\times$& 105& 4.05E+08 \\
+    pca& 1900& 116.0 &16$\times$& 364& 1.42E+09 \\
+    reverse\_index& 192& 5.7 & 34$\times$& 764& 2.87E+09 \\
+    streamcluster& 29300& 787.0 &37$\times$& 2083& 7.78E+09 \\
+    string\_match& 2751& 430.0 &6$\times$& 1763& 5.61E+09 \\
+    swaptions& 7061& 929.0 &8$\times$& 1830& 4.84E+09 \\
+    word\_count& 4121& 508.0 & 8$\times$& 1435& 2.80E+09 \\
+
+\hline
+\end{tabular}
+}
+
+
+\caption{\label{tab:space-overheads} Space overheads for all benchmarks with 16 threads.}
+% (Detailed results are available here: \href{https://mic92.github.io/inspector/index.html\#measurement_table}{Log details web-link}) }                                                                                                                                  
+
+
+\end{figure}

@@ -1,0 +1,30 @@
+\begin{figure}[t]
+\centering
+\myfontsize
+{
+\begin{tabular}{m{1.6cm}|m{3.2cm}| m{1.2cm}|m{1.3cm}}
+   %   & & \multicolumn{2}{c|}{ Page faults }   &  Bandwidth & Branch instr. \\
+   { Application} & Dataset / Parameters & Page faults & Faults/sec\\
+  \hline \hline
+    blackscholes& 16 in\_64K.txt prices.txt & 2.49E+04& 2.58E+04 \\
+    canneal& 15 10000 2000 100000.nets 32 & 2.11E+06 & 21.57E+04 \\
+    histogram& large.bmp & 4.27E+04 & 10.78E+04	  \\
+    kmeans& -d 3 -c 500 -p 50000 -s 500 & 1.16E+06 & 13.99E+04  \\
+    linear\_regression& key\_file\_500MB.txt & 2.88E+04 & 11.11E+04  \\
+    matrix\_multiply& 2000 2000 & 2.32E+05 & 11.65E+04  \\
+    pca& -r 4000 -c 4000 -s 100 & 5.34E+05 & 10.22E+04\\
+    reverse\_index & datafiles & 2.61E+04 & 10.35E+04  \\
+    streamcluster& 2 5 1 10 10 5 none output.txt 16 & 1.64E+05 & 1.163E+04\\
+    string\_match &key\_file\_500MB.txt & 3.11E+04 & 1.993E+04\\
+    swaptions & -ns 128 -sm 50000 -nt 16  & 4.66E+04 & 1.207E+04 \\
+    word\_count& word\_100MB.txt	 & 1.56E+05 & 54.34E+04  \\
+
+\hline
+\end{tabular}
+}
+
+
+\caption{\label{tab:apps} Runtime statistics for all benchmarks with 16 threads (Detailed log analysis is available here: \href{https://mic92.github.io/inspector/index.html\#measurement_table}{web-link}). }                                                                                                                                  
+
+
+\end{figure}
